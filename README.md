@@ -33,6 +33,7 @@ This vault captures reading notes, technical deep-dives, and reflections from an
 ### book
 
 - [本体论（Ontology）：从哲学根基到计算机科学的概念迁移](book/本体论（Ontology）：从哲学根基到计算机科学的概念迁移.md)
+- [西方本体论的当代转折](book/西方本体论的当代转折.md)
 
 ### paper
 
