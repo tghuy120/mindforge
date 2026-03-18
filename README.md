@@ -8,7 +8,7 @@ This vault captures reading notes, technical deep-dives, and reflections from an
 
 ## Articles
 
-### AI & Engineering
+### Notes/AI
 
 - [AI-Native 开发实践：从 Figma 设计到 Superpowers Brainstorm 再到 Spec-Delta 工作流](Notes/AI/AI-Native开发实践：从Figma设计到Superpowers%20Brainstorm再到Spec-Delta工作流.md)
 - [架构师视角的 AI Harness Engineering 最佳实践](Notes/AI/架构师视角的AI%20Harness%20Engineering最佳实践.md)
@@ -17,30 +17,26 @@ This vault captures reading notes, technical deep-dives, and reflections from an
 - [MCP vs CLI — 为什么开发者在重新审视 MCP](Notes/AI/MCP%20vs%20CLI%20—%20为什么开发者在重新审视%20MCP.md)
 - [Pencil 设计工具与 Claude Code 快速上手指南](Notes/AI/Pencil设计工具与Claude%20Code快速上手指南.md)
 - [在 Obsidian 中用 Excalidraw 与 Draw.io 绘制 Azure 架构图实战指南](Notes/AI/在Obsidian中用Excalidraw与Draw.io绘制Azure架构图实战指南.md)
-
-### Context Engineering
-
+- [Palantir Ontology：从哲学本体论到企业操作系统的工程实践](Notes/AI/Palantir%20Ontology：从哲学本体论到企业操作系统的工程实践.md)
 - [A Survey of Context Engineering for Large Language Models 读书笔记](Notes/AI/A%20Survey%20of%20Context%20Engineering%20for%20Large%20Language%20Models/A%20Survey%20of%20Context%20Engineering%20for%20LargeLanguage%20Models%20读书笔记.md)
 - [Context Engineering vs. Model Context Protocol](Notes/AI/A%20Survey%20of%20Context%20Engineering%20for%20Large%20Language%20Models/Context%20Engineering%20vs.%20Model%20Context%20Protocol.md)
 - [Context Engineering vs MCP — Full Series](Notes/AI/Context%20Engineering%20vs%20MCP/Context%20Engineering%20vs%20MCP%20-%20MOC.md)
 
-### Ontology & Data Platforms
-
-- [本体论（Ontology）：从哲学根基到计算机科学的概念迁移](book/本体论（Ontology）：从哲学根基到计算机科学的概念迁移.md)
-- [Palantir Ontology：从哲学本体论到企业操作系统的工程实践](Notes/AI/Palantir%20Ontology：从哲学本体论到企业操作系统的工程实践.md)
-- [Microsoft Fabric IQ 与本体论（Ontology）研究](Azure/Microsoft%20Fabric%20IQ与本体论（Ontology）研究.md)
-
-### DevOps
+### Notes/DevOps
 
 - [tmux 与 Claude 远程交互实践](Notes/DevOps/tmux与Claude远程交互实践.md)
-
-### Paper Reading
-
-- [How AI Impacts Skill Formation — 读书笔记与质疑](paper/2026-03-18-How-AI-Impacts-Skill-Formation.md)
 
 ### Azure
 
 - [Microsoft Fabric IQ 与本体论（Ontology）研究](Azure/Microsoft%20Fabric%20IQ与本体论（Ontology）研究.md)
+
+### book
+
+- [本体论（Ontology）：从哲学根基到计算机科学的概念迁移](book/本体论（Ontology）：从哲学根基到计算机科学的概念迁移.md)
+
+### paper
+
+- [How AI Impacts Skill Formation — 读书笔记与质疑](paper/2026-03-18-How-AI-Impacts-Skill-Formation.md)
 
 ---
 
