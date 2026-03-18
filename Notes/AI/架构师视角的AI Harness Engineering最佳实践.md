@@ -30,7 +30,7 @@ OpenAI 提出了 Harness Engineering 的五大支柱：
 
 关于 Harness Engineering 的定义，社区有不同的视角。理解这三个概念的关系对于实践至关重要。
 
-![[harness-concepts-relationship.excalidraw.png]]
+![harness-concepts-relationship](../../asset/harness-concepts-relationship.excalidraw.png)
 
 ### 2.1 Prompt Engineering（提示工程）
 
@@ -75,7 +75,7 @@ OpenAI 提出了 Harness Engineering 的五大支柱：
 - **[ragflow-skill-orchestrator-studio](https://github.com/huqianghui/ragflow-skill-orchestrator-studio-vibe-coding)** — AI Agent 驱动的数据处理管道编排平台，使用 OpenSpec 管理规格
 - **[yoga-guru-copilot-platform](https://github.com/huqianghui/yoga-guru-copilot-platform)** — 瑜伽教练 AI Copilot 平台，使用 Superpowers 管理开发流程
 
-![[harness-practice-framework.excalidraw.png]]
+![harness-practice-framework](../../asset/harness-practice-framework.excalidraw.png)
 
 ### 3.1 架构师先验知识编码
 
@@ -121,7 +121,7 @@ CLAUDE.md 不仅是操作手册，更是**架构师经验的编码**。两个项
 
 ### 3.2 文档索引化分层
 
-![[doc-layered-architecture.excalidraw.png]]
+![doc-layered-architecture](../../asset/doc-layered-architecture.excalidraw.png)
 
 传统开发中，文档往往是非结构化的。Harness Engineering 要求**文档也必须索引化、分层化**，每个文件有明确的分工：
 
