@@ -24,13 +24,33 @@ OpenAI 提出了 Harness Engineering 的五大支柱：
 4. **黄金准则（Golden Principles）** — 将人类的"品味"机械化编码，在 CI 中强制执行
 5. **垃圾回收（Garbage Collection）** — 后台 agent 持续清理技术债务和文档漂移
 
+### 架构师的角色蜕变：从 Team 到 One Person Team
+
+Harness Engineering 之所以对架构师至关重要，背后有一个更大的趋势：**AI 正在重新定义 Cloud Solution Architect（CSA）的角色边界**。
+
+在传统交付模式中，一个中等规模的项目通常需要 7 个以上角色协同工作——Senior CSA、产品设计师、前端设计、前端开发、后端开发、数据库设计、项目经理——沟通成本高，协调周期长。而在 AI 工具链成熟的今天，一个掌握了 AI 编排能力的架构师，可以借助 Figma AI + Design Agent、Claude Code + Cursor/Copilot、AI Schema Design、AI PM Agent 等工具，将自己的领域知识转化为 Prompt、Skill 和 Flow，独立完成之前需要整个团队协作的工作。
+
+![one-person-team](../../../asset/one-person-team.png)
+
+这种转变不仅是工具的升级，更是**核心技能的根本重塑**：
+
+| 传统技能 | AI 时代新技能 |
+|---------|-------------|
+| 手动编码（Coding） | Prompt Engineering — 将需求精确表达为 AI 可执行的指令 |
+| 设计评审（Design Review） | AI Orchestration — 编排多个 AI Agent 协同完成设计与开发 |
+| SQL 编写（SQL Writing） | Skill/Flow Design — 将重复工作流封装为可复用的 Skill 和 Flow |
+| 会议协调（Meeting Coordination） | Context Engineering — 构建结构化上下文，让 AI 理解项目全貌 |
+| Sprint 计划（Sprint Planning） | Quality Validation — 通过 CI/CD、E2E 测试和 Code Review 验证 AI 输出质量 |
+
+架构师的核心价值从"亲自动手写代码"转变为"**驾驭 AI 的能力**"——即本文所讨论的 Harness Engineering。掌握好这套方法论，一个人就是一支团队（One Person Team）。
+
 ---
 
 ## 二、概念辨析：Prompt → Context → Harness
 
 关于 Harness Engineering 的定义，社区有不同的视角。理解这三个概念的关系对于实践至关重要。
 
-![harness-concepts-relationship](../../asset/harness-concepts-relationship.excalidraw.png)
+![harness-concepts-relationship](../../../asset/harness-concepts-relationship.excalidraw.png)
 
 ### 2.1 Prompt Engineering（提示工程）
 
@@ -75,7 +95,7 @@ OpenAI 提出了 Harness Engineering 的五大支柱：
 - **[ragflow-skill-orchestrator-studio](https://github.com/huqianghui/ragflow-skill-orchestrator-studio-vibe-coding)** — AI Agent 驱动的数据处理管道编排平台，使用 OpenSpec 管理规格
 - **[yoga-guru-copilot-platform](https://github.com/huqianghui/yoga-guru-copilot-platform)** — 瑜伽教练 AI Copilot 平台，使用 Superpowers 管理开发流程
 
-![harness-practice-framework](../../asset/harness-practice-framework.excalidraw.png)
+![harness-practice-framework](../../../asset/harness-practice-framework.excalidraw.png)
 
 ### 3.1 架构师先验知识编码
 
@@ -121,7 +141,7 @@ CLAUDE.md 不仅是操作手册，更是**架构师经验的编码**。两个项
 
 ### 3.2 文档索引化分层
 
-![doc-layered-architecture](../../asset/doc-layered-architecture.excalidraw.png)
+![doc-layered-architecture](../../../asset/doc-layered-architecture.excalidraw.png)
 
 传统开发中，文档往往是非结构化的。Harness Engineering 要求**文档也必须索引化、分层化**，每个文件有明确的分工：
 
