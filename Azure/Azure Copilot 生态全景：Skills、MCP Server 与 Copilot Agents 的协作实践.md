@@ -1,0 +1,411 @@
+---
+title: Azure Copilot 生态全景：Skills、MCP Server 与 Copilot Agents 的协作实践
+created: 2026-03-19
+tags: [azure, azure-copilot, azure-mcp-server, azure-skills, github-copilot, copilot-agents, mcp, vscode, devops, ai-agent, aks]
+---
+
+# Azure Copilot 生态全景：Skills、MCP Server 与 Copilot Agents 的协作实践
+
+## 一、问题的起点
+
+当你在 Azure Portal 中使用 Copilot 的 Deployment Agent 生成 Terraform 模板，或者让 Troubleshooting Agent 诊断 AKS 集群问题时，会自然产生一个疑问：**这些能力能否在 Portal 之外使用？能否集成到我自己的 CI/CD 管道或 AI Agent 中？**
+
+答案并不是简单的"能"或"不能"——微软构建了一个多层次的 AI 工具生态，不同工具覆盖不同场景，它们之间既有重叠也有互补。本文梳理这个生态的三个核心组件：**Azure Skills**、**Azure MCP Server** 和 **Azure Copilot Agents**，以及它们与 GitHub Copilot / VS Code 的集成方式。
+
+---
+
+## 二、三个核心组件
+
+### 2.1 Azure Copilot Agents——Portal 内的专家顾问
+
+**Azure Copilot Agents**（预览版）是 Azure Portal 中内置的 6 类 AI Agent，定位是"**专业领域的虚拟顾问**"：
+
+| Agent | 核心能力 | 关键限制 |
+|-------|---------|---------|
+| **Deployment** | 翻译业务目标为 Well-Architected 部署方案，生成 Terraform 配置，可推送到 GitHub 作为 PR | 仅支持全新部署，不能导入/修改已有基础设施；仅输出 Terraform（不支持 Bicep） |
+| **Troubleshooting** | 基于实际环境的根因诊断，部分问题支持一键修复，可自动创建 Support Request | 一键修复不适用所有资源类型（如 AKS 不支持） |
+| **Optimization** | VM/VMSS 成本优化建议，生成 CLI/PowerShell 脚本，成本对比图表 | 无法直接执行脚本或修改资源；单次最多 10 条建议 |
+| **Observability** | 从 Monitor 告警创建调查分析，可视化推理步骤 | 目前仅支持 Application Insights 告警类型 |
+| **Migration** | VMware 迁移规划、业务评估、Landing Zone 设置 | 仅 VMware 全面支持；无法执行实际迁移（复制等） |
+| **Resiliency** | 可用区弹性评估、备份缺口检测、生成可部署的弹性脚本 | Zone Resiliency 脚本仅覆盖 VM、App Service、PostgreSQL 等有限服务 |
+
+**关键事实：Azure Copilot Agents 只能通过 Portal UI 使用。** 没有公开的 REST API、SDK 或 CLI 命令。它们的独特优势在于：
+- **实时环境上下文**——能感知你当前在 Portal 中查看的资源、告警和 Advisor 建议
+- **深度控制面集成**——与 Azure Migrate、Azure Monitor、Well-Architected Framework 的原生集成
+- **操作闭环**——一键修复、自动创建 Support Ticket、直接推送 PR 到 GitHub
+
+> **注意**：AI Shell（`aish`）曾作为 CLI 端的 Copilot 扩展，但已于 2026 年 1 月归档，不再维护。`az copilot` 命令也不存在。
+
+### 2.2 Azure MCP Server——统一的编程接口
+
+**Azure MCP Server**（`@azure/mcp`，`github.com/microsoft/mcp`）是微软开源（MIT）的 MCP 协议实现，定位是"**Azure 服务的通用 AI 工具后端**"。
+
+**核心能力**：
+- 覆盖 **35+ Azure 服务**，提供 **200+ 结构化工具**
+- 支持读写操作（可通过 `--read-only` 限制为只读）
+- 使用 **Entra ID + Azure RBAC** 认证
+- 兼容所有 MCP 客户端：Claude Code、GitHub Copilot、OpenAI Agents SDK、Semantic Kernel、Cursor、Windsurf 等
+
+**覆盖的 Azure 服务（按类别）**：
+
+| 类别 | 服务 |
+|------|------|
+| **AI & ML** | Microsoft Foundry、Azure AI Search、Azure Speech |
+| **计算** | App Service、Functions、**AKS**、Service Fabric、Virtual Machines |
+| **容器** | Container Registry、AKS、Service Fabric |
+| **数据库** | Cosmos DB、MySQL、PostgreSQL、Redis、Azure SQL |
+| **DevOps** | Bicep Schema、Azure Deploy、Monitor、Managed Grafana |
+| **开发工具** | App Configuration、Application Insights、Log Analytics、Load Testing |
+| **安全** | Key Vault、Confidential Ledger |
+| **存储** | Blob、File Shares、Queue、Table、Data Lake |
+| **集成** | Event Hubs、Service Bus、Event Grid |
+| **管理** | Advisor、Policy、Pricing、Quotas、Resource Health、Well-Architected |
+
+**安装方式**（四种包管理器）：
+
+```bash
+# npm（推荐）
+npx -y @azure/mcp@latest server start
+
+# PyPI
+uvx --from msmcp-azure azmcp server start
+
+# .NET 10+
+dotnet tool install Azure.Mcp
+
+# Docker
+docker run mcr.microsoft.com/azure-sdk/azure-mcp:latest
+```
+
+**安全机制**：
+- 工具标注分类：`destructive`（破坏性）、`readOnly`（只读）、`idempotent`（幂等）
+- 敏感操作（如 Key Vault 密钥读取）触发用户确认（Elicitation）
+- Namespace 隔离——可以只暴露特定服务（如仅 `aks` 和 `monitor`）
+
+### 2.3 Azure Skills——专家级工作流剧本
+
+**Azure Skills**（`github.com/microsoft/azure-skills`）是微软官方的 Agent 插件，定位是"**教 AI Agent 做 Azure 专家的剧本集**"。
+
+如果说 Azure MCP Server 是"手"（执行能力），那么 Azure Skills 就是"脑"（领域知识）。每个 Skill 是一个精心编写的 Markdown 剧本（SKILL.md），定义了端到端的工作流程、决策树、最佳实践和错误恢复策略。
+
+**22 个 Skill 完整列表**：
+
+| # | Skill | 用途 |
+|---|-------|------|
+| 1 | `azure-prepare` | 生成基础设施代码（Bicep/Terraform）、Dockerfile、azure.yaml；强制执行"先计划再行动"工作流 |
+| 2 | `azure-validate` | 部署前验证（Bicep 构建、Terraform validate、项目构建检查） |
+| 3 | `azure-deploy` | 执行部署（azd up、terraform apply、az deployment）并处理错误恢复 |
+| 4 | `azure-diagnostics` | 生产环境故障排查——Container Apps、Function Apps、**AKS**（含专用子剧本） |
+| 5 | `azure-compute` | VM/VMSS 选型建议，含 **GPU 工作负载指导**（NC/ND/NV 系列推荐） |
+| 6 | `azure-cost-optimization` | 订阅成本分析、孤立资源清理、右径化建议 |
+| 7 | `azure-quotas` | 配额管理、容量验证、跨区域对比、配额提升请求 |
+| 8 | `azure-rbac` | 最小权限角色识别、自定义角色定义、CLI 和 Bicep 生成 |
+| 9 | `azure-resource-lookup` | 通过 Resource Graph（KQL）发现资源、跨订阅查询 |
+| 10 | `azure-resource-visualizer` | 分析资源组并生成 Mermaid 架构图 |
+| 11 | `azure-compliance` | 合规性/安全审计、Key Vault 过期监控 |
+| 12 | `azure-storage` | Blob、File Shares、Queue、Table、Data Lake 操作 |
+| 13 | `azure-upgrade` | 评估并执行 Azure 工作负载升级（计划/层级/SKU 变更） |
+| 14 | `azure-cloud-migrate` | 跨云迁移（AWS/GCP → Azure），含 Lambda→Functions 转换 |
+| 15 | `azure-ai` | 集成 Azure AI Search、Speech、OpenAI、Document Intelligence |
+| 16 | `azure-aigateway` | 配置 API Management 作为 AI 网关（语义缓存、Token 限制、MCP 工具治理） |
+| 17 | `azure-messaging` | Event Hubs / Service Bus SDK 故障排查 |
+| 18 | `azure-kusto` | Azure Data Explorer / KQL 查询执行 |
+| 19 | `azure-hosted-copilot-sdk` | 构建并部署 GitHub Copilot SDK 应用到 Azure |
+| 20 | `entra-app-registration` | Entra ID 应用注册、OAuth 2.0 配置、MSAL 集成 |
+| 21 | `microsoft-foundry` | Azure Foundry 完整 Agent 生命周期（创建、部署、调用、评估、追踪） |
+| 22 | `appinsights-instrumentation` | Application Insights 监控接入指南（ASP.NET Core、Node.js、Python） |
+
+**AKS 专项支持**——`azure-diagnostics` 包含 4 个专用子剧本：
+
+| 子剧本 | 覆盖场景 |
+|--------|---------|
+| `aks-troubleshooting.md` | 主路由剧本——判断问题类型并分发 |
+| `pod-failures.md` | CrashLoopBackOff、ImagePullBackOff、Pending、OOMKilled、探针失败 |
+| `node-issues.md` | NotReady 状态、自动扩缩器故障、Spot 节点污点、多 AZ 调度、升级卡住 |
+| `networking.md` | Service 不可达、DNS 解析失败、LoadBalancer Pending、Ingress 路由、NetworkPolicy 阻断 |
+
+**GPU 工作负载支持**——`azure-compute` 的第 3 步专门处理 GPU 选型（NC/ND/NV 系列），`azure-quotas` 支持 `Microsoft.Compute` 和 `Microsoft.MachineLearningServices` 配额检查。
+
+---
+
+## 三、三者的关系：三层架构
+
+Azure Skills、Azure MCP Server 和 Azure Copilot Agents 不是竞争关系，而是面向不同场景的互补工具。它们的关系可以用一个三层模型来理解：
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│              Azure Copilot Agents（Portal）                  │
+│    6 个专业 Agent——深度集成 Portal 控制面，实时环境上下文       │
+│    ★ 独有：一键修复、自动创建 Support Ticket、PR 推送          │
+│    ✗ 限制：仅 Portal UI，无 API/SDK                          │
+└─────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────┐
+│              Azure Skills（Agent 插件）                       │
+│    22 个领域专家剧本——端到端工作流 + 决策树 + 最佳实践          │
+│    ★ 独有：强制 prepare→validate→deploy 顺序、错误恢复策略     │
+│    ↓ 调用                                                    │
+├─────────────────────────────────────────────────────────────┤
+│              Azure MCP Server（工具层）                       │
+│    200+ 结构化工具——35+ Azure 服务的读写操作                   │
+│    ★ 独有：开放协议，任何 MCP 客户端可接入                     │
+│    ↓ 操作                                                    │
+├─────────────────────────────────────────────────────────────┤
+│              Azure 资源（AKS、VM、Storage、Monitor...）       │
+└─────────────────────────────────────────────────────────────┘
+```
+
+**类比**：
+- **Azure MCP Server** = 工具箱中的扳手、螺丝刀（原子操作）
+- **Azure Skills** = 维修手册（告诉你用哪个工具、什么顺序、遇到问题怎么处理）
+- **Azure Copilot Agents** = 驻场维修专家（有手册也有工具，但只在工厂里工作）
+
+**关键安装关系**：安装 Azure Skills 插件时，它会**自动安装和配置 Azure MCP Server**。两者是捆绑交付的：
+
+```json
+// Azure Skills 的 .mcp.json 配置
+{
+  "mcpServers": {
+    "azure": {
+      "command": "npx",
+      "args": ["-y", "@azure/mcp@latest", "server", "start"]
+    }
+  }
+}
+```
+
+---
+
+## 四、与 GitHub Copilot 和 VS Code 的集成
+
+### 4.1 集成渠道全景
+
+| 渠道 | 使用 MCP Server？ | 使用 Skills？ | 适用场景 |
+|------|-------------------|--------------|---------|
+| **Azure Portal Copilot** | 否（原生控制面） | 否 | 运维人员在 Portal 内的临时操作和诊断 |
+| **VS Code + GitHub Copilot for Azure** | 是（已捆绑） | 通过插件安装 | 开发者日常：编码、部署、调试、故障排查 |
+| **VS Code Agent Mode + Azure MCP** | 是（手动配置） | 可选安装 | 供应商无关的 MCP 客户端（Cursor、Windsurf 等） |
+| **Claude Code + Azure MCP** | 是（配置 MCP） | 可选安装 | Claude Code 用户的 Azure 操作 |
+| **GitHub Copilot Coding Agent（云端）** | 是（仓库配置） | 否 | 自主 PR 创建——Agent 读取 Azure 状态辅助代码修改 |
+| **Copilot Studio** | 是（远程部署） | 否 | 低代码 Agent 构建，多渠道分发（Teams/Web/Mobile） |
+
+### 4.2 VS Code + GitHub Copilot for Azure
+
+这是目前**最推荐的开发者集成路径**。
+
+**安装**：VS Code 扩展市场搜索 `ms-azuretools.vscode-azure-github-copilot`（1.19M 安装量）。
+
+**两种模式**：
+- **Agent Mode**（推荐）——Copilot 自主完成 Azure 任务，可调用所有 Azure MCP 工具
+- **Ask Mode**（`@azure`）——问答式交互，用于学习和咨询
+
+**正在进行的迁移**：扩展底层正在从专有工具迁移到 Azure MCP Server 工具。Visual Studio 2022/2026 已经默认使用 MCP Server。VS Code 端部分工具已迁移完成（`azure_list_activity_logs`、`azure_diagnose_resource`、`azure_generate_azure_cli_command`），其余工具迁移进行中。
+
+**AKS 故障排查**已确认支持的提示词：
+- "Help me troubleshoot my AKS cluster"
+- "My AKS cluster 'xxx' is having performance problems"
+- "How can I get the logs of a specific pod in Azure?"
+- "Do my Azure kube-apiserver logs show the last time a restart occurred?"
+
+### 4.3 Azure Skills 安装方式
+
+**GitHub Copilot CLI**：
+```bash
+/plugin marketplace add microsoft/azure-skills
+/plugin install azure@azure-skills
+```
+
+**Claude Code**：
+```bash
+claude plugin marketplace add microsoft/azure-skills
+claude plugin install azure@azure-skills
+```
+
+安装后，Skills 会作为系统级指令注入 Agent 上下文，当检测到相关意图时自动激活。
+
+### 4.4 Azure MCP Server 手动配置（适用于任何 MCP 客户端）
+
+**VS Code**（`.vscode/mcp.json`）：
+```json
+{
+  "servers": {
+    "azure-mcp": {
+      "command": "npx",
+      "args": ["-y", "@azure/mcp@latest", "server", "start"]
+    }
+  }
+}
+```
+
+**Claude Code**（`~/.claude.json` 或项目 `.mcp.json`）：
+```json
+{
+  "mcpServers": {
+    "azure": {
+      "command": "npx",
+      "args": ["-y", "@azure/mcp@latest", "server", "start"]
+    }
+  }
+}
+```
+
+**认证**：运行前需执行 `az login`，或配置环境变量 `AZURE_TENANT_ID` / `AZURE_CLIENT_ID` / `AZURE_CLIENT_SECRET`。
+
+### 4.5 GitHub Copilot Coding Agent（云端自主 Agent）
+
+GitHub 的 Coding Agent 可以连接 Azure MCP Server，实现"分配 Issue → Agent 自主修改代码 → 创建 Draft PR"的全自动流程。
+
+**配置方法**：
+```bash
+# 使用 azd 一键配置（推荐）
+azd coding-agent config
+```
+
+此命令会：创建 User Managed Identity → 分配 Reader 角色 → 存储 Secret 到 GitHub → 生成 Actions Workflow → 推送分支。
+
+**安全注意**：默认 Reader 角色——Agent 只能读取 Azure 状态辅助代码修改，不能修改线上资源。如需写权限需手动提升。Agent 自主执行时**不会逐操作确认**。
+
+---
+
+## 五、Azure Skills + Azure MCP Server 能否替代 Azure Copilot Agents？
+
+这是核心问题。答案是：**大部分场景可以，但有不可替代的差异**。
+
+### 能力对比矩阵
+
+| 能力 | Portal Copilot Agents | Skills + MCP Server |
+|------|----------------------|---------------------|
+| 基础设施代码生成（Terraform/Bicep） | ✅ Deployment Agent | ✅ `azure-prepare` + MCP |
+| 部署执行 | ✅ Deployment Agent（推送 PR） | ✅ `azure-deploy`（azd up、terraform apply） |
+| AKS 故障排查 | ✅ Troubleshooting Agent | ✅ `azure-diagnostics`（4 个 AKS 子剧本） |
+| 成本优化 | ✅ Optimization Agent | ✅ `azure-cost-optimization` + `azure-compute` |
+| 告警分析 | ✅ Observability Agent | ✅ MCP Monitor/App Insights 工具 |
+| 迁移规划 | ✅ Migration Agent | ✅ `azure-cloud-migrate` |
+| 弹性评估 | ✅ Resiliency Agent | 部分（通过 `azure-compliance` + MCP Advisor） |
+| **一键修复** | ✅ Portal 独有 | ✗ 需手动执行修复命令 |
+| **自动创建 Support Ticket** | ✅ Portal 独有 | ✗ 需手动创建 |
+| **实时 Portal 上下文感知** | ✅ 知道你在看什么资源 | ✗ 需在提示词中指定资源 |
+| **强制工作流顺序** | ✗ 无强制 | ✅ Skills 强制 prepare→validate→deploy |
+| **可编程/可集成** | ✗ 仅 Portal UI | ✅ 任何 MCP 客户端 |
+| **CI/CD 集成** | ✗ | ✅ GitHub Actions、Azure Pipelines |
+| **多工具协同** | ✗ | ✅ 22 个 Skills 互相调用 |
+
+### 不可替代的 Portal Copilot 能力
+
+1. **一键修复（One-click fix）**——Troubleshooting Agent 对部分已知问题可以直接在 Portal 中执行修复，无需用户编写或执行任何命令
+2. **自动 Support Ticket**——诊断结果可一键转为微软技术支持工单，预填充所有上下文信息
+3. **实时环境感知**——Agent 能感知你当前在 Portal 中浏览的资源刀片、告警详情、Advisor 建议
+4. **Well-Architected 深度评估**——Deployment Agent 的部署方案评估基于 Well-Architected Framework 的深度集成，超越了 Skills 提供的最佳实践
+
+### Skills + MCP Server 的独特优势
+
+1. **可编程**——可以集成到 CI/CD、自定义 Agent、自动化管道中
+2. **强制工作流**——Skills 通过 `.azure/plan.md` 状态追踪，强制 prepare→validate→deploy 顺序，防止跳步
+3. **错误恢复策略**——每个 Skill 包含详细的错误处理和恢复路径
+4. **供应商无关**——不绑定 VS Code 或 GitHub Copilot，任何 MCP 客户端都能使用
+5. **可扩展**——可以编写自定义 Skills 扩展覆盖场景
+
+---
+
+## 六、最佳实践推荐
+
+### 6.1 选择合适的工具
+
+```
+                     ┌─ 临时诊断/一键修复 ──→ Azure Portal Copilot Agents
+                     │
+  Azure 相关任务 ────┼─ 开发/部署/调试 ────→ VS Code + GitHub Copilot for Azure
+                     │                         + Azure Skills 插件
+                     │
+                     ├─ 自动化/CI/CD ─────→ Azure MCP Server + 自定义 Agent
+                     │
+                     └─ 团队协作/审批 ────→ Copilot Studio + 远程 MCP Server
+```
+
+### 6.2 开发者日常工作流
+
+**推荐组合**：VS Code + GitHub Copilot for Azure + Azure Skills
+
+```
+1. 在 VS Code 中用 Agent Mode 描述需求
+   → Skills 自动激活 azure-prepare，生成 Bicep/Terraform + Dockerfile
+
+2. Agent 自动调用 azure-validate 验证配置
+   → 发现问题自动修复，通过后标记 "Validated"
+
+3. 确认后 Agent 调用 azure-deploy 执行部署
+   → azd up / terraform apply
+
+4. 部署失败时 azure-diagnostics 自动介入
+   → 如果是 AKS 问题，路由到 pod-failures.md 或 networking.md 子剧本
+
+5. 遇到需要微软支持的问题 → 切换到 Portal Copilot Troubleshooting Agent
+   → 一键创建 Support Ticket
+```
+
+### 6.3 安全最佳实践
+
+1. **最小权限原则**——Azure MCP Server 默认使用当前 `az login` 的身份，确保是最小必要权限
+2. **只读模式**——在不需要写操作的场景（如分析、查询）中使用 `--read-only` 标志
+3. **Namespace 隔离**——不要暴露所有服务，只配置需要的 namespace
+4. **提示词安全**——在提示词中不要包含密钥、连接字符串等敏感信息
+5. **Coding Agent 权限**——GitHub Coding Agent 默认 Reader 角色是安全的；如需写权限，要严格评估风险
+
+### 6.4 提示词工程模式
+
+微软推荐的 6 步模式（Agent Mode）：
+
+1. **指令**：先告诉 Agent "在我确认之前不要执行任何操作"
+2. **描述**：用足够的细节描述需求（**包含 "Azure" 关键词**以触发 MCP 工具）
+3. **提问**：让 Agent 提出澄清问题
+4. **迭代**：通过对话完善理解
+5. **计划**：要求 Agent "创建一个分步骤的检查清单计划让我审核"
+6. **授权**：审核通过后明确授权执行
+
+### 6.5 AKS + GPU 场景的推荐路径
+
+针对 AKS + GPU + 模型推理性能测试这类场景：
+
+| 阶段 | 推荐工具 | 具体用法 |
+|------|---------|---------|
+| **选型** | Azure Skills `azure-compute` | GPU VM 系列推荐（NC for 推理、ND for 训练） |
+| **配额检查** | Azure Skills `azure-quotas` | 检查目标区域的 GPU 配额，必要时申请提升 |
+| **基础设施** | Azure Skills `azure-prepare` → `azure-validate` → `azure-deploy` | 生成 AKS + GPU 节点池的 Terraform，验证并部署 |
+| **诊断** | Azure Skills `azure-diagnostics` (AKS 子剧本) | Pod 调度失败、OOMKilled、节点 NotReady 等 |
+| **成本** | Azure Skills `azure-cost-optimization` | GPU 节点池的成本分析和优化建议 |
+| **告警** | Azure MCP Server Monitor 工具 | 配置和查询推理延迟、GPU 利用率告警 |
+| **紧急问题** | Azure Portal Copilot Troubleshooting Agent | 一键修复 + Support Ticket |
+
+---
+
+## 七、总结
+
+### 生态定位图
+
+| 组件 | 定位 | 独有价值 | 限制 |
+|------|------|---------|------|
+| **Azure Copilot Agents** | Portal 内的专家顾问 | 实时环境感知、一键修复、Support Ticket | 仅 Portal UI |
+| **Azure MCP Server** | 通用 AI 工具后端 | 开放协议、200+ 工具、任何客户端可用 | 原子操作，缺乏工作流编排 |
+| **Azure Skills** | 专家级工作流剧本 | 端到端流程、决策树、错误恢复、强制顺序 | 依赖 MCP Server 执行 |
+
+### 核心洞察
+
+1. **Azure Copilot Agents 和 Skills + MCP Server 不是替代关系，而是互补关系**——前者适合临时的、交互式的 Portal 操作；后者适合可编程的、自动化的开发和运维流程
+2. **Azure MCP Server 是统一的粘合层**——无论你使用哪个客户端（VS Code、Claude Code、Cursor、自建 Agent），都通过同一个 MCP 协议访问 Azure
+3. **Azure Skills 是被忽视的宝藏**——22 个精心编写的专家剧本，包含微软第一手的最佳实践和错误处理经验，比通用 LLM 的 Azure 知识精确得多
+4. **微软的方向很明确**——从专有工具向 MCP 开放协议迁移，GitHub Copilot for Azure 的底层已在迁移中
+
+---
+
+## 参考资料
+
+- [Azure Copilot Agents (preview)](https://learn.microsoft.com/en-us/azure/copilot/agents-preview)
+- [Azure Copilot Overview](https://learn.microsoft.com/en-us/azure/copilot/overview)
+- [Azure MCP Server Overview](https://learn.microsoft.com/en-us/azure/developer/azure-mcp-server/overview)
+- [Azure MCP Server Tools Reference](https://learn.microsoft.com/en-us/azure/developer/azure-mcp-server/tools/)
+- [Azure MCP Server GitHub (microsoft/mcp)](https://github.com/microsoft/mcp)
+- [Azure Skills GitHub (microsoft/azure-skills)](https://github.com/microsoft/azure-skills)
+- [GitHub Copilot for Azure Introduction](https://learn.microsoft.com/en-us/azure/developer/github-copilot-azure/introduction)
+- [GitHub Copilot for Azure — Troubleshoot Examples](https://learn.microsoft.com/en-us/azure/developer/github-copilot-azure/troubleshoot-examples)
+- [Connect Coding Agent to Azure MCP Server](https://learn.microsoft.com/en-us/azure/developer/azure-mcp-server/how-to/github-copilot-coding-agent)
+- [Deploy Azure MCP Server for Copilot Studio](https://learn.microsoft.com/en-us/azure/developer/azure-mcp-server/how-to/deploy-remote-mcp-server-copilot-studio)

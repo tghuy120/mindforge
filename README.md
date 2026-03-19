@@ -37,6 +37,7 @@ This vault captures reading notes, technical deep-dives, and reflections from an
 ### Azure
 
 - [Microsoft Fabric IQ 与本体论（Ontology）研究](Azure/Microsoft%20Fabric%20IQ与本体论（Ontology）研究.md)
+- [Azure Copilot 生态全景：Skills、MCP Server 与 Copilot Agents 的协作实践](Azure/Azure%20Copilot%20生态全景：Skills、MCP%20Server%20与%20Copilot%20Agents%20的协作实践.md)
 
 ### book
 
