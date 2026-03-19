@@ -10,8 +10,7 @@ This is an **Obsidian vault** (not a software project). It contains daily work j
 
 ```
 daily-work-item/          # Daily journals: YYYY-MM-DD.md
-daily-work-item/asset/    # Embedded images (PNG) for daily notes
-<directory>/asset/        # Each content directory has its own asset/ for diagrams and images
+asset/                    # All images, diagrams (.excalidraw, .png) — single root-level directory
 Notes/AI/                 # AI-related articles and reading notes
 Notes/DevOps/             # DevOps-related articles
 template/日记模版.md       # Daily note template (used by Obsidian daily-notes plugin)
@@ -53,4 +52,4 @@ Community: calendar, copilot, dataview, excalibrain, day-planner, icon-folder, k
 3. **Format consistency** — follow the conventions above exactly; don't introduce new formats
 4. **Complete linkage** — when updating task status, also update related notes and references
 5. **.pen files** — use only Pencil MCP tools (never Read/Grep) to access `.pen` file contents
-6. **Diagrams** — default to using the Excalidraw skill (`excalidraw-diagram`) for all diagram and illustration needs; place all generated files (`.excalidraw` and rendered `.png`) into the `asset/` subdirectory of the article's parent directory (e.g., `Azure/asset/`, `Notes/AI/asset/`); when embedding in Markdown, always use the `.png` version (`![[filename.png]]`), not the `.excalidraw` source file
+6. **Diagrams** — default to using the Excalidraw skill (`excalidraw-diagram`) for all diagram and illustration needs; place all generated files (`.excalidraw` and rendered `.png`) into the root `asset/` directory; when embedding in Markdown, always use the `.png` version (`![[filename.png]]`), not the `.excalidraw` source file
