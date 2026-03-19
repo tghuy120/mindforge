@@ -33,7 +33,7 @@ template/日记模版.md       # Daily note template (used by Obsidian daily-not
 - Dependencies: `🆔 id` (defines ID), `⛔ id` (depends on)
 - Sub-items: tab-indented under parent task
 
-**Links**: Use `[[wikilinks]]` for internal notes, `[title](url)` for external. Task outputs use arrow notation: `→ [[Article Title]]`. Images use `![[filename.png]]`.
+**Links**: Use `[[wikilinks]]` for internal notes, `[title](url)` for external. Task outputs use arrow notation: `→ [[Article Title]]`. Images use standard Markdown syntax `![alt](relative-path)` with relative paths from the article to `asset/` (e.g., `![desc](../asset/diagram.png)`) — this ensures both Obsidian and GitHub can render images correctly. Do NOT use `![[filename.png]]` wikilink syntax for images, as GitHub cannot render it.
 
 **Language**: Chinese for body text, English for technical terms (Claude Code, Superpowers, etc.). Use Chinese full-width parentheses `（）` and em dash `—`.
 
@@ -52,4 +52,4 @@ Community: calendar, copilot, dataview, excalibrain, day-planner, icon-folder, k
 3. **Format consistency** — follow the conventions above exactly; don't introduce new formats
 4. **Complete linkage** — when updating task status, also update related notes and references
 5. **.pen files** — use only Pencil MCP tools (never Read/Grep) to access `.pen` file contents
-6. **Diagrams** — default to using the Excalidraw skill (`excalidraw-diagram`) for all diagram and illustration needs; place all generated files (`.excalidraw` and rendered `.png`) into the root `asset/` directory; when embedding in Markdown, always use the `.png` version (`![[filename.png]]`), not the `.excalidraw` source file
+6. **Diagrams** — default to using the Excalidraw skill (`excalidraw-diagram`) for all diagram and illustration needs; place all generated files (`.excalidraw` and rendered `.png`) into the root `asset/` directory; when embedding in Markdown, always use the `.png` version with standard Markdown syntax (`![alt](../asset/filename.png)`), not the `.excalidraw` source file and not wikilink syntax
