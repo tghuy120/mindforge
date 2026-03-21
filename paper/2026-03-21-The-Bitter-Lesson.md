@@ -331,6 +331,16 @@ Bitter Lesson 对 AI 和对人说的其实是同一句话：
 
 **Sutton 自己就是最好的例子**——他不是靠某个具体算法不被淘汰的（TD Learning 已经 38 年了），而是靠**从具体经验中提炼元规律的能力**。The Bitter Lesson 本身就是元方法的产物：观察 70 年历史 → 提炼跨领域规律 → 指导未来决策。这个能力，AI 目前还不具备。
 
+这三种元能力在 [[架构师视角的AI Harness Engineering最佳实践]] 中有对应的实践路径：
+
+| 元能力 | Bitter Lesson 理论 | Harness Engineering 实践 |
+|---|---|---|
+| **定义问题** | 人定义"什么是对的"，AI 去 search & learn | 架构师编写 baseline spec 和 config.yaml——技术选型、架构决策不委托给 AI |
+| **设计约束** | 确定性边界不是搜索问题 | 设计 CLAUDE.md 规则、权限边界、CI/CD 质量门——这些是"缰绳"的具体形态 |
+| **跨域迁移** | 从具体经验提炼元规律 | 将 ragflow 的 60-70% 代码复用到 yoga-guru；将 OpenSpec 的变更管理理念迁移到 Superpowers |
+
+**关键启示：Harness Engineering 本身就是架构师培养元能力的最佳练习场。** 你不是在"写配置文件"，而是在练习"定义问题 + 设计约束 + 跨域迁移"这三种不会被 AI 取代的元能力。做 Harness Engineering 的过程，就是让自己不被 AI 淘汰的过程。
+
 ---
 
 ## 七、总结
