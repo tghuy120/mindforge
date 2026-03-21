@@ -45,6 +45,10 @@ The `obsidian-agent` (`.claude/agents/obsidian-agent.md`) is the primary tool fo
 
 Community: calendar, copilot, dataview, excalibrain, day-planner, icon-folder, kanban, minimal-settings, pandoc, tasks-plugin, table-editor. PDF export is available via the pandoc plugin (system pandoc installed via brew).
 
+## MCP Servers
+
+**Tavily MCP** is configured as the default web search tool in this project. When a task requires web search (finding latest news, looking up documentation, researching topics), use Tavily MCP tools (`tavily_search`, `tavily_extract`, `tavily_crawl`, `tavily_map`, `tavily_research`) instead of the built-in `WebSearch` (which is unavailable in Claude Code). `WebFetch` can still be used for fetching specific known URLs.
+
 ## Operating Principles
 
 1. **Read before writing** — always read the target file first

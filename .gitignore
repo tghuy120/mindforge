@@ -10,6 +10,7 @@ excalidraw-diagram-skill/
 
 # Claude Code
 .claude/
+.mcp.json
 
 # Playwright MCP cache
 .playwright-mcp/
