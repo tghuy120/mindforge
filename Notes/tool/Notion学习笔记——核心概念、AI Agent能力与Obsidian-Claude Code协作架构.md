@@ -239,9 +239,9 @@ claude mcp add notion \
 ### 下一步行动
 
 - [x] 安装 Notion 并完成基本体验 ✅ 2026-03-22
-- [ ] 配置 Claude Code + Notion MCP 集成
-- [ ] 创建 Task Database 并建立三个核心视图
-- [ ] 实现最小闭环：Obsidian 写想法 → Claude Code 提取任务 → Notion 管状态
+- [x] 配置 Claude Code + Notion MCP 集成 ✅ 2026-03-22
+- [x] 创建 Task Database 并建立三个核心视图 ✅ 2026-03-22
+- [x] 实现最小闭环：Obsidian 写想法 → Claude Code 提取任务 → Notion 管状态 ✅ 2026-03-22
 
 ---
 
