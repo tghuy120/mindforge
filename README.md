@@ -21,6 +21,7 @@ This vault captures reading notes, technical deep-dives, and reflections from an
 - [Claude Code 的 Agent 与 Subagent 架构解析——以 Superpowers 为例](Notes/AI/Claude-Code/Claude%20Code的Agent与Subagent架构解析——以Superpowers为例.md)
 - [Claude Code 扩展三剑客：Command、Skill 与 Agent 的区别与协作](Notes/AI/Claude-Code/Claude%20Code扩展三剑客：Command、Skill与Agent的区别与协作.md)
 - [learn-claude-code——打开 Coding Agent 黑盒](Notes/AI/Claude-Code/learn-claude-code——打开Coding%20Agent黑盒.md)
+- [使用 Skill-Creator 融合多个 PPT Skill 打造 CSA 专属演示工具](Notes/AI/Claude-Code/使用Skill-Creator融合多个PPT%20Skill打造CSA专属演示工具.md)
 
 ### Notes/AI/AI-Native-Workflow
 
