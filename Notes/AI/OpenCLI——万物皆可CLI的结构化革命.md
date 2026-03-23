@@ -94,7 +94,22 @@ download xiaohongshu URL
 - 使用示例（examples）
 - 短选项组合、参数分隔符等约定（conventions）
 
+## "万物皆可 CLI"到底解决了什么问题？
+
+在 AI Agent 出现之前，很多操作只能通过**网页工具**完成——下载视频要打开网站、总结文章要打开 NotebookLM、管理云资源要登录 Portal。这些操作对人来说"可以接受"，但对 Agent 来说是噩梦：浏览器自动化脆弱、认证复杂、DOM 结构随时变化。
+
+"万物皆可 CLI"的核心思路是：**把原本只能通过 Web UI 完成的操作，变成 CLI 命令**。比如：
+
+- `yt-dlp` 取代了打开 YouTube 网页下载视频
+- `gh` CLI 取代了打开 GitHub 网页管理 PR
+- `az` CLI 取代了登录 Azure Portal 管理资源
+- `mgc`（Microsoft Graph CLI）取代了打开 Microsoft 365 管理后台
+
+但问题是：这些 CLI 工具各自为政，参数风格不统一，没有 schema。**OpenCLI 要解决的不是"把网页变成 CLI"（这已经在发生），而是"把 CLI 变成 machine-readable 的标准接口"**——让 AI Agent 能够像调用 REST API 一样稳定地调用任何 CLI 工具。
+
 ## CLI vs MCP：AI Agent 的两条路线
+
+关于 CLI 和 MCP 的深入对比，之前已经写过专题文章 → [[MCP vs CLI — 为什么开发者在重新审视 MCP]]。这里聚焦最新的基准测试数据来补充。
 
 2025 年以来，AI Agent 生态中出现了两条主要的工具调用路线：MCP（Model Context Protocol）和 CLI。理解它们的区别，是理解 OpenCLI 价值的关键。
 
