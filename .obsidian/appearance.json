@@ -1,3 +1,6 @@
 {
-  "cssTheme": ""
+  "cssTheme": "",
+  "enabledCssSnippets": [
+    "collapse-completed-tasks"
+  ]
 }

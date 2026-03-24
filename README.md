@@ -23,10 +23,12 @@ This vault captures reading notes, technical deep-dives, and reflections from an
 - [learn-claude-code——打开 Coding Agent 黑盒](Notes/AI/Claude-Code/learn-claude-code——打开Coding%20Agent黑盒.md)
 - [使用 Skill-Creator 融合多个 PPT Skill 打造 CSA 专属演示工具](Notes/AI/Claude-Code/使用Skill-Creator融合多个PPT%20Skill打造CSA专属演示工具.md)
 
-### Notes/AI
+### Notes/AI/agent
 
-- [OpenCLI——万物皆可 CLI 的结构化革命](Notes/AI/OpenCLI——万物皆可CLI的结构化革命.md)
-- [从 Google 五种 Skill Pattern 到 Agent Runtime——Skill、MCP 与 Agent 的统一架构](Notes/AI/从Google五种Skill%20Pattern到Agent%20Runtime——Skill、MCP与Agent的统一架构.md)
+- [OpenCLI——万物皆可 CLI 的结构化革命](Notes/AI/agent/OpenCLI——万物皆可CLI的结构化革命.md)
+- [从 Google 五种 Skill Pattern 到 Agent Runtime——Skill、MCP 与 Agent 的统一架构](Notes/AI/agent/从Google五种Skill%20Pattern到Agent%20Runtime——Skill、MCP与Agent的统一架构.md)
+- [Exa、Tavily 与 Context7——AI Agent 搜索三剑客的定位与 MCP 配置实践](Notes/AI/agent/Exa、Tavily与Context7——AI%20Agent搜索三剑客的定位与MCP配置实践.md)
+- [Agent-Reach 与 OpenCLI——命令编排型 Agent 框架的两条路线](Notes/AI/agent/Agent-Reach与OpenCLI——命令编排型Agent框架的两条路线.md)
 
 ### Notes/AI/AI-Native-Workflow
 

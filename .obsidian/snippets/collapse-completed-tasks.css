@@ -1,0 +1,12 @@
+/* 已完成任务（[x]）的子项默认折叠 */
+li.task-list-item[data-task="x"] > ul,
+li.task-list-item[data-task="x"] > ol {
+  display: none;
+}
+
+/* 鼠标悬停时展开，方便查看详情 */
+li.task-list-item[data-task="x"]:hover > ul,
+li.task-list-item[data-task="x"]:hover > ol {
+  display: block;
+  opacity: 0.7;
+}

@@ -71,6 +71,39 @@ GSD 的核心优势在于**上下文管理**：每个子任务在独立的 200K 
 
 > **效率参考**：社区用户反馈，使用 GSD 后 8 小时完成了相当于 2-3 天的工作量。但 GSD 的上下文开销约为实际编码内容的 4 倍，建议使用高配额的 AI 服务。
 
+### 缺陷发现与修复闭环（Gap Closure）
+
+在实际使用 GSD 时，一个常见场景是：**阶段执行完成后发现了 issue**。此时不应跳出 GSD 流程去用 Superpowers debug，而应优先使用 GSD 内建的验证→修复闭环。
+
+#### 标准修复流程
+
+```
+/gsd:verify-work N
+    ↓ 发现 gaps（验证缺口）
+/gsd:plan-phase N --gaps
+    ↓ 生成针对性修复计划（gap_closure: true）
+/gsd:execute-phase N --gaps-only
+    ↓ 仅执行修复计划，不重跑整个阶段
+/gsd:verify-work N
+    ↓ 再次验证，循环直到通过
+```
+
+#### 三级修复策略
+
+| 级别 | 触发条件 | 使用命令 | 说明 |
+|------|---------|---------|------|
+| **L1 验证修复** | `verify-work` 发现 must-haves 未实现 | `/gsd:plan-phase N --gaps` → `/gsd:execute-phase N --gaps-only` | GSD 自动生成 gap closure 计划并执行，最常用 |
+| **L2 定向调试** | 观察到具体 bug（代码错误、功能缺失） | `/gsd:debug "问题描述"` | 启动隔离的 debug 子代理，先假设→收集证据→生成修复计划 |
+| **L3 外部辅助** | GSD 内部 debug 无法推进 | Superpowers systematic-debugging | 仅在 L1/L2 都无法解决时才使用，注意此时脱离了 GSD 的状态管理 |
+
+#### 关键原则
+
+- **优先用 GSD 内建流程**：`verify-work` → `plan-phase --gaps` → `execute-phase --gaps-only` → `debug`，这套闭环保留了完整的阶段状态和上下文
+- **Superpowers debug 是最后手段**：因为 Superpowers 无法感知 GSD 的阶段状态管理（context、plans、UAT 等），直接使用会丢失上下文连续性
+- **`--gaps-only` 是效率关键**：避免重新执行整个阶段，只处理验证发现的缺口
+
+> **实战经验**：在某药企 AI-Coach 项目（[AI-Coach-vibe-coding](https://github.com/huqianghui/AI-Coach-vibe-coding)）中，使用 GSD + Superpowers 组合实践发现，90% 的阶段内 issue 可以通过 L1（verify → gap closure）自动闭环解决，只有涉及复杂的跨模块 bug 才需要升级到 L2 或 L3。
+
 ---
 
 ## 四、框架核心对比矩阵
@@ -192,6 +225,8 @@ GSD、SpecKit、OpenSpec **功能高度重叠**（都生成规范和任务计划
 
 ### 实际整合示例：GSD + Superpowers + 已有工作流
 
+#### 示例一：yoga-guru-copilot-platform（设计驱动）
+
 在 yoga-guru-copilot-platform 项目中，完整的 AI 开发流水线为：
 
 ```
@@ -210,6 +245,28 @@ Figma 设计 → Superpowers Brainstorm → GSD 项目初始化
                                         ↓
                                   GSD complete-milestone → Tag 发布
 ```
+
+#### 示例二：某药企 AI-Coach（需求驱动 + Gap Closure 实践）
+
+在 [AI-Coach-vibe-coding](https://github.com/huqianghui/AI-Coach-vibe-coding) 项目中，采用 GSD + Superpowers 组合从零构建 AI-Coach 系统：
+
+```
+需求讨论 → GSD new-project（生成 PROJECT/REQUIREMENTS/ROADMAP）
+              ↓
+        GSD discuss-phase → 澄清 AI-Coach 核心功能边界
+              ↓
+        GSD plan-phase → 任务拆解
+              ↓
+        GSD execute-phase + Superpowers TDD
+              ↓
+        GSD verify-work
+         ├─ 通过 → GSD complete-milestone
+         └─ 发现 gaps → Gap Closure 闭环：
+              plan-phase --gaps → execute-phase --gaps-only → 再次 verify
+              （若仍卡住 → /gsd:debug → Superpowers debug）
+```
+
+> 这个项目验证了 GSD Gap Closure 闭环在实际开发中的有效性——大部分阶段内 issue 无需退出 GSD 流程即可闭环解决。
 
 ---
 
