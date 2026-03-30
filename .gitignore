@@ -1,6 +1,7 @@
 # Private directories
 daily-work-item/
 excalidraw-diagram-skill/
+personal-journal/
 
 # Obsidian internals
 .obsidian/workspace.json
