@@ -587,3 +587,8 @@ Azure Skills 的设计逻辑是：**只在值得"付出上下文代价"的地方
 - [GitHub Copilot for Azure — Troubleshoot Examples](https://learn.microsoft.com/en-us/azure/developer/github-copilot-azure/troubleshoot-examples)
 - [Connect Coding Agent to Azure MCP Server](https://learn.microsoft.com/en-us/azure/developer/azure-mcp-server/how-to/github-copilot-coding-agent)
 - [Deploy Azure MCP Server for Copilot Studio](https://learn.microsoft.com/en-us/azure/developer/azure-mcp-server/how-to/deploy-remote-mcp-server-copilot-studio)
+
+## 相关文章
+
+- [[从Google五种Skill Pattern到Agent Runtime——Skill、MCP与Agent的统一架构]] — Agent Skill 模式分类
+- [[Microsoft Fabric IQ与本体论（Ontology）研究]] — Azure 生态中的 Fabric IQ

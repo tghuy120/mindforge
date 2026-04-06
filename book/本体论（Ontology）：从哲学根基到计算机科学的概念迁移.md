@@ -419,3 +419,9 @@ Thing
 - [Stanford Encyclopedia of Philosophy — Properties](https://plato.stanford.edu/entries/properties/)
 - [Tom Gruber — Toward Principles for the Design of Ontologies Used for Knowledge Sharing](https://tomgruber.org/writing/onto-design.htm)
 - [W3C OWL 2 Web Ontology Language Overview](https://www.w3.org/TR/owl2-overview/)
+
+## 相关文章
+
+- [[西方本体论的当代转折]] — 当代本体论哲学转折
+- [[Palantir Ontology：从哲学本体论到企业操作系统的工程实践]] — 本体论的工程实践
+- [[Microsoft Fabric IQ与本体论（Ontology）研究]] — Azure 中的本体论应用

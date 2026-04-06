@@ -1,3 +1,4 @@
+---
 title: Context Engineering vs. Model Context Protocol (Full Article)
 aliases:
   - CE vs MCP Full Article

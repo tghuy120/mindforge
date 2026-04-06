@@ -22,6 +22,7 @@ This vault captures reading notes, technical deep-dives, and reflections from an
 - [Claude Code 扩展三剑客：Command、Skill 与 Agent 的区别与协作](Notes/AI/Claude-Code/Claude%20Code扩展三剑客：Command、Skill与Agent的区别与协作.md)
 - [learn-claude-code——打开 Coding Agent 黑盒](Notes/AI/Claude-Code/learn-claude-code——打开Coding%20Agent黑盒.md)
 - [使用 Skill-Creator 融合多个 PPT Skill 打造 CSA 专属演示工具](Notes/AI/Claude-Code/使用Skill-Creator融合多个PPT%20Skill打造CSA专属演示工具.md)
+- [Coding Agent Plugin 生态调研——协议、最佳实践与自定义 plugin 开发](Notes/AI/Claude-Code/Coding%20Agent%20Plugin生态调研——协议、最佳实践与自定义plugin开发.md)
 
 ### Notes/AI/agent
 
@@ -31,6 +32,7 @@ This vault captures reading notes, technical deep-dives, and reflections from an
 - [Agent-Reach 与 OpenCLI——命令编排型 Agent 框架的两条路线](Notes/AI/agent/Agent-Reach与OpenCLI——命令编排型Agent框架的两条路线.md)
 - [Agent 经典范式与人类问题处理模式的映射](Notes/AI/agent/Agent经典范式与人类问题处理模式的映射.md)
 - [AutoResearch 概念澄清——与 Ralph-Loop 和 AutoML 的本质区别](Notes/AI/agent/AutoResearch概念澄清——与Ralph-Loop和AutoML的本质区别.md)
+- [OpenClaw 架构解读——从 claw0 教学仓库理解 AI Agent 网关的核心设计](Notes/AI/agent/OpenClaw架构解读——从claw0教学仓库理解AI%20Agent网关的核心设计.md)
 
 ### Notes/AI/vibe-coding
 
@@ -39,6 +41,11 @@ This vault captures reading notes, technical deep-dives, and reflections from an
 - [架构师视角的 AI Harness Engineering 最佳实践](Notes/AI/vibe-coding/架构师视角的AI%20Harness%20Engineering最佳实践.md)
 - [Vibe Coding 流程框架选择指南：GSD、SpecKit、OpenSpec 与 Superpowers 的组合实践](Notes/AI/vibe-coding/Vibe%20Coding流程框架选择指南：GSD、SpecKit、OpenSpec与Superpowers的组合实践.md)
 - [Vibe-Coding 大项目落地困局——从 Context 爆炸到 Skill Runtime 的范式迁移](Notes/AI/vibe-coding/Vibe-Coding大项目落地困局——从Context爆炸到Skill%20Runtime的范式迁移.md)
+- [GSD 项目规模分级实践——从快速脚本到超大规模的 Context 策略演进](Notes/AI/vibe-coding/GSD项目规模分级实践——从快速脚本到超大规模的Context策略演进.md)
+
+### Notes/AI/RAG
+
+- [qmd 与 Microsoft Foundry IQ 的 RAG 能力对比——从个人知识库到企业级检索](Notes/AI/RAG/qmd与Microsoft%20Foundry%20IQ的RAG能力对比——从个人知识库到企业级检索.md)
 
 ### Notes/AI/Design-Tools
 
@@ -49,10 +56,15 @@ This vault captures reading notes, technical deep-dives, and reflections from an
 
 - [tmux 与 Claude 远程交互实践](Notes/DevOps/tmux与Claude远程交互实践.md)
 
+### Notes/tool
+
+- [Notion 学习笔记——核心概念、AI Agent 能力与 Obsidian-Claude Code 协作架构](Notes/tool/Notion学习笔记——核心概念、AI%20Agent能力与Obsidian-Claude%20Code协作架构.md)
+
 ### Azure
 
 - [Microsoft Fabric IQ 与本体论（Ontology）研究](Azure/Microsoft%20Fabric%20IQ与本体论（Ontology）研究.md)
 - [Azure Copilot 生态全景：Skills、MCP Server 与 Copilot Agents 的协作实践](Azure/Azure%20Copilot%20生态全景：Skills、MCP%20Server%20与%20Copilot%20Agents%20的协作实践.md)
+- [Microsoft Fabric IQ 本体（Ontology）管理功能实操解析](Azure/Microsoft%20Fabric%20IQ本体（Ontology）管理功能实操解析.md)
 
 ### book
 

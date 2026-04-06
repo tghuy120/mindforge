@@ -137,3 +137,8 @@ class AIResearchEnv:
 - GraphRAG 与 EntiGraph 互补：前者用于推理阶段，后者用于训练阶段
 
 **核心洞察**：论文更多是在"优化已有范式"而非"突破范式本身"。三个方案均未改变 Transformer 底层架构，而是通过数据工程和系统工程实现能力提升——这本身就说明了当前 AI 进步的主要驱动力仍在工程层面。
+
+## 相关文章
+
+- [[AutoResearch概念澄清——与Ralph-Loop和AutoML的本质区别]] — 自动研究与自我改进概念辨析
+- [[2026-03-21-The-Bitter-Lesson|The Bitter Lesson]] — AI 发展哲学启示

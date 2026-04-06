@@ -9,11 +9,23 @@ This is an **Obsidian vault** (not a software project). It contains daily work j
 ## Vault Structure
 
 ```
-daily-work-item/          # Daily journals: YYYY-MM-DD.md
+daily-work-item/          # Daily journals: YYYY-MM-DD-周X.md
 asset/                    # All images, diagrams (.excalidraw, .png) — single root-level directory
 Notes/AI/                 # AI-related articles and reading notes
+Notes/AI/Context-Engineering/  # Context Engineering topic cluster
+Notes/AI/Claude-Code/     # Claude Code / Coding Agent articles
+Notes/AI/agent/           # AI Agent general articles
+Notes/AI/vibe-coding/     # Vibe Coding / Harness Engineering articles
+Notes/AI/Design-Tools/    # Design tool guides
 Notes/DevOps/             # DevOps-related articles
+Notes/tool/               # Tool learning notes (Notion, etc.)
+Azure/                    # Azure cloud articles
+paper/                    # Paper reading notes (YYYY-MM-DD-Title.md)
+book/                     # Book notes and philosophy
+product/                  # Product analysis (Palantir, etc.)
 template/日记模版.md       # Daily note template (used by Obsidian daily-notes plugin)
+index.md                  # Content index organized by topic
+log.md                    # Append-only knowledge changelog
 .claude/agents/           # Custom obsidian-agent definition
 .claude/commands/         # Custom /obsidian slash command
 ```
@@ -48,6 +60,27 @@ Community: calendar, copilot, dataview, excalibrain, day-planner, icon-folder, k
 ## MCP Servers
 
 **Tavily MCP** is configured as the default web search tool in this project. When a task requires web search (finding latest news, looking up documentation, researching topics), use Tavily MCP tools (`tavily_search`, `tavily_extract`, `tavily_crawl`, `tavily_map`, `tavily_research`) instead of the built-in `WebSearch` (which is unavailable in Claude Code). `WebFetch` can still be used for fetching specific known URLs.
+
+## Knowledge Ingest Workflow
+
+When adding new knowledge to the vault, follow this standardized flow:
+
+1. **Collect** — save raw source (article URL, paper PDF, notes) into the appropriate directory
+2. **Create note** — write a Markdown article with proper frontmatter (`title`, `created`, `tags`), following vault conventions
+3. **Cross-reference** — add `[[wikilinks]]` to related existing articles; check `index.md` for related topics
+4. **Update index** — add the new article to `index.md` under the correct category with a one-line summary
+5. **Update log** — append an entry to `log.md`: `YYYY-MM-DD | ingest | directory/ | 新增《Article Title》`
+6. **Update README** — add the article link to `README.md` under the correct section
+7. **Refresh search** — run `qmd embed` to update the qmd search index (if installed)
+
+## Search Tools
+
+**qmd** is installed as a local hybrid search engine (BM25 + vector + LLM reranking). Collection `mindforge` indexes all `.md` files in the vault.
+
+- CLI search: `qmd query "search term"` or `qmd search "keyword" -c mindforge`
+- MCP server: `qmd mcp` (can be added to Claude Code settings for native tool access)
+- Status: `qmd status`
+- Re-index after changes: `qmd embed`
 
 ## Operating Principles
 

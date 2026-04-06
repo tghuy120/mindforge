@@ -246,3 +246,8 @@ claude mcp add notion \
 ---
 
 > 参考来源：[ChatGPT 对话——Notion Agent 学习笔记](https://chatgpt.com/share/69bf9af9-61e8-8010-9549-019192f564ce)
+
+## 相关文章
+
+- [[Claude Code扩展三剑客：Command、Skill与Agent的区别与协作]] — Claude Code 扩展机制
+- [[从Google五种Skill Pattern到Agent Runtime——Skill、MCP与Agent的统一架构]] — Agent 架构模式

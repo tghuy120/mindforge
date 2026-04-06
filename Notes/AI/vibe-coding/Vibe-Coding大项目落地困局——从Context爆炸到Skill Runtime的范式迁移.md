@@ -1,4 +1,6 @@
 ---
+title: Vibe-Coding 大项目落地困局——从 Context 爆炸到 Skill Runtime 的范式迁移
+created: 2026-03-22
 tags:
   - vibe-coding
   - context-engineering

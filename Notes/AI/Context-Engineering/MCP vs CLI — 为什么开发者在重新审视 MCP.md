@@ -1,6 +1,6 @@
 ---
 title: MCP vs CLI — 为什么开发者在重新审视 MCP
-date: 2026-03-14
+created: 2026-03-14
 tags:
   - AI
   - MCP
@@ -586,3 +586,9 @@ graph TD
 ---
 
 *最后更新：2026-03-14*
+
+## 相关文章
+
+- [[OpenCLI——万物皆可CLI的结构化革命]] — CLI 作为 Agent 交互替代方案
+- [[Agent-Reach与OpenCLI——命令编排型Agent框架的两条路线]] — 命令编排型框架路线
+- [[Exa、Tavily与Context7——AI Agent搜索三剑客的定位与MCP配置实践]] — MCP 工具生态实践

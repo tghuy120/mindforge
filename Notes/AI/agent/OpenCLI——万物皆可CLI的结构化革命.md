@@ -1,4 +1,5 @@
 ---
+title: OpenCLI——万物皆可 CLI 的结构化革命
 tags:
   - OpenCLI
   - CLI

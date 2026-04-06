@@ -92,3 +92,8 @@ $$\left(th_t,a_t\right)=\pi\left(q,(a_1,o_1),\ldots,(a_{t-1},o_{t-1})\right)$$
 - [datawhalechina/hello-agents](https://github.com/datawhalechina/hello-agents) — Agent 从第一性原理出发的系统教程
 - [shareAI-lab/learn-claude-code](https://github.com/shareAI-lab/learn-claude-code) — Claude Code 学习资源
 - Yao et al., "ReAct: Synergizing Reasoning and Acting in Language Models" (2022)
+
+## 相关文章
+
+- [[从Google五种Skill Pattern到Agent Runtime——Skill、MCP与Agent的统一架构]] — Agent 技能模式分类
+- [[Agent-Reach与OpenCLI——命令编排型Agent框架的两条路线]] — Agent 框架实践路线
