@@ -9,12 +9,12 @@ tags: [claude-code, superpowers, gstack, compound-engineering, plugin, vibe-codi
 
 Claude Code 生态中 skill/agent/workflow/tool 爆发式增长，带来一个核心矛盾：**单个框架解决局部问题，但真实开发流程是端到端的**。
 
-| 框架 | GitHub Stars | 擅长 | 盲区 |
-|------|-------------|------|------|
-| Superpowers | 121K+ | 工程方法论、流程纪律 | 浏览器、部署、安全护栏 |
-| gstack | 54.6K+ | 真实环境 QA、部署、安全 | 计划撰写、TDD、系统调试 |
-| CE（Compound Engineering） | 11.5K+ | 研究型规划、知识复利 | 真实浏览器测试、部署 |
-| GSD（Get Stuff Done） | — | 规模分级、状态管理、phase 编排 | 具体执行工具 |
+| 框架                       | GitHub Stars | 擅长                 | 盲区            |
+| ------------------------ | ------------ | ------------------ | ------------- |
+| Superpowers              | 121K+        | 工程方法论、流程纪律         | 浏览器、部署、安全护栏   |
+| gstack                   | 54.6K+       | 真实环境 QA、部署、安全      | 计划撰写、TDD、系统调试 |
+| CE（Compound Engineering） | 11.5K+       | 研究型规划、知识复利         | 真实浏览器测试、部署    |
+| GSD（Get Stuff Done）      | 49.6K+       | 规模分级、状态管理、phase 编排 | 具体执行工具        |
 
 没有一个框架能独立覆盖从想法到上线的全链路。**框架融合不是"装更多插件"，而是设计清晰的职责边界和交接协议**。
 
