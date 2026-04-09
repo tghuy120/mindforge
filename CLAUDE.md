@@ -17,15 +17,16 @@ Notes/AI/Claude-Code/     # Claude Code / Coding Agent articles
 Notes/AI/agent/           # AI Agent general articles
 Notes/AI/vibe-coding/     # Vibe Coding / Harness Engineering articles
 Notes/AI/Design-Tools/    # Design tool guides
+Notes/AI/RAG/             # RAG / search / retrieval articles
 Notes/DevOps/             # DevOps-related articles
 Notes/tool/               # Tool learning notes (Notion, etc.)
 Azure/                    # Azure cloud articles
 paper/                    # Paper reading notes (YYYY-MM-DD-Title.md)
 book/                     # Book notes and philosophy
 product/                  # Product analysis (Palantir, etc.)
+personal-journal/         # Private reflections (excluded from git)
 template/日记模版.md       # Daily note template (used by Obsidian daily-notes plugin)
-index.md                  # Content index organized by topic
-log.md                    # Append-only knowledge changelog
+README.md                 # Article navigation index (the single source of truth for content listing)
 .claude/agents/           # Custom obsidian-agent definition
 .claude/commands/         # Custom /obsidian slash command
 ```
@@ -67,11 +68,9 @@ When adding new knowledge to the vault, follow this standardized flow:
 
 1. **Collect** — save raw source (article URL, paper PDF, notes) into the appropriate directory
 2. **Create note** — write a Markdown article with proper frontmatter (`title`, `created`, `tags`), following vault conventions
-3. **Cross-reference** — add `[[wikilinks]]` to related existing articles; check `index.md` for related topics
-4. **Update index** — add the new article to `index.md` under the correct category with a one-line summary
-5. **Update log** — append an entry to `log.md`: `YYYY-MM-DD | ingest | directory/ | 新增《Article Title》`
-6. **Update README** — add the article link to `README.md` under the correct section
-7. **Refresh search** — run `qmd embed` to update the qmd search index (if installed)
+3. **Cross-reference** — add `[[wikilinks]]` to related existing articles; check `README.md` for related topics
+4. **Update README** — add the article link to `README.md` under the correct section (README.md is the single source of truth for content listing)
+5. **Refresh search** — run `qmd embed` to update the qmd search index (if installed)
 
 ## Search Tools
 

@@ -60,6 +60,7 @@ This vault captures reading notes, technical deep-dives, and reflections from an
 ### Notes/tool
 
 - [Notion 学习笔记——核心概念、AI Agent 能力与 Obsidian-Claude Code 协作架构](Notes/tool/Notion学习笔记——核心概念、AI%20Agent能力与Obsidian-Claude%20Code协作架构.md)
+- [cmux 使用笔记——从 Ghostty 增强到 AI Agent 终端的实践](Notes/tool/cmux使用笔记——从Ghostty增强到AI%20Agent终端的实践.md)
 
 ### Azure
 
