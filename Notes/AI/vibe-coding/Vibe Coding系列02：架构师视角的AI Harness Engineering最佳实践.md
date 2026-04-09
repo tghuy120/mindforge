@@ -4,7 +4,6 @@ created: 2026-03-17
 tags: [harness-engineering, context-engineering, AI-native, claude-code, openspec, superpowers, architecture]
 ---
 
-# Vibe Coding 系列02：架构师视角的 AI Harness Engineering 最佳实践
 
 > 从 ragflow-skill-orchestrator-studio 到 yoga-guru-copilot-platform 的实战经验
 

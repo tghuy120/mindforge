@@ -12,7 +12,6 @@ tags:
   - LangGraph
 ---
 
-# Vibe Coding 系列05：大项目落地困局——从 Context 爆炸到 Skill Runtime 的范式迁移
 
 > 本文基于一次 ChatGPT 深度讨论整理，围绕 GSD（Get Stuff Done）、Superpowers、OpenSpec 等 vibe-coding 工具在实际大项目中遇到的 context 管理困局，以及行业正在发生的范式迁移。
 

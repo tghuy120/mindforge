@@ -45,6 +45,9 @@ This vault captures reading notes, technical deep-dives, and reflections from an
 - [系列06：GSD 项目规模分级实践——从快速脚本到超大规模的 Context 策略演进](Notes/AI/vibe-coding/Vibe%20Coding系列06：GSD项目规模分级实践——从快速脚本到超大规模的Context策略演进.md)
 - [系列07：Coding Agent 时代的代码复用——从架构约束到 Plugin 协作的实践指南](Notes/AI/vibe-coding/Vibe%20Coding系列07：Coding%20Agent时代的代码复用——从架构约束到Plugin协作的实践指南.md)
 - [系列08：GSD + Superpowers + gstack 三层插件架构——从定位争议到组合实践](Notes/AI/vibe-coding/Vibe%20Coding系列08：GSD+Superpowers+gstack三层插件架构——从定位争议到组合实践.md)
+- [Claude Code 双插件最佳搭配：superpowers 当大脑，gstack 当手脚](Notes/AI/vibe-coding/references/Claude%20Code双插件最佳搭配：superpowers当大脑，gstack当手脚.md)（外部参考）
+- [深入对比 Gstack、Superpowers 和 Compound Engineering 三个最火的 AI Coding 工具](Notes/AI/vibe-coding/references/深入对比Gstack、Superpowers和Compound%20Engineering三个最火的AI%20Coding工具.md)（外部参考）
+- [系列09：开源社区框架融合实践——从双插件搭配到多工具编排的案例与模式](Notes/AI/vibe-coding/Vibe%20Coding系列09：开源社区框架融合实践——从双插件搭配到多工具编排的案例与模式.md)
 
 ### Notes/AI/RAG
 

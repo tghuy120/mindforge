@@ -9,7 +9,6 @@ tags:
   - best-practices
 ---
 
-# Vibe Coding 系列06：GSD 项目规模分级实践——从快速脚本到超大规模的 Context 策略演进
 
 > GSD（Get Stuff Done）是当前 Vibe Coding 领域最成熟的 Spec-Driven Development 框架，但"一套流程打天下"是 anti-pattern。本文将项目按规模分为四级，逐级拆解 GSD 的命令组合、Context 策略、驱动模式与补偿方案，并回答一个关键设计问题：**为什么 GSD 没有 Code Review 节点？**
 

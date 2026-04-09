@@ -4,7 +4,6 @@ created: 2026-04-09
 tags: [claude-code, code-reuse, architecture, superpowers, gstack, compound-engineering, modular, vibe-coding]
 ---
 
-# Vibe Coding 系列07：Coding Agent 时代的代码复用——从架构约束到 Plugin 协作的实践指南
 
 ## 一、问题：Coding Agent 天生爱造轮子
 

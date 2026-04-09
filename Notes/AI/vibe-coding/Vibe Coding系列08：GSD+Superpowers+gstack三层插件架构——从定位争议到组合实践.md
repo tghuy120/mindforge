@@ -4,7 +4,6 @@ created: 2026-04-09
 tags: [gsd, superpowers, gstack, compound-engineering, claude-code, plugin-architecture, vibe-coding, harness-engineering]
 ---
 
-# Vibe Coding 系列08：GSD + Superpowers + gstack 三层插件架构——从定位争议到组合实践
 
 > 本文是 Vibe Coding 系列的第八篇。在前七篇中，我们分别讨论了 Harness Engineering 的来龙去脉、架构师实践、五层 AI Pipeline、框架选择、大项目困局、规模分级和代码复用。本文聚焦一个实操问题：**GSD、Superpowers、gstack 三个插件如何组合？冲突点在哪里？怎么解决？**
 

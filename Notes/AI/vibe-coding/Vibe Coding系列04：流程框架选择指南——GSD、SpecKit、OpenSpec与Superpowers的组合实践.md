@@ -4,7 +4,6 @@ created: 2026-03-20
 tags: [vibe-coding, GSD, speckit, openspec, superpowers, claude-code, AI-native, workflow, spec-driven-development]
 ---
 
-# Vibe Coding 系列04：流程框架选择指南——GSD、SpecKit、OpenSpec 与 Superpowers 的组合实践
 
 > 一人团队如何选择和组合 AI 编程流程框架，在效率与规范之间取得平衡
 

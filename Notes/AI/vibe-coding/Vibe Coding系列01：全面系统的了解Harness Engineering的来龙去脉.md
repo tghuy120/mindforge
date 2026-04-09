@@ -14,7 +14,6 @@ tags:
   - best-practices
 ---
 
-# Vibe Coding 系列01：全面系统的了解 Harness Engineering 的来龙去脉
 
 > 从概念溯源到行业共识，从六大核心模块到开源工具生态，从最佳实践到风险警示——一篇文章读懂 AI Agent 时代最重要的工程方法论。
 
