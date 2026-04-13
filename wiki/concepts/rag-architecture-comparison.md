@@ -55,6 +55,16 @@ related:
 
 > qmd 缺乏知识图谱能力，Fabric IQ 提供原生 Labeled Property Graph + ISO GQL 支持。
 
+### Claim: Azure 企业级 LLM Wiki 架构——AI Search + CosmosDB Gremlin + OmniRAG 路由
+
+- **来源**：[[2026-04-12-周日]]
+- **首次出现**：2026-04-12
+- **最近更新**：2026-04-12
+- **置信度**：0.5
+- **状态**：active
+
+> 基于 Karpathy LLM Wiki 概念的 Azure 企业级方案：AI Search 做搜索主体（BM25 + Vector + 语义重排），CosmosDB Gremlin API 做 Entity/Relationship 存储与遍历（对应 Obsidian Graph View/Backlinks）。OmniRAG 路由——语义查询走 AI Search，关系查询走 Gremlin 图遍历，复合查询先图遍历缩小范围再 AI Search 精排。小规模成本 ~$80-115/月（AI Search Basic + CosmosDB Serverless）。
+
 ## 冲突与演进
 
 （暂无）
@@ -68,3 +78,4 @@ related:
 ## 来源日记
 
 - [[qmd与Microsoft Foundry IQ的RAG能力对比——从个人知识库到企业级检索]] — RAG 对比分析
+- [[2026-04-12-周日]] — Azure 企业级 LLM Wiki 架构方案探索

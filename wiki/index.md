@@ -2,7 +2,7 @@
 title: Personal Knowledge Wiki
 created: 2026-04-13
 updated: 2026-04-13
-stats: "40 concepts, 8 methods, 4 decisions, ~160 claims"
+stats: "41 concepts, 8 methods, 4 decisions, ~167 claims"
 tags:
   - wiki
   - index
@@ -127,6 +127,7 @@ wiki 页面之间的关联使用类型化前缀标注，格式：`- [[page]] —
 - [[notion-as-ai-layer]] — Notion 在 AI Agent 生态中的定位
 - [[ai-native-design-tools]] — AI 原生设计工具：Pencil / Excalidraw / Draw.io
 - [[terminal-multiplexer-for-ai]] — 终端复用器：tmux / cmux 与 AI 工作流
+- [[claude-code-memory-system]] — Claude Code 六层记忆与持久化体系
 
 ## 方法索引
 

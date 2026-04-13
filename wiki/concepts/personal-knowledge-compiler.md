@@ -54,6 +54,26 @@ related:
 
 > OMC Wiki（.omc/wiki/）与 Obsidian vault（Notes/）并存导致同一概念可能存在两处。解法：将 LLM Wiki 概念直接整合到 Obsidian vault 的 wiki/ 目录。
 
+### Claim: PKC 四层知识模型——Concept/Method/Decision/Typed Relations
+
+- **来源**：[[2026-04-13-周一]]
+- **首次出现**：2026-04-13
+- **最近更新**：2026-04-13
+- **置信度**：0.8
+- **状态**：active
+
+> PKC 从单一概念层演进为四层模型：Concept（What）→ Method（How）→ Decision（Why）→ Typed Relations（How connected）。每层解决不同类型的知识问题：概念页记录声明式知识，方法页记录步骤化过程知识，决策页记录选型论证，8 种类型化关联记录知识间的语义关系。当前规模：40 concepts + 8 methods + 4 decisions + ~160 claims。
+
+### Claim: 五项高维度改进构成 PKC 持续演进机制
+
+- **来源**：[[2026-04-13-周一]]
+- **首次出现**：2026-04-13
+- **最近更新**：2026-04-13
+- **置信度**：0.7
+- **状态**：active
+
+> 实践反馈闭环（方法→实践→置信度回写）、知识成熟度模型（6维度×4级别）、Why/决策层、类型化关联（8种）、跨切面查询（6种查询类型）——五项改进将 PKC 从"提取→记录"升级为"提取→验证→演进→查询"的完整知识管理循环。
+
 ## 冲突与演进
 
 （暂无）
@@ -67,3 +87,4 @@ related:
 ## 来源日记
 
 - [[从日记到知识库：Obsidian × oh-my-claudecode × LLM Wiki 的个人知识编译实践]] — PKC 实践文章
+- [[2026-04-13-周一]] — 四层知识模型演进、五项高维度改进实施
