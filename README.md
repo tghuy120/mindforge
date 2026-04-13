@@ -23,7 +23,6 @@ This vault captures reading notes, technical deep-dives, and reflections from an
 - [learn-claude-code——打开 Coding Agent 黑盒](Notes/AI/Claude-Code/learn-claude-code——打开Coding%20Agent黑盒.md)
 - [使用 Skill-Creator 融合多个 PPT Skill 打造 CSA 专属演示工具](Notes/AI/Claude-Code/使用Skill-Creator融合多个PPT%20Skill打造CSA专属演示工具.md)
 - [Coding Agent Plugin 生态调研——协议、最佳实践与自定义 plugin 开发](Notes/AI/Claude-Code/Coding%20Agent%20Plugin生态调研——协议、最佳实践与自定义plugin开发.md)
-- [从日记到知识库：Obsidian × oh-my-claudecode × LLM Wiki 的个人知识编译实践](Notes/AI/Claude-Code/从日记到知识库：Obsidian%20×%20oh-my-claudecode%20×%20LLM%20Wiki%20的个人知识编译实践.md)
 
 ### Notes/AI/agent
 
@@ -72,6 +71,8 @@ This vault captures reading notes, technical deep-dives, and reflections from an
 
 - [Notion 学习笔记——核心概念、AI Agent 能力与 Obsidian-Claude Code 协作架构](Notes/tool/Notion学习笔记——核心概念、AI%20Agent能力与Obsidian-Claude%20Code协作架构.md)
 - [cmux 使用笔记——从 Ghostty 增强到 AI Agent 终端的实践](Notes/tool/cmux使用笔记——从Ghostty增强到AI%20Agent终端的实践.md)
+- [从日记到知识库：Obsidian × oh-my-claudecode × LLM Wiki 的个人知识编译实践](Notes/tool/从日记到知识库：Obsidian%20×%20oh-my-claudecode%20×%20LLM%20Wiki%20的个人知识编译实践.md)
+- [个人知识编译器进化：从三层知识模型到持续迭代的知识系统](Notes/tool/个人知识编译器进化：从三层知识模型到持续迭代的知识系统.md)
 
 ### Azure
 

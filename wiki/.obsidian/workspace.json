@@ -1,0 +1,218 @@
+{
+  "main": {
+    "id": "227b6e70207e2943",
+    "type": "split",
+    "children": [
+      {
+        "id": "246d701517d4e002",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "8fcb5154c4b09fd2",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "_template_concept.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "_template_concept"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "8cb77098fee3feab",
+    "type": "split",
+    "children": [
+      {
+        "id": "8e855a006169adea",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "52fce2555a782e1b",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
+            }
+          },
+          {
+            "id": "52139af881a01cf5",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "cc4007a195e8d748",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "fd33093232b8552c",
+    "type": "split",
+    "children": [
+      {
+        "id": "bb9972690a2a3c5b",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "c7d28370a9e588bc",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "_template_concept.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks for _template_concept"
+            }
+          },
+          {
+            "id": "28ca2b6001e690b1",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "_template_concept.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links from _template_concept"
+            }
+          },
+          {
+            "id": "90bea94d2c25c5a8",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "a6abfb3599f47175",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "All properties"
+            }
+          },
+          {
+            "id": "cc0e566066d089f6",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "_template_concept.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline of _template_concept"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false,
+      "bases:Create new base": false
+    }
+  },
+  "active": "8fcb5154c4b09fd2",
+  "lastOpenFiles": [
+    "_relations.md",
+    "_template_decision.md",
+    "_template_method.md",
+    "decisions/architecture-constraint-over-agent-learning.md",
+    "concept.md",
+    "_template_concept.md",
+    "knowledge-gap/2026-04-13-gap-analysis.md",
+    "decisions/spec-driven-vs-methodology-framework.md",
+    "decisions/cascaded-vs-e2e-voice.md",
+    "index.md",
+    "decisions/wiki-over-rag-for-personal-knowledge.md",
+    "decisions",
+    "knowledge-gap",
+    "methods/personal-knowledge-compiler-workflow.md",
+    "methods/voice-cascaded-pipeline.md",
+    "methods/openclaw-five-stage-gateway.md",
+    "methods/harness-five-dimension-quality-gate.md",
+    "methods/gsd-project-scale-selection.md",
+    "methods/gsd-five-step-workflow.md",
+    "methods/code-reuse-four-layer-defense.md",
+    "methods/ai-native-five-layer-pipeline.md",
+    "concepts/skill-pattern.md",
+    "concepts/voice-live-agent.md",
+    "methods",
+    "concepts/mcp-vs-cli.md",
+    "concepts/harness-quality-gate.md",
+    "concepts/llm-wiki.md",
+    "concepts/skill-runtime.md",
+    "concepts/notion-as-ai-layer.md"
+  ]
+}

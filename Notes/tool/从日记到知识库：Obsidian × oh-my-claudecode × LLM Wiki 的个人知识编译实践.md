@@ -239,16 +239,6 @@ Grounded Answers（有据可查的回答）
 
 核心原则：**不要消灭冲突，要记录冲突。** 知识系统的目标不是"正确"，而是"不断逼近真实"。
 
-### 4.5 Azure 企业级扩展路径
-
-当个人 vault 的知识量增长到需要更强检索能力时，可以扩展为 Azure 企业级方案：
-
-- **Azure AI Search** 作为搜索主体（BM25 + 向量 + 语义重排）
-- **CosmosDB Gremlin API** 作为图数据库补充（Entity + Relationship 遍历，对应 Obsidian 的 Graph View / Backlinks）
-- **OmniRAG 路由**：语义查询走 AI Search，关系查询走 Gremlin 图遍历
-
-详细方案参见 [[Azure 企业级 LLM Wiki 方案]]（已整理到 `.omc/wiki/azure-llm-wiki-enterprise.md`）。
-
 ## 五、现状与下一步
 
 ### 已完成
@@ -281,5 +271,3 @@ Grounded Answers（有据可查的回答）
 - [Karpathy LLM Wiki Gist](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f) — 原始架构设计
 - [oh-my-claudecode](https://github.com/nicobailey/oh-my-claudecode) — Multi-Agent Orchestration Layer
 - [Decoding the Configuration of AI Coding Agents](https://arxiv.org/html/2511.09268v1) — CLAUDE.md 配置研究
-- [CosmosAIGraph + OmniRAG](https://learn.microsoft.com/en-us/azure/cosmos-db/gen-ai/cosmos-ai-graph) — Azure 知识图谱 + RAG 架构
-- [CosmosDB Gremlin API for GraphRAG](https://www.advancinganalytics.co.uk/blog/utilising-cosmosdb-gremlin-api-for-graphrag) — 图数据库 + RAG 实践

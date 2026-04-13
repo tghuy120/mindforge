@@ -4,88 +4,95 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What This Is
 
-This is an **Obsidian vault** (not a software project). It contains daily work journals, long-form notes on AI/DevOps topics, and supporting templates. There is no build system, test suite, or package manager.
+This is an **Obsidian vault** (not a software project). It contains daily work journals, long-form notes on AI/DevOps topics, a personal knowledge wiki, and supporting templates. There is no build system, test suite, or package manager.
 
 ## Vault Structure
 
 ```
 daily-work-item/          # Daily journals: YYYY-MM-DD-周X.md
-asset/                    # All images, diagrams (.excalidraw, .png) — single root-level directory
-Notes/AI/                 # AI-related articles and reading notes
-Notes/AI/Context-Engineering/  # Context Engineering topic cluster
-Notes/AI/Claude-Code/     # Claude Code / Coding Agent articles
-Notes/AI/agent/           # AI Agent general articles
-Notes/AI/vibe-coding/     # Vibe Coding / Harness Engineering articles
-Notes/AI/Design-Tools/    # Design tool guides
-Notes/AI/RAG/             # RAG / search / retrieval articles
+asset/                    # All images, diagrams (.excalidraw, .png)
+Notes/AI/                 # AI-related articles (subdirs: Context-Engineering, Claude-Code, agent, vibe-coding, Design-Tools, RAG)
 Notes/DevOps/             # DevOps-related articles
-Notes/tool/               # Tool learning notes (Notion, etc.)
+Notes/tool/               # Tool learning notes
 Azure/                    # Azure cloud articles
 paper/                    # Paper reading notes (YYYY-MM-DD-Title.md)
 book/                     # Book notes and philosophy
-product/                  # Product analysis (Palantir, etc.)
-personal-journal/         # Private reflections (excluded from git)
-template/日记模版.md       # Daily note template (used by Obsidian daily-notes plugin)
-README.md                 # Article navigation index (the single source of truth for content listing)
-.claude/agents/           # Custom obsidian-agent definition
-.claude/commands/         # Custom /obsidian slash command
+product/                  # Product analysis
+personal-journal/         # ⛔ Private — NEVER read or analyze
+wiki/                     # Personal Knowledge Wiki — see wiki/index.md for full structure
+README.md                 # Article navigation index (single source of truth for content listing)
 ```
 
-## Key Conventions
+## Key Rules
 
-**Daily notes** follow a strict four-section structure:
-1. `## 任务打卡` — Fixed daily habits (4 items, never changes)
-2. `## 追踪任务` — Multi-day tracked tasks carried from previous days
-3. `## 今天主任务` — Today's work items, ordered by priority
-4. `## 其他事项：` — Free-form notes (note: this heading has a colon, others don't)
+**Formatting details** (daily note structure, task syntax, link conventions) → see `.claude/agents/obsidian-agent.md`
 
-**Task syntax** follows Obsidian Tasks plugin conventions:
-- `- [ ]` pending, `- [x]` done, `- [/]` in-progress
-- Completion: `- [x] task ✅ YYYY-MM-DD`
-- Priority: `🔴` (urgent), `⏫` (high)
-- Dependencies: `🆔 id` (defines ID), `⛔ id` (depends on)
-- Sub-items: tab-indented under parent task
+Core rules that apply everywhere:
+- **Links**: `[[wikilinks]]` for internal notes, `[content-title](url)` for external. External link text must use the content title, not the platform name.
+- **Images**: `![alt](relative-path)` with correct `../` depth to root `asset/`. **Never** use `![[filename.png]]` wikilink syntax (GitHub cannot render it).
+- **Language**: Chinese for body text, English for technical terms. Use `（）` and `—`.
+- **personal-journal/**: ⛔ Absolutely forbidden to read, analyze, or process under any circumstances.
 
-**Links**: Use `[[wikilinks]]` for internal notes, `[title](url)` for external. Task outputs use arrow notation: `→ [[Article Title]]`. Images use standard Markdown syntax `![alt](relative-path)` with relative paths from the article to `asset/` (e.g., `![desc](../asset/diagram.png)`) — this ensures both Obsidian and GitHub can render images correctly. Do NOT use `![[filename.png]]` wikilink syntax for images, as GitHub cannot render it. **External link text must use the content title** (论文标题、项目名、文章标题), NOT the website/platform name (e.g., `[Continually Self-Improving AI](https://arxiv.org/...)` not `[arxiv](...)`, `[obra/superpowers](https://github.com/...)` not `[GitHub](...)`).
+## Agent Routing
 
-**Language**: Chinese for body text, English for technical terms (Claude Code, Superpowers, etc.). Use Chinese full-width parentheses `（）` and em dash `—`.
+| Agent | File | Role |
+|-------|------|------|
+| `obsidian-agent` | `.claude/agents/obsidian-agent.md` | Vault 操作主力：日记管理、任务追踪、笔记创建、wiki 页面 I/O |
+| `knowledge-extractor` | `.claude/agents/knowledge-extractor.md` | 知识提取：从日记/文章中识别概念/方法/决策、提取 Claims |
+| `knowledge-maintainer` | `.claude/agents/knowledge-maintainer.md` | 知识维护：更新置信度、标记 stale、生成摘要、刷新关联 |
+| `conflict-detector` | `.claude/agents/conflict-detector.md` | 冲突检测：扫描 Claims 发现矛盾（只读） |
+| `editor-agent` | `.claude/agents/editor-agent.md` | 文章编辑：质量润色、结构优化、格式统一 |
 
-## Custom Agent
+**路由规则**：
+- 日记/任务/笔记操作 → `obsidian-agent`（via `/obsidian` 或 `/daily`）
+- 知识提取/周报 → `knowledge-extractor`（via `/extract-knowledge` 或 `/weekly-review`）
+- Wiki 维护 → `knowledge-maintainer`（via `/evolve-wiki`）
+- 冲突检测 → `conflict-detector`（via `/detect-conflict`）
+- 文章润色 → `editor-agent`
 
-The `obsidian-agent` (`.claude/agents/obsidian-agent.md`) is the primary tool for vault operations. Route all daily note, task tracking, note creation, and export requests through it via `/obsidian` or by spawning it directly with `subagent_type: "obsidian-agent"`.
+## Tools
 
-## Installed Obsidian Plugins
+**Obsidian Plugins**: calendar, copilot, dataview, excalibrain, day-planner, icon-folder, kanban, minimal-settings, pandoc, tasks-plugin, table-editor. PDF export via pandoc plugin (system pandoc installed via brew).
 
-Community: calendar, copilot, dataview, excalibrain, day-planner, icon-folder, kanban, minimal-settings, pandoc, tasks-plugin, table-editor. PDF export is available via the pandoc plugin (system pandoc installed via brew).
+**Tavily MCP** is the default web search tool. Use `tavily_search`, `tavily_extract`, `tavily_crawl`, `tavily_map`, `tavily_research` instead of `WebSearch`. `WebFetch` can still be used for specific known URLs.
 
-## MCP Servers
+**qmd** is a local hybrid search engine (BM25 + vector + LLM reranking). Collection `mindforge` indexes all `.md` files.
+- Search: `qmd query "search term"` or `qmd search "keyword" -c mindforge`
+- Re-index: `qmd embed`
 
-**Tavily MCP** is configured as the default web search tool in this project. When a task requires web search (finding latest news, looking up documentation, researching topics), use Tavily MCP tools (`tavily_search`, `tavily_extract`, `tavily_crawl`, `tavily_map`, `tavily_research`) instead of the built-in `WebSearch` (which is unavailable in Claude Code). `WebFetch` can still be used for fetching specific known URLs.
+## Knowledge Layer (LLM Wiki)
 
-## Knowledge Ingest Workflow
+The vault includes a **Personal Knowledge Wiki** (`wiki/`) following the Karpathy LLM Wiki model: knowledge is "compiled once and kept current, not re-derived on every query."
 
-When adding new knowledge to the vault, follow this standardized flow:
+**Full documentation**: `wiki/index.md` — contains wiki structure, knowledge schema (Concept/Method/Decision pages + Claims), workflows, relation types, and indexes.
 
-1. **Collect** — save raw source (article URL, paper PDF, notes) into the appropriate directory
-2. **Create note** — write a Markdown article with proper frontmatter (`title`, `created`, `tags`), following vault conventions
-3. **Cross-reference** — add `[[wikilinks]]` to related existing articles; check `README.md` for related topics
-4. **Update README** — add the article link to `README.md` under the correct section (README.md is the single source of truth for content listing)
-5. **Refresh search** — run `qmd embed` to update the qmd search index (if installed)
+**Key references**:
+- `wiki/index.md` — Wiki 导航、Schema 说明、概念/方法/决策索引、知识工作流表
+- `wiki/_relations.md` — 8 种关系类型定义（implements/grounds/extends/constrains/contrasts/part-of/uses/produces）
+- `wiki/_template_concept.md` / `_template_method.md` / `_template_decision.md` — 页面模板
 
-## Search Tools
+### Architecture Principles
 
-**qmd** is installed as a local hybrid search engine (BM25 + vector + LLM reranking). Collection `mindforge` indexes all `.md` files in the vault.
+1. **Vault is Source of Truth** — `wiki/` Markdown files are the persistent knowledge store. Claude Code is the maintainer, not the brain.
+2. **Single-Writer** — All file I/O to `wiki/` goes through sequential command pipelines. Never have multiple agents write to the same file simultaneously.
+3. **Claim-based Schema** — Knowledge is structured as assertions with evidence, confidence scores (0.0~1.0), and lifecycle status (active/conflicting/outdated/stale).
+4. **Incremental Evolution** — Wiki pages evolve through repeated extraction and review cycles. Don't try to build a complete knowledge base in one pass.
 
-- CLI search: `qmd query "search term"` or `qmd search "keyword" -c mindforge`
-- MCP server: `qmd mcp` (can be added to Claude Code settings for native tool access)
-- Status: `qmd status`
-- Re-index after changes: `qmd embed`
+### Knowledge Ingest Workflow
+
+When adding new knowledge to the vault:
+
+1. **Collect** — save raw source into the appropriate directory
+2. **Create note** — write Markdown with proper frontmatter (`title`, `created`, `tags`)
+3. **Cross-reference** — add `[[wikilinks]]` to related articles; check `README.md` for related topics
+4. **Update README** — add article link under the correct section
+5. **Refresh search** — run `qmd embed` to update the search index
 
 ## Operating Principles
 
 1. **Read before writing** — always read the target file first
-2. **Minimal edits** — use Edit tool for surgical changes, never rewrite whole files
+2. **Minimal edits** — use Edit tool for surgical changes, never rewrite whole files unnecessarily
 3. **Format consistency** — follow the conventions above exactly; don't introduce new formats
 4. **Complete linkage** — when updating task status, also update related notes and references
 5. **.pen files** — use only Pencil MCP tools (never Read/Grep) to access `.pen` file contents
-6. **Diagrams** — default to using the Excalidraw skill (`excalidraw-diagram`) for all diagram and illustration needs; place all generated files (`.excalidraw` and rendered `.png`) into the root `asset/` directory; when embedding in Markdown, always use the `.png` version with standard Markdown syntax (`![alt](../asset/filename.png)`), not the `.excalidraw` source file and not wikilink syntax
+6. **Diagrams** — default to Excalidraw skill; place files into root `asset/`; embed using `![alt](../asset/filename.png)`
