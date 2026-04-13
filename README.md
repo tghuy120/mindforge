@@ -23,6 +23,7 @@ This vault captures reading notes, technical deep-dives, and reflections from an
 - [learn-claude-code——打开 Coding Agent 黑盒](Notes/AI/Claude-Code/learn-claude-code——打开Coding%20Agent黑盒.md)
 - [使用 Skill-Creator 融合多个 PPT Skill 打造 CSA 专属演示工具](Notes/AI/Claude-Code/使用Skill-Creator融合多个PPT%20Skill打造CSA专属演示工具.md)
 - [Coding Agent Plugin 生态调研——协议、最佳实践与自定义 plugin 开发](Notes/AI/Claude-Code/Coding%20Agent%20Plugin生态调研——协议、最佳实践与自定义plugin开发.md)
+- [从日记到知识库：Obsidian × oh-my-claudecode × LLM Wiki 的个人知识编译实践](Notes/AI/Claude-Code/从日记到知识库：Obsidian%20×%20oh-my-claudecode%20×%20LLM%20Wiki%20的个人知识编译实践.md)
 
 ### Notes/AI/agent
 
