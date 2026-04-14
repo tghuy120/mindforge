@@ -11,10 +11,14 @@
             "id": "8fcb5154c4b09fd2",
             "type": "leaf",
             "state": {
-              "type": "graph",
-              "state": {},
-              "icon": "lucide-git-fork",
-              "title": "Graph view"
+              "type": "markdown",
+              "state": {
+                "file": "knowledge-gap/2026-04-13-gap-analysis.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "2026-04-13-gap-analysis"
             }
           }
         ]
@@ -178,34 +182,34 @@
   },
   "active": "8fcb5154c4b09fd2",
   "lastOpenFiles": [
-    "_template_concept.md",
+    "methods/ai-native-five-layer-pipeline.md",
+    "decisions/architecture-constraint-over-agent-learning.md",
+    "concepts/agent-loop-architecture.md",
+    "knowledge-gap/2026-04-13-gap-analysis.md",
+    "decisions/wiki-over-rag-for-personal-knowledge.md",
+    "methods/harness-five-dimension-quality-gate.md",
     "_relations.md",
+    "_template_concept.md",
     "_template_decision.md",
     "_template_method.md",
-    "decisions/architecture-constraint-over-agent-learning.md",
     "concept.md",
-    "knowledge-gap/2026-04-13-gap-analysis.md",
     "decisions/spec-driven-vs-methodology-framework.md",
     "decisions/cascaded-vs-e2e-voice.md",
     "index.md",
-    "decisions/wiki-over-rag-for-personal-knowledge.md",
     "decisions",
     "knowledge-gap",
     "methods/personal-knowledge-compiler-workflow.md",
     "methods/voice-cascaded-pipeline.md",
     "methods/openclaw-five-stage-gateway.md",
-    "methods/harness-five-dimension-quality-gate.md",
     "methods/gsd-project-scale-selection.md",
     "methods/gsd-five-step-workflow.md",
     "methods/code-reuse-four-layer-defense.md",
-    "methods/ai-native-five-layer-pipeline.md",
     "concepts/skill-pattern.md",
     "concepts/voice-live-agent.md",
     "methods",
     "concepts/mcp-vs-cli.md",
     "concepts/harness-quality-gate.md",
     "concepts/llm-wiki.md",
-    "concepts/skill-runtime.md",
-    "concepts/notion-as-ai-layer.md"
+    "concepts/skill-runtime.md"
   ]
 }
