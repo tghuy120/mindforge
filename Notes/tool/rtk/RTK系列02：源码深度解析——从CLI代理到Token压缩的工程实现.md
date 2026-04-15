@@ -3,7 +3,6 @@ title: RTK 系列 02：源码深度解析——从 CLI 代理到 Token 压缩的
 created: 2026-04-15
 tags:
   - AI
-  - claude-code
   - rtk
   - token-optimization
   - context-engineering

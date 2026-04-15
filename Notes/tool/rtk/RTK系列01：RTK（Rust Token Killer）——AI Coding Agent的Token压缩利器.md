@@ -1,7 +1,13 @@
 ---
 title: RTK 系列 01：RTK（Rust Token Killer）——AI Coding Agent 的 Token 压缩利器
 created: 2026-04-14
-tags: [AI, claude-code, rtk, token-optimization, context-engineering, rust, cli-proxy]
+tags:
+  - AI
+  - rtk
+  - token-optimization
+  - context-engineering
+  - rust
+  - cli-proxy
 ---
 
 # RTK 系列 01：RTK（Rust Token Killer）——AI Coding Agent 的 Token 压缩利器

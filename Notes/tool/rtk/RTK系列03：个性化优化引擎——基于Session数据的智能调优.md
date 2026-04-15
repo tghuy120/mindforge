@@ -3,7 +3,6 @@ title: RTK 系列 03：个性化优化引擎——基于 Session 数据的智能
 created: 2026-04-15
 tags:
   - AI
-  - claude-code
   - rtk
   - token-optimization
   - context-engineering
