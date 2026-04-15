@@ -101,6 +101,24 @@ This vault captures reading notes, technical deep-dives, and reflections from an
 
 ---
 
+## Wiki Knowledge Graph
+
+Interactive visualization of the personal knowledge wiki — 42 concepts, 9 methods, 4 decisions, 186 claims, and 148 typed relations rendered as a force-directed graph.
+
+**[View Live Graph](https://huqianghui.github.io/mindforge/wiki/)**
+
+Features:
+- Node colors by type: Concept (blue), Method (green), Decision (orange)
+- Node size scaled by claims count
+- 8 relation types with distinct edge colors
+- Click to inspect: claims list, confidence scores, relations
+- Search, filter by node type and relation type
+- Auto-updates on wiki changes via GitHub Actions
+
+Data pipeline: `wiki/scripts/export-graph.py` scans all wiki pages and generates `wiki-graph.json`, which the React app (`wiki/visualizer/`) renders. A `post-commit` git hook automatically regenerates the data when wiki content changes.
+
+---
+
 ## License
 
 Personal knowledge notes. Feel free to reference with attribution.
