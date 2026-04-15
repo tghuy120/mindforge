@@ -1,0 +1,3643 @@
+{
+  "generated_at": "2026-04-15T13:32:17.627373+00:00",
+  "stats": {
+    "nodes": 53,
+    "links": 141,
+    "orphan_links_removed": 0,
+    "claims": 180,
+    "categories": 8
+  },
+  "nodes": [
+    {
+      "id": "agent-loop-architecture",
+      "type": "concept",
+      "title": "Agent Loop Architecture",
+      "summary": "Agent Loop 是所有 AI Agent 的运行时核心——一个 while 循环执行 model 调用 + 工具执行 + 结果回灌的过程。核心只需约 30 行代码，\"One loop & Bash is all you need\"。Claude Code 的 learn-claude-code 课程将其分为基础层、隔离层、协作层三个梯队，对应从单 Agent 到 Teams/Worktree 的完整机制。",
+      "tags": [
+        "wiki",
+        "concept",
+        "agent",
+        "architecture",
+        "claude-code"
+      ],
+      "category": "AI Agent 理论与架构",
+      "method_type": null,
+      "decision_status": null,
+      "claims_count": 4,
+      "avg_confidence": 0.73,
+      "claims": [
+        {
+          "statement": "Agent Loop 核心只需 30 行 Python",
+          "source": "learn-claude-code",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.8,
+          "status": "active",
+          "evidence": "while 循环 + model 调用 + 工具执行 + 结果回灌，\"One loop & Bash is all you need\"。"
+        },
+        {
+          "statement": "Tool Dispatch 模式——添加新工具只需往 dispatch map 加一行",
+          "source": "learn-claude-code",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.7,
+          "status": "active",
+          "evidence": "agent loop 本身一字不改，这是 Tool Dispatch 模式的核心优势。"
+        },
+        {
+          "statement": "TodoWrite 是 harness \"行为纠偏\"能力的首次展现",
+          "source": "learn-claude-code",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.7,
+          "status": "active",
+          "evidence": "引入任务追踪后，model 被强制同一时间只有一个 in_progress 任务；连续 3 轮不调用 todo 工具时系统自动注入提醒。"
+        },
+        {
+          "statement": "learn-claude-code 的 12 session 分三梯队",
+          "source": "learn-claude-code",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.7,
+          "status": "active",
+          "evidence": "基础层（Agent 能做什么）、隔离层（怎么管理注意力）、协作层（多 Agent 怎么协同），对应 Claude Code 从 Agent Loop 到 Teams/Worktree 的完整机制。"
+        }
+      ]
+    },
+    {
+      "id": "agent-paradigms",
+      "type": "concept",
+      "title": "Agent Paradigms",
+      "summary": "AI Agent 的三种经典范式——ReAct（试错迭代）、Plan-and-Solve（系统规划）、Reflection（自我批评）——直接映射到人类认知策略。成熟的 Agent 系统（如 Claude Code）总是混合使用多种范式并自适应切换。所有 Agent 框架（LangChain、LlamaIndex、AutoGen）本质上只做三件事：定义循环结构、管理上下文、处理异常。",
+      "tags": [
+        "wiki",
+        "concept",
+        "agent",
+        "paradigm",
+        "react"
+      ],
+      "category": "AI Agent 理论与架构",
+      "method_type": null,
+      "decision_status": null,
+      "claims_count": 3,
+      "avg_confidence": 0.73,
+      "claims": [
+        {
+          "statement": "三种经典范式映射人类认知策略",
+          "source": "Agent经典范式与人类问题处理模式的映射",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.8,
+          "status": "active",
+          "evidence": "ReAct = 试错迭代（\"try and see\"），Plan-and-Solve = 系统规划（\"think before act\"），Reflection = 自我批评（\"review and improve\"）。"
+        },
+        {
+          "statement": "成熟 Agent 系统总是混合使用多种范式",
+          "source": "Agent经典范式与人类问题处理模式的映射",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.7,
+          "status": "active",
+          "evidence": "Claude Code 示例：ReAct 用于简单任务，Plan Mode 用于复杂任务，Reflection loop 用于测试失败时。选择不是非此即彼而是自适应切换。"
+        },
+        {
+          "statement": "所有 Agent 框架本质只做三件事",
+          "source": "Agent经典范式与人类问题处理模式的映射",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.7,
+          "status": "active",
+          "evidence": "定义循环结构（Thought-Action-Observation）、管理上下文（trajectory 累积）、处理异常（解析错误、重试、无限循环预防）。理解范式原理可以从框架\"用户\"进阶为 Agent\"创造者\"。"
+        }
+      ]
+    },
+    {
+      "id": "agent-search-tools",
+      "type": "concept",
+      "title": "Agent Search Tools",
+      "summary": "Exa、Tavily 和 Context7 是 AI Agent 的三大搜索工具，覆盖不同搜索需求象限：Exa 用于深度语义研究，Tavily 用于实时事实搜索，Context7 用于版本特定技术文档。传统搜索引擎返回\"链接列表\"不适合 Agent 消费，Agent 需要结构化、可直接消费的内容。",
+      "tags": [
+        "wiki",
+        "concept",
+        "search",
+        "exa",
+        "tavily",
+        "context7"
+      ],
+      "category": "Context 与工具集成",
+      "method_type": null,
+      "decision_status": null,
+      "claims_count": 3,
+      "avg_confidence": 0.73,
+      "claims": [
+        {
+          "statement": "三大搜索工具互补而非可替代",
+          "source": "Exa、Tavily与Context7——AI Agent搜索三剑客的定位与MCP配置实践",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.8,
+          "status": "active",
+          "evidence": "Exa 用于深度语义研究，Tavily 用于实时事实搜索，Context7 用于版本特定技术文档。"
+        },
+        {
+          "statement": "Agent 需要结构化内容而非链接列表",
+          "source": "Exa、Tavily与Context7——AI Agent搜索三剑客的定位与MCP配置实践",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.7,
+          "status": "active",
+          "evidence": "传统搜索引擎返回的\"link lists\"不适合 Agent 消费。"
+        },
+        {
+          "statement": "Exa MCP Server 只是协议适配器",
+          "source": "Exa、Tavily与Context7——AI Agent搜索三剑客的定位与MCP配置实践",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.7,
+          "status": "active",
+          "evidence": "真正的搜索能力是 Exa 专有的云端 crawler + index + embedding + ranking 系统。"
+        }
+      ]
+    },
+    {
+      "id": "ai-native-design-tools",
+      "type": "concept",
+      "title": "AI-Native Design Tools",
+      "summary": "AI-Native 设计工具正在改变设计-开发协作模式。Pencil 的核心差异化在于通过原生 MCP 将设计画布暴露给 Claude Code，实现\"AI 在画布上设计，人类微调\"（vs Figma 的\"人类设计，AI 辅助\"）。Excalidraw（手绘草图风格）和 Draw.io（专业工程风格）互补——推荐工作流是\"先用 Excalidraw 快速草图，再用 Draw.io 出正式架构图\"。",
+      "tags": [
+        "wiki",
+        "concept",
+        "design",
+        "pencil",
+        "excalidraw",
+        "draw-io"
+      ],
+      "category": "知识管理与工具",
+      "method_type": null,
+      "decision_status": null,
+      "claims_count": 2,
+      "avg_confidence": 0.65,
+      "claims": [
+        {
+          "statement": "Pencil 通过 MCP 实现 AI 主导设计",
+          "source": "Pencil设计工具与Claude Code快速上手指南",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.7,
+          "status": "active",
+          "evidence": "Figma 用 plugin 式 AI 集成（人类设计、AI 辅助），Pencil 暴露设计画布给 Claude Code via native MCP，实现\"AI designs on canvas, human fine-tunes\"。"
+        },
+        {
+          "statement": "Excalidraw 与 Draw.io 互补",
+          "source": "在Obsidian中用Excalidraw与Draw.io绘制Azure架构图实战指南",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.6,
+          "status": "active",
+          "evidence": "推荐工作流：\"sketch quickly with Excalidraw first, then produce formal architecture diagrams with Draw.io\"。"
+        }
+      ]
+    },
+    {
+      "id": "ai-native-pipeline",
+      "type": "concept",
+      "title": "AI-Native Development Pipeline",
+      "summary": "AI-Native 五层开发 Pipeline 不是工具的串联而是思维模式的转换。核心流程：Design AI（Figma，回答\"长什么样\"）→ Spec AI（Superpowers Brainstorm，回答\"做什么为什么做\"）→ Coding AI（OpenSpec Spec-Delta，回答\"这次改什么\"）→ Testing AI → Review AI。从 Figma 直接让 AI 写代码效果差的根因是设计稿只有\"像素级信息\"而缺少\"需求级信息\"。",
+      "tags": [
+        "wiki",
+        "concept",
+        "ai-native",
+        "pipeline",
+        "figma",
+        "superpowers"
+      ],
+      "category": "Vibe Coding 框架与工作流",
+      "method_type": null,
+      "decision_status": null,
+      "claims_count": 3,
+      "avg_confidence": 0.77,
+      "claims": [
+        {
+          "statement": "从 Figma 直接让 AI 写代码效果差",
+          "source": "Vibe Coding系列03",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.8,
+          "status": "active",
+          "evidence": "根因：AI 拿到的是\"像素级信息\"，缺的是\"需求级信息\"——设计稿本身不包含足够信息让 AI 写出好代码。"
+        },
+        {
+          "statement": "五层 Pipeline 是思维模式的转换",
+          "source": "Vibe Coding系列03",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.8,
+          "status": "active",
+          "evidence": "Figma 回答\"长什么样\"（视觉层），Brainstorm 回答\"做什么为什么做\"（需求层），Spec-Delta 回答\"这次改什么\"（变更层）。"
+        },
+        {
+          "statement": "每阶段输出的 context 类型完全不同",
+          "source": "Vibe Coding系列03",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.7,
+          "status": "active",
+          "evidence": "Design AI → Spec AI → Coding AI → Testing AI → Review AI，每个阶段产出的信息类型（视觉/需求/变更/测试/审查）各不相同。"
+        }
+      ]
+    },
+    {
+      "id": "ai-skill-formation",
+      "type": "concept",
+      "title": "AI Impact on Skill Formation",
+      "summary": "研究表明 AI 辅助编程在提升完成速度的同时降低了约 17% 的技能形成——AI 交互时间抵消了编码速度增益。对常规知识工作，AI \"拉高下限\"（低技能者受益最多）；对复杂决策工作，AI \"放大差距\"（高手提升、新手反降）。AI 是现有能力的放大器而非均衡器。",
+      "tags": [
+        "wiki",
+        "concept",
+        "ai-impact",
+        "education",
+        "skill"
+      ],
+      "category": "AI Agent 理论与架构",
+      "method_type": null,
+      "decision_status": null,
+      "claims_count": 3,
+      "avg_confidence": 0.67,
+      "claims": [
+        {
+          "statement": "AI 辅助编程降低约 17% 的技能形成",
+          "source": "2026-03-18-How-AI-Impacts-Skill-Formation",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.7,
+          "status": "active",
+          "evidence": "且并未显著提升任务完成速度——AI 交互时间抵消了编码速度增益。"
+        },
+        {
+          "statement": "AI 对不同复杂度工作的影响截然不同",
+          "source": "2026-03-18-How-AI-Impacts-Skill-Formation",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.7,
+          "status": "active",
+          "evidence": "常规知识工作\"拉高下限\"，复杂决策工作\"放大差距\"。AI 是放大器不是均衡器。"
+        },
+        {
+          "statement": "Vibe Coding 超越了论文实验设定",
+          "source": "2026-03-18-How-AI-Impacts-Skill-Formation",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.6,
+          "status": "active",
+          "evidence": "Vibe Coding 是纯 prompt-and-spec 驱动编程（人类写零代码），进入 Agentic AI 自主编程领域，与论文中的 AI 辅助编程完全不同。"
+        }
+      ]
+    },
+    {
+      "id": "autoresearch",
+      "type": "concept",
+      "title": "AutoResearch",
+      "summary": "AutoResearch（Karpathy 提出）不是\"AI 做研究\"，而是在受控搜索空间中的自动化爬坡——更接近 AutoML 和进化搜索。与 Ralph Loop 的核心区别在于选择机制：Ralph Loop 只有 done/not-done（可行解查找），AutoResearch 有分数比较、历史最优和回滚（优化搜索）。其五约束设计模式（单一可变面、固定评估、强制预算、diff 迭代、自动回滚）是最可复用的模式。",
+      "tags": [
+        "wiki",
+        "concept",
+        "ai-research",
+        "automation",
+        "karpathy"
+      ],
+      "category": "AI Agent 理论与架构",
+      "method_type": null,
+      "decision_status": null,
+      "claims_count": 5,
+      "avg_confidence": 0.72,
+      "claims": [
+        {
+          "statement": "AutoResearch 是受控搜索空间中的自动化爬坡",
+          "source": "AutoResearch概念澄清——与Ralph-Loop和AutoML的本质区别",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.8,
+          "status": "active",
+          "evidence": "不是\"AI 做研究\"，而是自动化 hill-climbing，更接近 AutoML 和进化搜索。"
+        },
+        {
+          "statement": "Ralph Loop 与 AutoResearch 的核心区别是选择机制",
+          "source": "AutoResearch概念澄清——与Ralph-Loop和AutoML的本质区别",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.8,
+          "status": "active",
+          "evidence": "Ralph Loop 只有 done/not-done（fixed-point iteration），AutoResearch 有 score comparison + history of best + rollback（evolutionary search）。"
+        },
+        {
+          "statement": "AutoResearch vs AutoML 的区别在搜索空间动态性",
+          "source": "AutoResearch概念澄清——与Ralph-Loop和AutoML的本质区别",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.7,
+          "status": "active",
+          "evidence": "AutoML 搜索静态人定义参数空间，AutoResearch 允许 agent 通过修改训练代码创建全新搜索维度。"
+        },
+        {
+          "statement": "五约束设计模式是最可复用的模式",
+          "source": "AutoResearch概念澄清——与Ralph-Loop和AutoML的本质区别",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.7,
+          "status": "active",
+          "evidence": "单一可变面、固定评估、强制预算、diff 迭代、自动回滚——满足全部五条即可在任意领域进行安全的 autonomous agent 实验。"
+        },
+        {
+          "statement": "AutoResearch 结构映射到 Agent Runtime",
+          "source": "AutoResearch概念澄清——与Ralph-Loop和AutoML的本质区别",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.6,
+          "status": "active",
+          "evidence": "program.md = Skill, train.py = Tool/MCP, prepare.py = Harness, metric = Eval/Feedback, git = Memory, loop = Agent Runtime Loop。"
+        }
+      ]
+    },
+    {
+      "id": "azure-copilot-ecosystem",
+      "type": "concept",
+      "title": "Azure Copilot Ecosystem",
+      "summary": "Azure Copilot 生态包含三个层次：Azure Copilot Agents（Portal UI 内置 Agent）、Azure Skills（22 个专家级工作流剧本）、Azure MCP Server（200+ Azure 服务工具的 MCP 协议实现）。当前 Copilot Agents 仅限 Portal 交互，无 API/SDK 暴露，因此编程化的 Agentic Infrastructure 路径需要组合使用 Skills + MCP Server + CLI。",
+      "tags": [
+        "wiki",
+        "concept",
+        "azure",
+        "copilot",
+        "mcp"
+      ],
+      "category": "Azure 与云平台",
+      "method_type": null,
+      "decision_status": null,
+      "claims_count": 4,
+      "avg_confidence": 0.75,
+      "claims": [
+        {
+          "statement": "Azure Copilot Agents 仅限 Portal UI，无 API/SDK",
+          "source": "2026-04-11-周六",
+          "first_seen": "2026-04-11",
+          "last_updated": "2026-04-13",
+          "confidence": 0.8,
+          "status": "active",
+          "evidence": "详细分析已整理为文章 → Azure Copilot 生态全景：Skills、MCP Server 与 Copilot Agents 的协作实践。Azure Copilot Agents 目前处于 preview 阶段，仅支持 Portal UI 交互，不提供编程化 API 或 SDK 接口。"
+        },
+        {
+          "statement": "Azure 编程化 Agentic 路径 = Azure Skills + Azure MCP Server + CLI",
+          "source": "2026-04-11-周六",
+          "first_seen": "2026-04-11",
+          "last_updated": "2026-04-13",
+          "confidence": 0.7,
+          "status": "active",
+          "evidence": "agenticInfraOps 推荐集成方案：Azure MCP Server 做查询（200+ Azure 服务工具）+ az/azd/terraform CLI 做部署执行 + Azure Skills 的 AKS 诊断剧本做故障排查。Azure Skills 提供 22 个专家级 Azure 工作流剧本（含 AKS 故障排查、GPU 选型）。"
+        },
+        {
+          "statement": "Azure MCP Server 覆盖 35+ 服务 200+ 工具",
+          "source": "Azure Copilot 生态全景：Skills、MCP Server 与 Copilot Agents 的协作实践",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.7,
+          "status": "active",
+          "evidence": "开源（MIT），兼容所有 MCP 客户端（Claude Code、GitHub Copilot、Cursor、Windsurf 等）——这是 AI agent 访问 Azure 的通用编程接口。"
+        },
+        {
+          "statement": "AI Shell (aish) 已归档，az copilot 命令不存在",
+          "source": "Azure Copilot 生态全景：Skills、MCP Server 与 Copilot Agents 的协作实践",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.8,
+          "status": "active",
+          "evidence": "AI Shell 于 2026 年 1 月归档，不再维护。目前没有基于 CLI 的 Azure Copilot 扩展。"
+        }
+      ]
+    },
+    {
+      "id": "bitter-lesson",
+      "type": "concept",
+      "title": "The Bitter Lesson",
+      "summary": "Rich Sutton 的元原则：利用计算的通用方法（search + learning）最终胜过依赖手工编码人类领域知识的方法——这一规律在国际象棋、围棋、语音识别、计算机视觉等所有 AI 领域反复得到验证。\"苦涩\"在于心理层面：研究者精心打造的领域知识被简单的\"更多计算\"碾压，这个模式已重复了 70 年。",
+      "tags": [
+        "wiki",
+        "concept",
+        "ai-theory",
+        "sutton",
+        "scaling"
+      ],
+      "category": "AI Agent 理论与架构",
+      "method_type": null,
+      "decision_status": null,
+      "claims_count": 4,
+      "avg_confidence": 0.77,
+      "claims": [
+        {
+          "statement": "通用计算方法最终胜过手工领域知识",
+          "source": "2026-03-21-The-Bitter-Lesson",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.8,
+          "status": "active",
+          "evidence": "search + learning 最终击败所有 hand-coded human domain knowledge，跨越所有 AI 领域。"
+        },
+        {
+          "statement": "\"苦涩\"是心理层面的",
+          "source": "2026-03-21-The-Bitter-Lesson",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.8,
+          "status": "active",
+          "evidence": "研究者精心打造的领域知识被简单暴力的\"更多计算\"碾压，70 年来反复发生。"
+        },
+        {
+          "statement": "Sutton 不是在推广 RL",
+          "source": "2026-03-21-The-Bitter-Lesson",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.7,
+          "status": "active",
+          "evidence": "是一个跨领域元原则：\"让计算（search + learning）替代人类知识\"，不限于强化学习。"
+        },
+        {
+          "statement": "存在四阶段循环",
+          "source": "2026-03-21-The-Bitter-Lesson",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.8,
+          "status": "active",
+          "evidence": "(1) 编码人类知识 → (2) 短期有效 → (3) 长期停滞 → (4) 对立的计算扩展方法实现突破。"
+        }
+      ]
+    },
+    {
+      "id": "claude-code-agent-subagent",
+      "type": "concept",
+      "title": "Claude Code Agent/Subagent Architecture",
+      "summary": "Claude Code 中 Agent 和 Subagent 是同一事物的两面——在 `.claude/agents/` 定义时叫 agent，被 Agent 工具调用运行时叫 subagent。Subagent 的 Context 与主 session 完全隔离且不可配置为共享，仅传递 prompt 参数，返回时中间过程全部丢弃仅返回摘要。\"Process isolation gives context isolation for free\" 是最关键的架构洞察。",
+      "tags": [
+        "wiki",
+        "concept",
+        "claude-code",
+        "agent",
+        "architecture"
+      ],
+      "category": "Claude Code 与扩展生态",
+      "method_type": null,
+      "decision_status": null,
+      "claims_count": 3,
+      "avg_confidence": 0.8,
+      "claims": [
+        {
+          "statement": "Agent 和 Subagent 是同一个东西的两面",
+          "source": "Claude Code的Agent与Subagent架构解析——以Superpowers为例",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.8,
+          "status": "active",
+          "evidence": "在 .claude/agents/ 定义时叫 agent，被 Agent 工具调用运行时叫 subagent，没有两个独立概念。"
+        },
+        {
+          "statement": "Subagent Context 与主 session 完全隔离",
+          "source": "Claude Code的Agent与Subagent架构解析——以Superpowers为例",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.8,
+          "status": "active",
+          "evidence": "仅传递 prompt 参数，无对话历史、无主 session 上下文，返回时中间过程全部丢弃仅返回摘要。"
+        },
+        {
+          "statement": "\"Process isolation gives context isolation for free\"",
+          "source": "learn-claude-code",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.8,
+          "status": "active",
+          "evidence": "Parent 维持持久 messages，Child 从空 messages 开始，交互极其克制。这是最关键的架构洞察。"
+        }
+      ]
+    },
+    {
+      "id": "claude-code-extension-system",
+      "type": "concept",
+      "title": "Claude Code Extension System",
+      "summary": "Claude Code 的扩展体系经历三次演进：Command（固定 prompt 模板，共享主 session context）→ Skill（知识注入，被动触发，AI 自动判断加载）→ Plugin（命名空间隔离 + Marketplace 分发）。Plugin 是分发单元不是运行时单元——安装后被\"拆包\"，运行时 model 看到的是独立的 tool/skill/command。",
+      "tags": [
+        "wiki",
+        "concept",
+        "claude-code",
+        "plugin",
+        "skill",
+        "command"
+      ],
+      "category": "Claude Code 与扩展生态",
+      "method_type": null,
+      "decision_status": null,
+      "claims_count": 4,
+      "avg_confidence": 0.75,
+      "claims": [
+        {
+          "statement": "Command / Skill / Agent 三层扩展各有定位",
+          "source": "Claude Code扩展三剑客",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.8,
+          "status": "active",
+          "evidence": "Command 是 prompt 模板（快捷入口，共享主 session context），Skill 是知识注入（被动触发，AI 自动判断加载），Agent 是独立角色（独立 context window，可限制工具和模型）。"
+        },
+        {
+          "statement": "Plugin 是 Coding Agent 从\"工具\"走向\"平台\"的关键拐点",
+          "source": "Coding Agent Plugin生态调研",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.7,
+          "status": "active",
+          "evidence": "将 Skill/Command/Subagent/Hook/MCP 统一封装为可安装、可版本化的模块，类似 VS Code Extension 生态能力。"
+        },
+        {
+          "statement": "Plugin 是分发单元不是运行时单元",
+          "source": "Coding Agent Plugin生态调研",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.8,
+          "status": "active",
+          "evidence": "安装后被\"拆包\"，运行时 model 看到的是独立的 tool/skill/command，完全不感知\"Plugin\"概念。"
+        },
+        {
+          "statement": "扩展机制经历三次演进",
+          "source": "Coding Agent Plugin生态调研",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.7,
+          "status": "active",
+          "evidence": "Command → Skill → Plugin。Anthropic 明确表示未来 Plugin 将成为标准扩展方式。"
+        }
+      ]
+    },
+    {
+      "id": "claude-code-memory-system",
+      "type": "concept",
+      "title": "Claude Code Memory System",
+      "summary": "Claude Code 拥有一套完整的六层记忆与持久化体系——从硬性的 Settings（强制配置）到柔性的 CLAUDE.md（行为指导），从 Claude 自主积累的 Auto Memory 到完整的 Session Transcripts（对话历史），再到按需加载的 Skills/Agents/MCP（扩展能力）和 App State（全局状态）。每层解决不同的问题，有不同的写入者、执行方式、生命周期和共享范围。理解这套分层架构是高效利用 Claude Code 进行知识管理的基础。",
+      "tags": [
+        "wiki",
+        "concept",
+        "claude-code",
+        "memory",
+        "persistence"
+      ],
+      "category": "知识管理与工具",
+      "method_type": null,
+      "decision_status": null,
+      "claims_count": 4,
+      "avg_confidence": 0.78,
+      "claims": [
+        {
+          "statement": "Claude Code 记忆体系分为六层，每层职责不同",
+          "source": "2026-04-13-周一",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.8,
+          "status": "active",
+          "evidence": "六层架构：Settings（强制配置，客户端执行）→ CLAUDE.md + Rules（行为指导，Claude 遵循）→ Auto Memory（Claude 自主笔记，跨 Session）→ Session Transcripts（对话历史，支持续接）→ Skills/Agents/MCP（扩展能力，按需加载）→ App State（全局配置）。关键区分：Settings 机械执行，CLAUDE.md 理解遵循，Memory 按需回忆。"
+        },
+        {
+          "statement": "Auto Memory 是 Claude Code 最独特的跨 Session 记忆机制",
+          "source": "2026-04-13-周一",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.8,
+          "status": "active",
+          "evidence": "Auto Memory 存储于 `~/.claude/projects/<project-path>/memory/`，MEMORY.md 索引文件启动时加载前 200 行/25KB，主题文件按需读取。记忆分 4 类：user（用户画像）、feedback（行为纠正/确认）、project（项目进展）、reference（外部指针）。同一 git repo 的所有 worktree 共享 memory 目录。"
+        },
+        {
+          "statement": "CLAUDE.md 最佳实践——精简行为规则 + 引用详细文档",
+          "source": "2026-04-13-周一",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.8,
+          "status": "active",
+          "evidence": "CLAUDE.md 每次对话完整加载占用上下文窗口。最佳实践：只保留行为规则摘要和 Agent 路由表，详细格式规范/工作流程通过 reference 指向 agent 文件和项目文档。本 vault 从 176 行精简到 98 行后效果更好。"
+        },
+        {
+          "statement": "Subagent Memory 为 Agent 提供独立的跨 Session 记忆空间",
+          "source": "2026-04-13-周一",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.7,
+          "status": "active",
+          "evidence": "Agent 定义文件中配置 `memory:` 字段可获得独立记忆：`project`（提交到 git）、`local`（gitignored）、`user`（跨项目）。每个 Subagent 启动时加载自己的 MEMORY.md 前 200 行。适用于需要跨 Session 追踪状态的 Agent（如知识提取器追踪已处理的日记）。"
+        }
+      ]
+    },
+    {
+      "id": "code-reuse-in-agent-era",
+      "type": "concept",
+      "title": "Code Reuse in Agent Era",
+      "summary": "Coding Agent 存在结构性复用缺陷：每次会话倾向从头实现功能而非复用已有代码，因为 agent 缺乏项目全局视角。现有框架（Superpowers、gstack、Compound Engineering）均未直接解决此问题。真正的解法是\"用架构约束让 agent 不得不复用\"——四层防线：CLAUDE.md 架构约束 > FEATURE.md 依赖边界 > Superpowers 流程嵌入复用检查 > Plugin 协作。",
+      "tags": [
+        "wiki",
+        "concept",
+        "agent",
+        "code-reuse",
+        "architecture"
+      ],
+      "category": "AI Agent 理论与架构",
+      "method_type": null,
+      "decision_status": null,
+      "claims_count": 3,
+      "avg_confidence": 0.77,
+      "claims": [
+        {
+          "statement": "Coding Agent 有结构性代码复用缺陷",
+          "source": "Vibe Coding系列07",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.8,
+          "status": "active",
+          "evidence": "每次会话倾向于从头实现功能而非复用已有代码，因为 agent 缺乏项目全局视角——它看到的是当前会话上下文，不是架构蓝图。"
+        },
+        {
+          "statement": "现有框架均未直接解决代码复用",
+          "source": "Vibe Coding系列07",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.7,
+          "status": "active",
+          "evidence": "Superpowers、gstack、Compound Engineering 没有一个直接解决代码复用——CE 是知识复用不是代码复用，单人场景下 CE 与 Claude Code memory 基本等价。"
+        },
+        {
+          "statement": "四层防线是代码复用的真正解法",
+          "source": "Vibe Coding系列07",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.8,
+          "status": "active",
+          "evidence": "不让 agent 自己学会复用，而是用架构约束让它不得不复用。四层：CLAUDE.md 架构约束（最关键）> FEATURE.md 依赖边界 > Superpowers 流程嵌入复用检查 > Plugin 协作。"
+        }
+      ]
+    },
+    {
+      "id": "context-engineering",
+      "type": "concept",
+      "title": "Context Engineering",
+      "summary": "Context Engineering 是从 Prompt Engineering 的正式演进——Prompt Engineering 关注\"对模型说什么\"，Context Engineering 治理\"模型响应时知道什么\"。LLM 性能限制很少源于模型本身缺陷，更多是不完整、不一致或不相关的上下文造成的。成熟 AI 系统架构应有 Context Engineering Layer（认知核心）和 Tool Interaction Layer（MCP 服务器），两者各司其职。Context Engineering 是\"操作系统\"，MCP 是\"USB-C 接口\"。",
+      "tags": [
+        "wiki",
+        "concept",
+        "context",
+        "ai-engineering",
+        "mcp"
+      ],
+      "category": "AI Agent 理论与架构",
+      "method_type": null,
+      "decision_status": null,
+      "claims_count": 6,
+      "avg_confidence": 0.75,
+      "claims": [
+        {
+          "statement": "LLM 性能限制通常是上下文问题而非模型缺陷",
+          "source": "Context Engineering vs. Model Context Protocol",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.8,
+          "status": "active",
+          "evidence": "LLM performance limitations are rarely due to inherent model flaws -- they are a direct consequence of incomplete, inconsistent, or irrelevant context."
+        },
+        {
+          "statement": "Context Engineering 是 Prompt Engineering 的正式演进",
+          "source": "Context Engineering vs. Model Context Protocol",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.8,
+          "status": "active",
+          "evidence": "Prompt engineering 关注\"说什么\"，CE 治理\"模型知道什么\"。企业采用驱动了这一转变。"
+        },
+        {
+          "statement": "Context window 应被视为 LLM 的\"RAM\"",
+          "source": "Context Engineering vs. Model Context Protocol",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.8,
+          "status": "active",
+          "evidence": "模型的整个推理工作记忆，用正确信息填充它是核心架构挑战。"
+        },
+        {
+          "statement": "Context Engineering 是\"操作系统\"，MCP 是\"USB-C 接口\"",
+          "source": "04 - A Comparative Framework",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.8,
+          "status": "active",
+          "evidence": "CE 整体管理 LLM 的 context window，MCP 提供标准化外部工具/数据接口。两者互补而非竞争。"
+        },
+        {
+          "statement": "MCP 标准化为未来 AI \"App Store\" 生态奠基",
+          "source": "05 - Strategic Implications and Future Outlook",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.6,
+          "status": "active",
+          "evidence": "Agent 将动态发现、配置和使用全球 MCP 注册表中的能力，无需人类预先配置。"
+        },
+        {
+          "statement": "AI 的可持续竞争优势来自上下文环境而非模型本身",
+          "source": "05 - Strategic Implications and Future Outlook",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.7,
+          "status": "active",
+          "evidence": "优势不来自对某个基础模型的访问，而来自围绕它构建的卓越、专有的 context-rich 环境。"
+        }
+      ]
+    },
+    {
+      "id": "context-explosion",
+      "type": "concept",
+      "title": "Context Explosion",
+      "summary": "Context 爆炸是当前所有 Spec/Workflow 框架（GSD、Superpowers、OpenSpec）面临的核心 scaling 问题。根因是一个错误的隐含假设：context = state。GSD 采用全量上下文拼接导致线性增长；Superpowers 的 subagent context 在大功能时也会爆炸；OpenSpec 的 Delta 模式只是将一次性爆 context 变成多次局部爆。正确做法是 state 外部存储 + context 按需投影（projection）。",
+      "tags": [
+        "wiki",
+        "concept",
+        "context",
+        "scaling",
+        "agent"
+      ],
+      "category": "AI Agent 理论与架构",
+      "method_type": null,
+      "decision_status": null,
+      "claims_count": 5,
+      "avg_confidence": 0.72,
+      "claims": [
+        {
+          "statement": "GSD 采用全量上下文拼接模式",
+          "source": "Vibe Coding系列05",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.8,
+          "status": "active",
+          "evidence": "document-centric 不是 bug 而是设计，但导致 context 随 plan 数线性增长、无选择加载、模型被迫同时做业务推理和文档解析。"
+        },
+        {
+          "statement": "GSD 本质是 AI 驱动的 checklist pipeline 而非 skill system",
+          "source": "Vibe Coding系列05",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.7,
+          "status": "active",
+          "evidence": "优化的是可理解性和可审查性，牺牲的是 token efficiency 和 scalable context。"
+        },
+        {
+          "statement": "Superpowers 的核心错位是\"用文本分解解决计算分解问题\"",
+          "source": "Vibe Coding系列05",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.7,
+          "status": "active",
+          "evidence": "subagent 的 context 在单个大功能时也会爆炸。"
+        },
+        {
+          "statement": "OpenSpec Delta 模式只是改变了爆炸时间分布",
+          "source": "Vibe Coding系列05",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.7,
+          "status": "active",
+          "evidence": "LLM 并不会真的\"只看 delta\"，delta 仍需还原语义上下文，从\"一次性爆 context\"变成\"多次局部爆 context\"。"
+        },
+        {
+          "statement": "所有框架共享错误假设 context = state",
+          "source": "Vibe Coding系列05",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.7,
+          "status": "active",
+          "evidence": "正确做法应是 state 外部存储 + context 按需投影（projection）。"
+        }
+      ]
+    },
+    {
+      "id": "context7",
+      "type": "concept",
+      "title": "Context7",
+      "summary": "Context7 是一个实时文档 MCP Server，解决 LLM 因训练数据截止日期而使用过时 API 参数的问题。架构极简——仅暴露 2 个工具（resolve-library-id 和 query-docs），检索和排序在服务端完成，不消耗 LLM 推理 tokens。支持数千个开源库文档和版本特定查询。",
+      "tags": [
+        "wiki",
+        "concept",
+        "mcp",
+        "documentation",
+        "context"
+      ],
+      "category": "Context 与工具集成",
+      "method_type": null,
+      "decision_status": null,
+      "claims_count": 3,
+      "avg_confidence": 0.73,
+      "claims": [
+        {
+          "statement": "Context7 解决 LLM 使用过时 API 的问题",
+          "source": "Context7：让 AI Agent 实时获取最新文档的 MCP Server——以 Azure 文档为例",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.8,
+          "status": "active",
+          "evidence": "LLM 对快速演化 SDK（Azure CLI、Terraform、Bicep）生成的代码经常使用已弃用参数或过时 API 模式。Context7 在推理时注入最新官方文档。"
+        },
+        {
+          "statement": "架构极简——仅 2 个工具",
+          "source": "Context7：让 AI Agent 实时获取最新文档的 MCP Server——以 Azure 文档为例",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.7,
+          "status": "active",
+          "evidence": "resolve-library-id 和 query-docs，检索排序在服务端完成，不消耗 LLM 推理 tokens。"
+        },
+        {
+          "statement": "支持版本特定查询和数千库文档",
+          "source": "Context7：让 AI Agent 实时获取最新文档的 MCP Server——以 Azure 文档为例",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.7,
+          "status": "active",
+          "evidence": "不限于 Azure，支持数千个开源库文档和版本特定查询（如 /vercel/next.js@14）。"
+        }
+      ]
+    },
+    {
+      "id": "continual-self-improving-ai",
+      "type": "concept",
+      "title": "Continually Self-Improving AI",
+      "summary": "当前 LLM 面临三个根本限制：静态权重、有限人类数据依赖、人类设计的训练算法。EntiGraph 通过实体-关系合成语料 + 持续预训练，用比传统 CPT 小约 10,000 倍的源语料实现接近 RAG 的性能。SBP（Synthesis-Based Pretraining）使用高熵训练目标提升跨文档关系建模能力。EntiGraph + RAG 优于纯 RAG，证明知识内化与检索增强互补而非竞争。",
+      "tags": [
+        "wiki",
+        "concept",
+        "ai-research",
+        "entigraph",
+        "sbp",
+        "self-improving"
+      ],
+      "category": "AI Agent 理论与架构",
+      "method_type": null,
+      "decision_status": null,
+      "claims_count": 4,
+      "avg_confidence": 0.7,
+      "claims": [
+        {
+          "statement": "LLM 面临三个根本限制",
+          "source": "2026-03-22-Continually-Self-Improving-AI论文精读笔记",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.8,
+          "status": "active",
+          "evidence": "静态权重（有限 context 记忆）、有限人类数据（power-law scaling 触顶）、人类设计的训练算法。"
+        },
+        {
+          "statement": "EntiGraph 用极小源语料实现接近 RAG 的性能",
+          "source": "2026-03-22-Continually-Self-Improving-AI论文精读笔记",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.7,
+          "status": "active",
+          "evidence": "通过实体-关系合成语料 + 持续预训练，源语料可比传统 CPT 小约 10,000 倍。"
+        },
+        {
+          "statement": "EntiGraph + RAG 优于纯 RAG",
+          "source": "2026-03-22-Continually-Self-Improving-AI论文精读笔记",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.7,
+          "status": "active",
+          "evidence": "知识内化与检索增强互补而非竞争。"
+        },
+        {
+          "statement": "SBP 用高熵训练目标提升跨文档关系建模",
+          "source": "2026-03-22-Continually-Self-Improving-AI论文精读笔记",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.6,
+          "status": "active",
+          "evidence": "一个文档映射到多个相关文档，强制模型提炼共享抽象概念。"
+        }
+      ]
+    },
+    {
+      "id": "enterprise-ontology",
+      "type": "concept",
+      "title": "Enterprise Ontology",
+      "summary": "企业数据在数据湖中实现了物理统一，但语义仍然碎片化——不同团队对\"客户\"、\"订单\"、\"产品\"的解释不一致。Ontology 作为统一语义定义层，让所有下游工具（Power BI、Notebook、AI Agent）共享同一套业务词汇。Microsoft Fabric IQ 是微软首次在数据平台产品中正式采用\"Ontology\"一词。Palantir Ontology 则是从静态数据地图升级为实时导航系统，具有 Action Types 的行动闭环能力。",
+      "tags": [
+        "wiki",
+        "concept",
+        "ontology",
+        "data-platform",
+        "fabric-iq",
+        "palantir"
+      ],
+      "category": "数据本体论（Ontology）",
+      "method_type": null,
+      "decision_status": null,
+      "claims_count": 6,
+      "avg_confidence": 0.73,
+      "claims": [
+        {
+          "statement": "企业数据物理统一但语义碎片化",
+          "source": "Microsoft Fabric IQ与本体论（Ontology）研究",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.8,
+          "status": "active",
+          "evidence": "不同团队对\"客户\"、\"订单\"、\"产品\"的解释不一致，导致报表错位和 AI 回答不准确。"
+        },
+        {
+          "statement": "Fabric IQ 是微软首次正式采用\"Ontology\"",
+          "source": "Microsoft Fabric IQ与本体论（Ontology）研究",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.8,
+          "status": "active",
+          "evidence": "首次在数据平台产品中正式使用该术语。"
+        },
+        {
+          "statement": "Ontology 将数据从\"可查询\"升级为\"可理解、可推理、可行动\"",
+          "source": "Microsoft Fabric IQ本体（Ontology）管理功能实操解析",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.7,
+          "status": "active",
+          "evidence": "超越传统数据仓库的真正价值主张。"
+        },
+        {
+          "statement": "Palantir Ontology 是操作语义层而非数据库",
+          "source": "Palantir Ontology：从哲学本体论到企业操作系统的工程实践",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.8,
+          "status": "active",
+          "evidence": "不复制数据，而是编码业务逻辑。将企业数据景观从\"静态地图\"升级为\"实时导航系统\"。"
+        },
+        {
+          "statement": "DDD 是\"蓝图思维\"，Palantir Ontology 超越纯数据建模",
+          "source": "Palantir数据本体论（Ontology）：从概念到产品的深度解析",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.7,
+          "status": "active",
+          "evidence": "DDD 告诉你如何建模，Ontology 提供运行时平台——通过 Action Types 实现行动闭环。"
+        },
+        {
+          "statement": "Ontology 为 AI/ML 模型提供结构化语义基础",
+          "source": "Palantir数据本体论（Ontology）：从概念到产品的深度解析",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.6,
+          "status": "active",
+          "evidence": "让模型在语义明确的对象图上推理而非原始数据表，降低幻觉风险。"
+        }
+      ]
+    },
+    {
+      "id": "framework-selection",
+      "type": "concept",
+      "title": "Framework Selection",
+      "summary": "Vibe Coding 框架选型的核心原则：规范驱动框架（GSD/SpecKit/OpenSpec）解决\"做什么\"，方法论框架（Superpowers）解决\"怎么做\"——两者互补不可互替。GSD/SpecKit/OpenSpec 功能高度重叠只能三选一。项目复杂度应按\"需要同时保持在 Context 中的关联信息量\"而非代码行数来定级。",
+      "tags": [
+        "wiki",
+        "concept",
+        "vibe-coding",
+        "framework",
+        "gsd",
+        "superpowers"
+      ],
+      "category": "Vibe Coding 框架与工作流",
+      "method_type": null,
+      "decision_status": null,
+      "claims_count": 5,
+      "avg_confidence": 0.72,
+      "claims": [
+        {
+          "statement": "规范驱动与方法论框架互补不可互替",
+          "source": "Vibe Coding系列04",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.8,
+          "status": "active",
+          "evidence": "规范驱动（GSD/SpecKit/OpenSpec）解决\"做什么\"，方法论（Superpowers）解决\"怎么做\"。"
+        },
+        {
+          "statement": "GSD/SpecKit/OpenSpec 只能三选一",
+          "source": "Vibe Coding系列04",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.7,
+          "status": "active",
+          "evidence": "三者功能高度重叠（都管\"做什么\"），Superpowers 管\"怎么做\"几乎必选搭配。"
+        },
+        {
+          "statement": "项目复杂度应按 Context 信息量而非代码行数定级",
+          "source": "Vibe Coding系列06",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.7,
+          "status": "active",
+          "evidence": "50 行 LangGraph 编排文件可能比 500 行 CRUD 更复杂。"
+        },
+        {
+          "statement": "L1 项目不存在 Context Rot，GSD 是纯开销",
+          "source": "Vibe Coding系列06",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.7,
+          "status": "active",
+          "evidence": "单文件/脚本级项目应跳过 GSD 直接执行。"
+        },
+        {
+          "statement": "L2 项目是 GSD 的\"甜蜜点\"",
+          "source": "Vibe Coding系列06",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.7,
+          "status": "active",
+          "evidence": "项目足够复杂需要结构化，但又没复杂到触发 Context 上限。"
+        }
+      ]
+    },
+    {
+      "id": "harness-engineering",
+      "type": "concept",
+      "title": "Harness Engineering",
+      "summary": "Harness Engineering（驾驭工程）是 Prompt Engineering 和 Context Engineering 的超集，三者构成同心圆包含关系。核心主张是：Agent 的\"智能\"来自 model，但\"可靠性\"来自 harness——外部系统代码（Tools + Knowledge + Observation + Action Interfaces + Permissions）。这一范式在 2026 年初由 OpenAI、Anthropic、Google DeepMind 独立演化趋同，标志着行业共识。",
+      "tags": [
+        "wiki",
+        "concept",
+        "ai-engineering",
+        "harness",
+        "agent"
+      ],
+      "category": "AI Agent 理论与架构",
+      "method_type": null,
+      "decision_status": null,
+      "claims_count": 7,
+      "avg_confidence": 0.73,
+      "claims": [
+        {
+          "statement": "Harness Engineering 是 Prompt Engineering 和 Context Engineering 的超集",
+          "source": "Vibe Coding系列01",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.8,
+          "status": "active",
+          "evidence": "三者是同心圆包含关系：Prompt（单次措辞）< Context（上下文构建）< Harness（仓库级系统工程）。"
+        },
+        {
+          "statement": "三家公司独立演化出同一套 Harness 设计范式",
+          "source": "Vibe Coding系列01",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.7,
+          "status": "active",
+          "evidence": "OpenAI、Anthropic、Google DeepMind 在 2026 年初独立演化出同一套 Harness 设计范式，这不是巧合而是行业共识。"
+        },
+        {
+          "statement": "Agent 的两种典型失败模式是系统设计问题而非模型能力问题",
+          "source": "Vibe Coding系列01",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.8,
+          "status": "active",
+          "evidence": "上下文耗尽（Context Exhaustion）和提前收工（Premature Completion）不是\"让模型更努力\"能解决的，而是系统设计问题。"
+        },
+        {
+          "statement": "级联失败是 Harness Engineering 出现的核心驱动力",
+          "source": "Vibe Coding系列01",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.7,
+          "status": "active",
+          "evidence": "单步 95% 成功率在 10 步串联后只剩 60%（0.95^10 ≈ 0.60），级联失败驱动了 Harness Engineering 的出现。"
+        },
+        {
+          "statement": "OpenAI 的 Harness Engineering 五大支柱",
+          "source": "Vibe Coding系列02",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.7,
+          "status": "active",
+          "evidence": "仓库即系统记录、分层领域架构、Agent 可读性、黄金准则、垃圾回收。"
+        },
+        {
+          "statement": "Agent 的智能来自 model，可靠性来自 harness",
+          "source": "learn-claude-code",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.8,
+          "status": "active",
+          "evidence": "30 行代码能跑 demo，但从 30 行到生产中间是 12 层 harness 的距离。Harness = Tools + Knowledge + Observation + Action Interfaces + Permissions。"
+        },
+        {
+          "statement": "\"Agent = Model, Not Framework\" 是一个工程立场",
+          "source": "learn-claude-code",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.6,
+          "status": "active",
+          "evidence": "model 是做决策的主体，外部代码只是缰绳。"
+        }
+      ]
+    },
+    {
+      "id": "harness-quality-gate",
+      "type": "concept",
+      "title": "Harness Quality Gate",
+      "summary": "Harness 工程质量门禁体系是通过 pre-commit hook + Harness CI pipeline 构建的全链路质量保障方案，涵盖 5 个维度：代码格式 → 架构验证 → 代码检查 → CI 编译/集成测试 → 性能测试。每个维度覆盖 Java、Python、JavaScript/TypeScript 三种主要语言的工具链。",
+      "tags": [
+        "wiki",
+        "concept",
+        "devops",
+        "ci-cd",
+        "harness",
+        "quality"
+      ],
+      "category": "知识管理与工具",
+      "method_type": null,
+      "decision_status": null,
+      "claims_count": 2,
+      "avg_confidence": 0.65,
+      "claims": [
+        {
+          "statement": "质量门禁应覆盖 5 个递进维度——代码格式、架构验证、代码检查、CI 编译、性能测试",
+          "source": "2026-04-11-周六",
+          "first_seen": "2026-04-11",
+          "last_updated": "2026-04-12",
+          "confidence": 0.5,
+          "status": "active",
+          "evidence": "核心思路：通过 pre-commit hook + Harness CI pipeline，从 5 个维度构建质量门禁：① 代码格式检查（pre-commit hook）② 架构测试验证（ArchUnit 及同类工具）③ 代码检查器（Lint / Static Analysis）④ CI 编译与集成测试（Testcontainers）⑤ 性能测试。每个维度对应一组多语言工具链。"
+        },
+        {
+          "statement": "ArchUnit 是 Java 架构测试的标准工具，Python/JS 有对应替代",
+          "source": "2026-04-11-周六",
+          "first_seen": "2026-04-11",
+          "last_updated": "2026-04-11",
+          "confidence": 0.8,
+          "status": "active",
+          "evidence": "Java 用 ArchUnit（包依赖规则、分层架构约束、命名规范、循环依赖检测），Python 用 import-linter / pytestarch，JavaScript/TypeScript 用 dependency-cruiser / eslint-plugin-boundaries。在 Harness CI 中作为测试 step 执行，失败即阻断 pipeline。"
+        }
+      ]
+    },
+    {
+      "id": "llm-wiki",
+      "type": "concept",
+      "title": "LLM Wiki",
+      "summary": "LLM Wiki 是 Karpathy 提出的知识管理范式：用 LLM 将原始资料\"编译\"为结构化的 wiki 文章，知识\"compiled once and kept current, not re-derived on every query\"。与传统 RAG 的根本区别在于：RAG 在每次查询时从原始文档重新检索碎片 chunk，而 LLM Wiki 预先编译好结构化知识，形成可自增长的知识复利循环。\n\n在个人实践中，LLM Wiki 演化为 Personal Knowledge Compiler（PKC）——以 Obsidian 日记为输入，通过 Claude Code + OMC 编排，将散落在日记中的经验提炼为持久化的 wiki 概念页。",
+      "tags": [
+        "wiki",
+        "concept",
+        "llm",
+        "knowledge-management",
+        "rag"
+      ],
+      "category": "知识管理与工具",
+      "method_type": null,
+      "decision_status": null,
+      "claims_count": 5,
+      "avg_confidence": 0.58,
+      "claims": [
+        {
+          "statement": "Azure 企业级 LLM Wiki 应采用 AI Search（主体）+ CosmosDB Gremlin（图数据库补充）的双层架构",
+          "source": "2026-04-12-周日",
+          "first_seen": "2026-04-12",
+          "last_updated": "2026-04-13",
+          "confidence": 0.5,
+          "status": "active",
+          "evidence": "AI Search 承担文档/向量存储 + 混合检索（BM25 + Vector）+ 语义重排的搜索主体角色；CosmosDB Gremlin API 专注于 Entity + Relationship 的存储与多跳遍历——对应 Obsidian 的 Graph View / Backlinks / `[[wikilinks]]`。CosmosDB 不做文档/向量主存储。"
+        },
+        {
+          "statement": "OmniRAG 路由根据查询类型自动选择最优检索路径",
+          "source": "2026-04-12-周日",
+          "first_seen": "2026-04-12",
+          "last_updated": "2026-04-12",
+          "confidence": 0.5,
+          "status": "active",
+          "evidence": "语义/关键词查询走 AI Search（主路径），关系/遍历查询走 CosmosDB Gremlin（补充路径），复合查询先 Gremlin 图遍历缩小范围再 AI Search 精排。比单一 Vector RAG 能回答更广泛的问题。"
+        },
+        {
+          "statement": "LLM Wiki 的知识复利效应优于传统 RAG",
+          "source": "2026-04-12-周日",
+          "first_seen": "2026-04-12",
+          "last_updated": "2026-04-13",
+          "confidence": 0.5,
+          "status": "active",
+          "evidence": "传统 RAG 的 chunk 质量依赖分块策略，每次查询从原始文档重新检索碎片。LLM Wiki 的文章由 LLM 编译保证质量（已综合、交叉引用），好的回答可写回 wiki 形成自增长循环——Karpathy 所说的 \"the wiki compounds over time\"。"
+        },
+        {
+          "statement": "个人知识编译实践的核心流程是 Obsidian 日记 → OMC 编排 → Wiki 概念页",
+          "source": "2026-04-13-周一",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.7,
+          "status": "active",
+          "evidence": "已完成文章 → 从日记到知识库：Obsidian × oh-my-claudecode × LLM Wiki 的个人知识编译实践。核心理念：Vault 是 Source of Truth，OMC 是编排调度层（维护者），不是记忆本身。知识以 Concept + Claims 形式结构化。"
+        },
+        {
+          "statement": "LLM Wiki 模型——\"RAG = search, LLM Wiki = writing a book\"",
+          "source": "从日记到知识库：Obsidian × oh-my-claudecode × LLM Wiki 的个人知识编译实践",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.7,
+          "status": "active",
+          "evidence": "Karpathy 的 LLM Wiki 模型将 LLM 视为知识维护者（像 Wikipedia 编辑）而非问答者。"
+        }
+      ]
+    },
+    {
+      "id": "mcp-vs-cli",
+      "type": "concept",
+      "title": "MCP vs CLI",
+      "summary": "MCP 和 CLI 是 AI Agent 工具集成的两条路线。MCP 的优势是跨应用通用性和动态工具发现，但存在严重的 context 膨胀问题（70+ 工具消耗 15,000-25,000 tokens）。CLI 利用 model 预训练知识，token 效率极高，但缺乏协议级标准化。社区出现了\"抛弃 MCP、回归 CLI\"的趋势，但两者应共存互补。",
+      "tags": [
+        "wiki",
+        "concept",
+        "mcp",
+        "cli",
+        "tool-integration"
+      ],
+      "category": "Context 与工具集成",
+      "method_type": null,
+      "decision_status": null,
+      "claims_count": 4,
+      "avg_confidence": 0.7,
+      "claims": [
+        {
+          "statement": "MCP 存在严重 context 膨胀问题",
+          "source": "MCP vs CLI — 为什么开发者在重新审视 MCP",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.8,
+          "status": "active",
+          "evidence": "每个 MCP Server 在每次推理调用时通过 tools/list 注入所有工具定义。70+ 工具消耗 15,000-25,000 tokens，占 context window 10%+。"
+        },
+        {
+          "statement": "CLI 方式 token 效率极高",
+          "source": "MCP vs CLI — 为什么开发者在重新审视 MCP",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.7,
+          "status": "active",
+          "evidence": "只需单个 Bash tool 定义，model 利用预训练知识理解命令行工具。"
+        },
+        {
+          "statement": "社区出现\"回归 CLI\"趋势",
+          "source": "MCP vs CLI — 为什么开发者在重新审视 MCP",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.6,
+          "status": "active",
+          "evidence": "驱动因素：MCP 的运维复杂度（额外 server 进程、调试困难、第三方信任需求）。"
+        },
+        {
+          "statement": "MCP 与 CLI 应共存互补",
+          "source": "MCP vs CLI — 为什么开发者在重新审视 MCP",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.7,
+          "status": "active",
+          "evidence": "MCP 的优势是跨应用通用性和动态工具发现；CLI 的优势是成熟 Unix 生态、零协议开销、直接进程调用。选择不是二元的。"
+        }
+      ]
+    },
+    {
+      "id": "notion-as-ai-layer",
+      "type": "concept",
+      "title": "Notion in AI Ecosystem",
+      "summary": "Notion Agent 不是自主 agent 系统或多 agent 协作系统——它是\"AI 驱动的自动化执行器\"（LLM + Notion API + Trigger），更像\"AI as operator\"而非\"AI as thinker\"。Notion 不会成为 Agent OS，更像\"AI 时代的 Confluence + Airtable\"。MCP 是关键变量——如果 MCP 成功，Notion 可成为外部 AI agent 的记忆层。",
+      "tags": [
+        "wiki",
+        "concept",
+        "notion",
+        "ai-agent",
+        "tool"
+      ],
+      "category": "知识管理与工具",
+      "method_type": null,
+      "decision_status": null,
+      "claims_count": 3,
+      "avg_confidence": 0.6,
+      "claims": [
+        {
+          "statement": "Notion Agent 是自动化执行器而非自主 agent",
+          "source": "Notion学习笔记——核心概念、AI Agent能力与Obsidian-Claude Code协作架构",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.7,
+          "status": "active",
+          "evidence": "LLM + Notion API + Trigger，更像\"AI as operator\"而非\"AI as thinker\"。"
+        },
+        {
+          "statement": "Notion 不会成为 Agent OS",
+          "source": "Notion学习笔记——核心概念、AI Agent能力与Obsidian-Claude Code协作架构",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.6,
+          "status": "active",
+          "evidence": "真正的 Agent 系统在外部（Claude Code, Codex, LangGraph），Notion 只是数据/UI 层。"
+        },
+        {
+          "statement": "MCP 是 Notion 的关键变量",
+          "source": "Notion学习笔记——核心概念、AI Agent能力与Obsidian-Claude Code协作架构",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.5,
+          "status": "active",
+          "evidence": "如果 MCP 成功，Notion 可成为外部 AI agent 的记忆层。"
+        }
+      ]
+    },
+    {
+      "id": "oh-my-claude-code",
+      "type": "concept",
+      "title": "oh-my-claude-code (OMC)",
+      "summary": "oh-my-claude-code（OMC）是一个多 Agent 编排框架，核心命题是\"不是让一个 Claude 扮演不同角色，而是让多个 Agent（包括不同模型）真正并行协作\"。与 Superpowers/gstack/GSD 的\"结构化 prompt + workflow 模板在同一实例切换角色\"本质不同。其 Domain 车道和 Autopilot 全自动执行是最独特的设计。",
+      "tags": [
+        "wiki",
+        "concept",
+        "claude-code",
+        "multi-agent",
+        "orchestration"
+      ],
+      "category": "Claude Code 与扩展生态",
+      "method_type": null,
+      "decision_status": null,
+      "claims_count": 4,
+      "avg_confidence": 0.65,
+      "claims": [
+        {
+          "statement": "OMC 的核心命题是多 Agent 真正并行协作",
+          "source": "Vibe Coding系列10",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.7,
+          "status": "active",
+          "evidence": "不是让一个 Claude 扮演不同角色，而是让多个 Agent（包括不同模型）真正并行协作。"
+        },
+        {
+          "statement": "Domain 车道是 OMC 最独特的设计",
+          "source": "Vibe Coding系列10",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.6,
+          "status": "active",
+          "evidence": "解决\"AI 缺的不是编码能力而是专业判断标准\"的问题，其他框架都没有系统化的领域判断注入机制。"
+        },
+        {
+          "statement": "OMC Autopilot 与 Superpowers 的核心体验差异",
+          "source": "Vibe Coding系列10",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.7,
+          "status": "active",
+          "evidence": "Superpowers 要求人类在每个阶段参与，OMC 的 autopilot 可以一句话跑完全程（全自动连续执行）。"
+        },
+        {
+          "statement": "Autopilot 运行时动态决策四大能力",
+          "source": "Vibe Coding系列10",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.6,
+          "status": "active",
+          "evidence": "Shared State 追踪、Role Routing 自动选模型、Persistent Execution Loop 反复验证、Parallel Task Distribution 多 worker 并行。"
+        }
+      ]
+    },
+    {
+      "id": "one-person-team",
+      "type": "concept",
+      "title": "One Person Team",
+      "summary": "AI 正在重新定义技术角色的能力边界，一个掌握 AI 编排能力的架构师可以借助工具链独立完成之前需要多人团队协作的工作。核心技能从手动编码转变为 Prompt Engineering / AI Orchestration / Skill-Flow Design / Context Engineering。",
+      "tags": [
+        "wiki",
+        "concept",
+        "ai-productivity",
+        "architect"
+      ],
+      "category": "AI Agent 理论与架构",
+      "method_type": null,
+      "decision_status": null,
+      "claims_count": 3,
+      "avg_confidence": 0.63,
+      "claims": [
+        {
+          "statement": "AI 重新定义了 Cloud Solution Architect 的角色边界",
+          "source": "Vibe Coding系列02",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.7,
+          "status": "active",
+          "evidence": "一个掌握 AI 编排能力的架构师可以借助工具链独立完成之前需要 7+ 人团队协作的工作。"
+        },
+        {
+          "statement": "架构师核心价值从\"亲自写代码\"转变为\"驾驭 AI 的能力\"",
+          "source": "Vibe Coding系列02",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.7,
+          "status": "active",
+          "evidence": "核心技能从手动编码/SQL/会议协调变为 Prompt Engineering/AI Orchestration/Skill-Flow Design/Context Engineering。"
+        },
+        {
+          "statement": "GSD + Superpowers 是社区最推荐的个人开发者组合",
+          "source": "Vibe Coding系列04",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.5,
+          "status": "active",
+          "evidence": "社区用户反馈使用 GSD 后 8 小时完成了相当于 2-3 天的工作量。"
+        }
+      ]
+    },
+    {
+      "id": "ontology-philosophy",
+      "type": "concept",
+      "title": "Ontology (Philosophy)",
+      "summary": "本体论（Ontology）是哲学中研究\"存在本身\"的分支，从 Parmenides 将\"Being\"本身作为核心研究对象开始，延伸到 Aristotle 的\"Primary Substance / Secondary Substance\"层级——直接预示了计算机本体论中的\"instance vs class\"。存在主义是对传统本体论的叛逆，将焦点从宇宙客观起源转向个体主观处境。",
+      "tags": [
+        "wiki",
+        "concept",
+        "philosophy",
+        "ontology",
+        "metaphysics"
+      ],
+      "category": "数据本体论（Ontology）",
+      "method_type": null,
+      "decision_status": null,
+      "claims_count": 4,
+      "avg_confidence": 0.68,
+      "claims": [
+        {
+          "statement": "哲学三个递归层次映射\"灵魂三问\"",
+          "source": "西方本体论的当代转折",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.7,
+          "status": "active",
+          "evidence": "Ontology（\"是什么\"）、Epistemology（\"为什么\"）、Praxis（\"怎么做\"）→ 你是谁、你从哪来、你到哪去。"
+        },
+        {
+          "statement": "Aristotle 的 Substance 层级预示了计算机的 instance vs class",
+          "source": "本体论（Ontology）：从哲学根基到计算机科学的概念迁移",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.8,
+          "status": "active",
+          "evidence": "Primary Substance（个别事物）vs Secondary Substance（普遍种属）直接对应 instance vs class。"
+        },
+        {
+          "statement": "Parmenides 将\"Being\"本身作为哲学探究的核心对象",
+          "source": "本体论（Ontology）：从哲学根基到计算机科学的概念迁移",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.7,
+          "status": "active",
+          "evidence": "不是任何具体事物，而是\"存在\"本身——开启了整个西方形而上学传统。"
+        },
+        {
+          "statement": "中国哲学倾向整体非二元思维",
+          "source": "西方本体论的当代转折",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.5,
+          "status": "active",
+          "evidence": "\"唯心 vs 唯物\"二分是西方框架；中国哲学（如道家\"道\"）不完全符合这一分类。"
+        }
+      ]
+    },
+    {
+      "id": "openclaw-agent-gateway",
+      "type": "concept",
+      "title": "OpenClaw Agent Gateway",
+      "summary": "OpenClaw / claw0 是一个教学级 Agent 网关架构，揭示了生产级 Agent 系统的五个递进阶段：基础循环 + 工具 → 网络层（session + channel + routing）→ 智能层（8 层 prompt 组装 + 混合记忆）→ 自主层（heartbeat + 可靠投递）→ 生产硬化（retry onion + 并发车道）。Agent 本质上是一个循环，模型通过 stop_reason 决定何时停止。",
+      "tags": [
+        "wiki",
+        "concept",
+        "agent",
+        "gateway",
+        "architecture"
+      ],
+      "category": "Claude Code 与扩展生态",
+      "method_type": null,
+      "decision_status": null,
+      "claims_count": 3,
+      "avg_confidence": 0.67,
+      "claims": [
+        {
+          "statement": "Agent 本质上是一个循环，不是单次推理",
+          "source": "OpenClaw架构解读——从claw0教学仓库理解AI Agent网关的核心设计",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.7,
+          "status": "active",
+          "evidence": "模型通过 stop_reason 决定何时停止，工具调用是简单 dispatch table（name-to-function mapping）。这种简洁性常被框架抽象掩盖。"
+        },
+        {
+          "statement": "生产 Agent 网关需要五个递进阶段",
+          "source": "OpenClaw架构解读——从claw0教学仓库理解AI Agent网关的核心设计",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.7,
+          "status": "active",
+          "evidence": "基础循环 + 工具 → 网络层 → 智能层（8 层 prompt 组装 + 混合记忆）→ 自主层 → 生产硬化。"
+        },
+        {
+          "statement": "Channel、Peer、Session 是三个常混淆的不同概念",
+          "source": "OpenClaw架构解读——从claw0教学仓库理解AI Agent网关的核心设计",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.6,
+          "status": "active",
+          "evidence": "Channel = 平台（Telegram, Slack），Peer = 通信端点身份，Session = 会话状态容器。"
+        }
+      ]
+    },
+    {
+      "id": "opencli",
+      "type": "concept",
+      "title": "OpenCLI",
+      "summary": "OpenCLI 之于 CLI 就如 OpenAPI 之于 HTTP API——它是一个接口描述层（不是框架，不是 agent），让机器通过结构化 JSON/YAML schema 理解如何调用任何 CLI 工具。解决了 LLM Agent 成为 CLI 调用者后，缺乏标准化参数 schema、能力发现和类型安全的根本问题。Agent-Reach 和 OpenCLI 在不同层面解决 CLI-Agent 问题。",
+      "tags": [
+        "wiki",
+        "concept",
+        "cli",
+        "specification",
+        "agent"
+      ],
+      "category": "Context 与工具集成",
+      "method_type": null,
+      "decision_status": null,
+      "claims_count": 4,
+      "avg_confidence": 0.68,
+      "claims": [
+        {
+          "statement": "OpenCLI 是 CLI 的 OpenAPI",
+          "source": "OpenCLI——万物皆可CLI的结构化革命",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.7,
+          "status": "active",
+          "evidence": "接口描述层，不是框架不是 agent，让机器通过结构化 JSON/YAML schema 理解如何调用任何 CLI 工具。"
+        },
+        {
+          "statement": "OpenCLI 解决 Agent 调用 CLI 的标准化缺失",
+          "source": "OpenCLI——万物皆可CLI的结构化革命",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.7,
+          "status": "active",
+          "evidence": "LLM Agent 成为 CLI 调用者后，缺乏标准化参数 schema、能力发现和类型安全使稳定工具调用不可能。"
+        },
+        {
+          "statement": "OpenCLI 分离描述与执行",
+          "source": "OpenCLI——万物皆可CLI的结构化革命",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.6,
+          "status": "active",
+          "evidence": "spec 层描述 commands/arguments/types，不处理实际工具编排 pipeline。"
+        },
+        {
+          "statement": "Agent-Reach 与 OpenCLI 在不同层面解决问题",
+          "source": "Agent-Reach与OpenCLI——命令编排型Agent框架的两条路线",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.7,
+          "status": "active",
+          "evidence": "Agent-Reach 是工具编排 + scraping scaffold，OpenCLI 是标准化接口描述。Agent-Reach 的 SKILL.md 方式等价于 Google Skill Pattern 中的 Tool Wrapper。"
+        }
+      ]
+    },
+    {
+      "id": "personal-knowledge-compiler",
+      "type": "concept",
+      "title": "Personal Knowledge Compiler",
+      "summary": "个人知识编译器（PKC）是将日记/笔记/文章通过 LLM 编译为结构化知识库的实践。核心洞察：日记按时间线写但按主题消费，存在根本性结构错配。Karpathy 的 LLM Wiki 模型将 LLM 视为知识维护者（像 Wikipedia 编辑）而非问答者——\"RAG = search, LLM Wiki = writing a book\"。",
+      "tags": [
+        "wiki",
+        "concept",
+        "knowledge-management",
+        "obsidian",
+        "omc"
+      ],
+      "category": "知识管理与工具",
+      "method_type": null,
+      "decision_status": null,
+      "claims_count": 5,
+      "avg_confidence": 0.7,
+      "claims": [
+        {
+          "statement": "日记存在写入与消费的结构错配",
+          "source": "从日记到知识库：Obsidian × oh-my-claudecode × LLM Wiki 的个人知识编译实践",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.7,
+          "status": "active",
+          "evidence": "日记按时间线写但按主题消费，线性增长没有网络效应，大多笔记\"写后即沉\"。"
+        },
+        {
+          "statement": "LLM Wiki 模型——LLM 是维护者不是问答者",
+          "source": "从日记到知识库：Obsidian × oh-my-claudecode × LLM Wiki 的个人知识编译实践",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.7,
+          "status": "active",
+          "evidence": "\"RAG = search, LLM Wiki = writing a book\"。Karpathy 模型。"
+        },
+        {
+          "statement": "知识碎片化问题及解法",
+          "source": "从日记到知识库：Obsidian × oh-my-claudecode × LLM Wiki 的个人知识编译实践",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.6,
+          "status": "active",
+          "evidence": "OMC Wiki（.omc/wiki/）与 Obsidian vault（Notes/）并存导致同一概念可能存在两处。解法：将 LLM Wiki 概念直接整合到 Obsidian vault 的 wiki/ 目录。"
+        },
+        {
+          "statement": "PKC 四层知识模型——Concept/Method/Decision/Typed Relations",
+          "source": "2026-04-13-周一",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.8,
+          "status": "active",
+          "evidence": "PKC 从单一概念层演进为四层模型：Concept（What）→ Method（How）→ Decision（Why）→ Typed Relations（How connected）。每层解决不同类型的知识问题：概念页记录声明式知识，方法页记录步骤化过程知识，决策页记录选型论证，8 种类型化关联记录知识间的语义关系。当前规模：40 concepts + 8 methods + 4 decisions + ~160 claims。"
+        },
+        {
+          "statement": "五项高维度改进构成 PKC 持续演进机制",
+          "source": "2026-04-13-周一",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.7,
+          "status": "active",
+          "evidence": "实践反馈闭环（方法→实践→置信度回写）、知识成熟度模型（6维度×4级别）、Why/决策层、类型化关联（8种）、跨切面查询（6种查询类型）——五项改进将 PKC 从\"提取→记录\"升级为\"提取→验证→演进→查询\"的完整知识管理循环。"
+        }
+      ]
+    },
+    {
+      "id": "rag-architecture-comparison",
+      "type": "concept",
+      "title": "RAG Architecture Comparison",
+      "summary": "个人级 RAG（qmd）与企业级 RAG（Foundry IQ + Fabric IQ）在架构上有本质差异。qmd 使用 BM25 + vector + HyDE 三重混合检索实现\"个人文件最佳搜索\"；Foundry IQ 提供 LLM 驱动的查询分解和多源并行检索。Fabric IQ 定义数据含义（ontology + graph），Foundry IQ 检索与合成答案，两者构成互补的语义基础 + agentic 检索架构。",
+      "tags": [
+        "wiki",
+        "concept",
+        "rag",
+        "search",
+        "qmd",
+        "fabric-iq"
+      ],
+      "category": "Azure 与云平台",
+      "method_type": null,
+      "decision_status": null,
+      "claims_count": 4,
+      "avg_confidence": 0.62,
+      "claims": [
+        {
+          "statement": "qmd 与 Foundry IQ 定位不同",
+          "source": "qmd与Microsoft Foundry IQ的RAG能力对比——从个人知识库到企业级检索",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.7,
+          "status": "active",
+          "evidence": "qmd = \"best search on your own files on your own device\"（BM25 + vector + HyDE），Foundry IQ = enterprise agentic retrieval（LLM 驱动查询分解 + 多源并行检索）。"
+        },
+        {
+          "statement": "Fabric IQ 与 Foundry IQ 互补",
+          "source": "qmd与Microsoft Foundry IQ的RAG能力对比——从个人知识库到企业级检索",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.7,
+          "status": "active",
+          "evidence": "Fabric IQ 定义数据含义（ontology + graph），Foundry IQ 检索与合成答案。"
+        },
+        {
+          "statement": "知识图谱是个人与企业 RAG 的关键差距",
+          "source": "qmd与Microsoft Foundry IQ的RAG能力对比——从个人知识库到企业级检索",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.6,
+          "status": "active",
+          "evidence": "qmd 缺乏知识图谱能力，Fabric IQ 提供原生 Labeled Property Graph + ISO GQL 支持。"
+        },
+        {
+          "statement": "Azure 企业级 LLM Wiki 架构——AI Search + CosmosDB Gremlin + OmniRAG 路由",
+          "source": "2026-04-12-周日",
+          "first_seen": "2026-04-12",
+          "last_updated": "2026-04-12",
+          "confidence": 0.5,
+          "status": "active",
+          "evidence": "基于 Karpathy LLM Wiki 概念的 Azure 企业级方案：AI Search 做搜索主体（BM25 + Vector + 语义重排），CosmosDB Gremlin API 做 Entity/Relationship 存储与遍历（对应 Obsidian Graph View/Backlinks）。OmniRAG 路由——语义查询走 AI Search，关系查询走 Gremlin 图遍历，复合查询先图遍历缩小范围再 AI Search 精排。小规模成本 ~$80-115/月（AI Search Basic + CosmosDB Serverless）。"
+        }
+      ]
+    },
+    {
+      "id": "skill-creator-orchestration",
+      "type": "concept",
+      "title": "Skill Creator & Orchestration",
+      "summary": "融合多个 Skill 的正确架构是\"编排层而非合并层\"——不复制子 skill 代码，而是作为智能编排层通过 Decision Framework 做路由。Skill 跨平台兼容性是事实标准，同一份 SKILL.md 可在 Claude Code、Chat API、OpenAI Codex、Gemini CLI 等多个 AI Agent 中使用。",
+      "tags": [
+        "wiki",
+        "concept",
+        "skill",
+        "orchestration",
+        "claude-code"
+      ],
+      "category": "Claude Code 与扩展生态",
+      "method_type": null,
+      "decision_status": null,
+      "claims_count": 3,
+      "avg_confidence": 0.63,
+      "claims": [
+        {
+          "statement": "融合 Skill 的正确架构是编排层而非合并层",
+          "source": "使用Skill-Creator融合多个PPT Skill",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.7,
+          "status": "active",
+          "evidence": "不复制子 skill 代码，而是作为智能编排层通过 Decision Framework 做路由。"
+        },
+        {
+          "statement": "Explore Agent 自动分析比人手动对比更全面",
+          "source": "使用Skill-Creator融合多个PPT Skill",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.6,
+          "status": "active",
+          "evidence": "5 个 skill、38 次工具调用约 2 分钟，尤其对工具链细节（如 CJK 字体处理差异）的挖掘更全面。"
+        },
+        {
+          "statement": "Skill 跨平台兼容性是事实标准",
+          "source": "Coding Agent Plugin生态调研",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.6,
+          "status": "active",
+          "evidence": "同一份 SKILL.md 不仅能在 Claude Code 中运行，也可在 Chat API、OpenAI Codex、Gemini CLI 等其他 AI Agent 中使用。"
+        }
+      ]
+    },
+    {
+      "id": "skill-hub-ecosystem",
+      "type": "concept",
+      "title": "Skill Hub Ecosystem",
+      "summary": "Coding Agent（如 Claude Code）的 Skill/Plugin 生态正在快速发展，多个社区平台提供不同定位的扩展方案。主要玩家包括 OpenClaw（2800+ 社区 Skill）、Superpowers（内置 Skill 工具系统）、GStack（命令行增强）等。生态仍处于早期整合阶段，各平台定位差异明显。",
+      "tags": [
+        "wiki",
+        "concept",
+        "claude-code",
+        "skill",
+        "plugin",
+        "agent"
+      ],
+      "category": "Claude Code 与扩展生态",
+      "method_type": null,
+      "decision_status": null,
+      "claims_count": 2,
+      "avg_confidence": 0.4,
+      "claims": [
+        {
+          "statement": "OpenClaw 是 Claude Code 主流 Skill 注册中心，拥有 2800+ 社区 Skill",
+          "source": "2026-04-11-周六",
+          "first_seen": "2026-04-11",
+          "last_updated": "2026-04-11",
+          "confidence": 0.5,
+          "status": "active",
+          "evidence": "OpenClaw / ClawHub 提供 2800+ 社区 Skill，是目前 Claude Code 生态中规模最大的 Skill 注册中心。George 提到可将 OpenClaw 的 Skill Hub 模式用于功能复用——将培训材料、培训流程、培训打分作为独立 Skill 模块化管理。"
+        },
+        {
+          "statement": "GStack、Superpowers、Hermes 三大框架定位不同，适合不同场景",
+          "source": "2026-04-11-周六",
+          "first_seen": "2026-04-11",
+          "last_updated": "2026-04-11",
+          "confidence": 0.3,
+          "status": "active",
+          "evidence": "GStack vs Superpowers vs Hermes 对比：三大框架在 Claude Code 插件生态中各有定位。具体差异待深入调研。参考：Firecrawl 整理的 Skill 评测、Build to Launch 的 10 个 Plugin 实测（4 个值得保留）。"
+        }
+      ]
+    },
+    {
+      "id": "skill-pattern",
+      "type": "concept",
+      "title": "Skill Pattern",
+      "summary": "Google 定义的五种 Skill Pattern 构成 Agent 的认知架构：Level 0 = Tool Wrapper（知识获取）、Level 1 = Generator + Reviewer（输出控制）、Level 2 = Inversion（输入控制）、Level 3 = Pipeline（流程控制）。Skill 与 Tool 本质不同——Tool 是确定性函数，Skill 是可复用的认知模式（\"思考 + 执行结构\"）。Skill Pattern 和 Agent Pattern 是两个正交系统。",
+      "tags": [
+        "wiki",
+        "concept",
+        "google",
+        "skill",
+        "cognitive-architecture"
+      ],
+      "category": "AI Agent 理论与架构",
+      "method_type": null,
+      "decision_status": null,
+      "claims_count": 5,
+      "avg_confidence": 0.74,
+      "claims": [
+        {
+          "statement": "Skill 与 Tool 本质不同",
+          "source": "从Google五种Skill Pattern到Agent Runtime——Skill、MCP与Agent的统一架构",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.8,
+          "status": "active",
+          "evidence": "Tool 是确定性函数，Skill 是可复用的认知模式（\"thinking + execution structure\"）。"
+        },
+        {
+          "statement": "五种 Skill Patterns 构成分层控制模型",
+          "source": "从Google五种Skill Pattern到Agent Runtime——Skill、MCP与Agent的统一架构",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.7,
+          "status": "active",
+          "evidence": "Level 0 = Tool Wrapper（知识获取）、Level 1 = Generator + Reviewer（输出控制）、Level 2 = Inversion（输入控制）、Level 3 = Pipeline（流程控制）。"
+        },
+        {
+          "statement": "Skill Pattern 和 Agent Pattern 是两个正交系统",
+          "source": "从Google五种Skill Pattern到Agent Runtime——Skill、MCP与Agent的统一架构",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.8,
+          "status": "active",
+          "evidence": "Skill Patterns 定义认知能力，Agent Patterns 定义运行时行为。类比：厨师技能（刀工、火候）vs 烹饪流程（备料、翻炒、摆盘）。"
+        },
+        {
+          "statement": "Inversion 模式是需求分析和架构设计阶段的关键模式",
+          "source": "从Google五种Skill Pattern到Agent Runtime——Skill、MCP与Agent的统一架构",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.7,
+          "status": "active",
+          "evidence": "强制 Agent 先提问再行动，解决最常见的失败模式：\"wild assumption + direct generation\"。"
+        },
+        {
+          "statement": "Skill 的核心价值是让模型\"看到正确信息\"",
+          "source": "从Google五种Skill Pattern到Agent Runtime——Skill、MCP与Agent的统一架构",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.7,
+          "status": "active",
+          "evidence": "不是让模型更聪明，而是作为动态 context loader 定位在 context window 尾部（attention 优势位置）。"
+        }
+      ]
+    },
+    {
+      "id": "skill-runtime",
+      "type": "concept",
+      "title": "Skill Runtime",
+      "summary": "Skill Runtime 是解决 Context 爆炸问题的范式方案：从 document-centric（全量拼接）迁移到 capability-centric（按需投影）。核心流程是\"query → intent parse → skill match → context projection → execution\"。Context 是声明式的（YAML schema 定义 I/O/依赖），而非全量拼接的文档。",
+      "tags": [
+        "wiki",
+        "concept",
+        "skill",
+        "runtime",
+        "agent"
+      ],
+      "category": "AI Agent 理论与架构",
+      "method_type": null,
+      "decision_status": null,
+      "claims_count": 3,
+      "avg_confidence": 0.63,
+      "claims": [
+        {
+          "statement": "行业缺失的方案是 Skill Runtime 模式",
+          "source": "Vibe Coding系列05",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.6,
+          "status": "active",
+          "evidence": "query 触发 intent parse -> skill match -> context projection -> execution。"
+        },
+        {
+          "statement": "Skill Runtime 的 context 是声明式的",
+          "source": "Vibe Coding系列05",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.6,
+          "status": "active",
+          "evidence": "YAML schema 定义输入/输出/依赖，而非全量拼接的文档——从 document-centric 到 capability-centric 的范式迁移。"
+        },
+        {
+          "statement": "评估 Agent system 能否 scale 的 5 个自检问题",
+          "source": "Vibe Coding系列05",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.7,
+          "status": "active",
+          "evidence": "谁决定用哪个 skill、context 是否全量拼接、skill 有无明确 I/O、context 是否 externalizable、execution 是否 independent。"
+        }
+      ]
+    },
+    {
+      "id": "speech-technology-stack",
+      "type": "concept",
+      "title": "Speech Technology Stack",
+      "summary": "实时语音 Agent 涉及三层技术栈：Speech In（VAD、降噪、回声消除、AGC）、Core Processing（ASR、LLM 推理、Turn-Taking）、Speech Out（TTS、流式合成）。Turn-Taking 是最深层的技术挑战——基础能量 VAD 无法区分\"思考停顿\"和\"说完了\"。",
+      "tags": [
+        "wiki",
+        "concept",
+        "speech",
+        "asr",
+        "tts",
+        "turn-taking"
+      ],
+      "category": "语音与实时交互",
+      "method_type": null,
+      "decision_status": null,
+      "claims_count": 3,
+      "avg_confidence": 0.7,
+      "claims": [
+        {
+          "statement": "实时语音 Agent 涉及三层技术栈",
+          "source": "Speech技术全景——从音频处理基础到Turn-Taking的深层机制",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.7,
+          "status": "active",
+          "evidence": "Speech In（VAD、降噪、回声消除、AGC）→ Core Processing（ASR、LLM 推理、Turn-Taking）→ Speech Out（TTS、流式合成）。"
+        },
+        {
+          "statement": "基础能量 VAD 无法区分思考停顿和说完了",
+          "source": "Speech技术全景——从音频处理基础到Turn-Taking的深层机制",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.7,
+          "status": "active",
+          "evidence": "500ms 静音触发 false end-of-turn，但用户可能只是在思考。"
+        },
+        {
+          "statement": "VAD barge-in 支持对自然对话体验至关重要",
+          "source": "Voice-Live-Agent实现架构——从级联流水线到Azure-Voice-Live-API",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.7,
+          "status": "active",
+          "evidence": "用户说话时打断 Agent 语音输出。Silero VAD（2MB 模型，< 1ms per 32ms audio chunk）实现 IDLE-LISTENING-PROCESSING-SPEAKING 状态机。"
+        }
+      ]
+    },
+    {
+      "id": "terminal-multiplexer-for-ai",
+      "type": "concept",
+      "title": "Terminal Multiplexers for AI",
+      "summary": "终端复用器（tmux、cmux）对 AI Agent 工作流至关重要。tmux 的核心价值是解耦终端会话与终端窗口，实现从任何设备（Mac、iPhone、iPad）通过 SSH 访问持久 Claude Code 会话。cmux = Ghostty + tmux 式会话管理 + AI Agent 集成层，是原生 macOS GUI 终端而非纯终端方案。",
+      "tags": [
+        "wiki",
+        "concept",
+        "tmux",
+        "cmux",
+        "terminal",
+        "remote"
+      ],
+      "category": "知识管理与工具",
+      "method_type": null,
+      "decision_status": null,
+      "claims_count": 3,
+      "avg_confidence": 0.6,
+      "claims": [
+        {
+          "statement": "tmux 解耦终端会话与窗口",
+          "source": "tmux与Claude远程交互实践",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.7,
+          "status": "active",
+          "evidence": "实现从任何设备通过 SSH 访问持久 Claude Code 会话。"
+        },
+        {
+          "statement": "cmux 是 GUI 终端而非纯终端",
+          "source": "cmux使用笔记——从Ghostty增强到AI Agent终端的实践",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.6,
+          "status": "active",
+          "evidence": "Ghostty（终端渲染）+ tmux 式会话管理 + AI Agent 集成层。"
+        },
+        {
+          "statement": "cmux 架构是 GUI App > Socket API > CLI",
+          "source": "cmux使用笔记——从Ghostty增强到AI Agent终端的实践",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.5,
+          "status": "active",
+          "evidence": "CLI 只是 wrapper，Socket API 才是唯一稳定接口，外部调用时 CLI 能力降级。"
+        }
+      ]
+    },
+    {
+      "id": "testcontainers",
+      "type": "concept",
+      "title": "Testcontainers",
+      "summary": "Testcontainers 是一个用真实 Docker 容器替代 mock 进行集成测试的框架。核心能力：按需启动容器（数据库、消息队列、云服务模拟等），测试完自动销毁。多语言支持（Java 最成熟、Python、JavaScript/TypeScript、Go、Rust、.NET），且有 Testcontainers Cloud 提供云端运行能力。",
+      "tags": [
+        "wiki",
+        "concept",
+        "testing",
+        "docker",
+        "ci-cd"
+      ],
+      "category": "知识管理与工具",
+      "method_type": null,
+      "decision_status": null,
+      "claims_count": 3,
+      "avg_confidence": 0.6,
+      "claims": [
+        {
+          "statement": "Testcontainers 用真实容器替代 mock 是集成测试的更好方案",
+          "source": "2026-04-11-周六",
+          "first_seen": "2026-04-11",
+          "last_updated": "2026-04-12",
+          "confidence": 0.5,
+          "status": "active",
+          "evidence": "Testcontainers 按需启动 Docker 容器（数据库、消息队列、云服务模拟等），测试完自动销毁。常用模块：PostgreSQL、MySQL、Redis、Kafka、LocalStack（AWS 模拟）、MongoDB 等。相比传统 mock/嵌入式数据库方案，提供更接近生产环境的测试保真度。"
+        },
+        {
+          "statement": "Java 版 Testcontainers 最成熟，JUnit 4/5 原生集成",
+          "source": "2026-04-11-周六",
+          "first_seen": "2026-04-11",
+          "last_updated": "2026-04-11",
+          "confidence": 0.8,
+          "status": "active",
+          "evidence": "多语言支持中 Java 版（testcontainers-java）最成熟，提供 JUnit 4/5 原生集成。Python 版支持 pytest，JavaScript/TypeScript 版支持 Jest/Vitest。"
+        },
+        {
+          "statement": "在 Harness CI 中可通过 Docker-in-Docker 或 Testcontainers Cloud 运行",
+          "source": "2026-04-11-周六",
+          "first_seen": "2026-04-11",
+          "last_updated": "2026-04-11",
+          "confidence": 0.5,
+          "status": "active",
+          "evidence": "Testcontainers Cloud 提供云端运行容器的能力，无需本地 Docker Desktop。在 Harness CI 中通过 Docker-in-Docker 或 Service Dependency 模式运行 Testcontainers。"
+        }
+      ]
+    },
+    {
+      "id": "three-layer-plugin-architecture",
+      "type": "concept",
+      "title": "Three-Layer Plugin Architecture",
+      "summary": "GSD + Superpowers + gstack 构成三层插件架构，各有明确定位：GSD 管\"做对的事情\"（Spec + Phase + State + Context），Superpowers 管\"做事情的方法对\"（Engineering Practices），gstack 管\"做完能交付\"（External World）。三者不是\"装更多插件\"，而是需要设计清晰的职责边界和交接协议。必须用 CLAUDE.md 声明式路由规则消除 skill 匹配歧义。",
+      "tags": [
+        "wiki",
+        "concept",
+        "gsd",
+        "superpowers",
+        "gstack",
+        "architecture"
+      ],
+      "category": "Vibe Coding 框架与工作流",
+      "method_type": null,
+      "decision_status": null,
+      "claims_count": 4,
+      "avg_confidence": 0.75,
+      "claims": [
+        {
+          "statement": "Superpowers 是 workflow-first，gstack 是 tool-first",
+          "source": "Vibe Coding系列08",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.7,
+          "status": "active",
+          "evidence": "\"Superpowers 是方法论、gstack 是工具箱\"是伪二分——两者都是 skill/tool 集合 + workflow 编排的混合体。"
+        },
+        {
+          "statement": "三层定位——GSD/Superpowers/gstack",
+          "source": "Vibe Coding系列08",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.8,
+          "status": "active",
+          "evidence": "GSD 管\"做对的事情\"，Superpowers 管\"做事情的方法对\"，gstack 管\"做完能交付\"。"
+        },
+        {
+          "statement": "没有一个框架能独立覆盖全链路",
+          "source": "Vibe Coding系列09",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.8,
+          "status": "active",
+          "evidence": "框架融合不是\"装更多插件\"，而是设计清晰的职责边界和交接协议。"
+        },
+        {
+          "statement": "必须用 CLAUDE.md 声明式路由消除 skill 匹配歧义",
+          "source": "Vibe Coding系列09",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.7,
+          "status": "active",
+          "evidence": "Claude Code 遇到泛指令时按路由表查表执行而非随机匹配。"
+        }
+      ]
+    },
+    {
+      "id": "voice-activity-detection",
+      "type": "concept",
+      "title": "Voice Activity Detection",
+      "summary": "Voice Activity Detection（VAD）是实时语音交互中判断用户是否在说话的关键技术。现代实现分为两类：传统的 Server VAD（基于静音检测）和新一代 Semantic VAD（基于语义分类器）。两者在打断灵敏度、延迟和适用场景上有明显差异。",
+      "tags": [
+        "wiki",
+        "concept",
+        "speech",
+        "voice",
+        "vad"
+      ],
+      "category": "语音与实时交互",
+      "method_type": null,
+      "decision_status": null,
+      "claims_count": 3,
+      "avg_confidence": 0.73,
+      "claims": [
+        {
+          "statement": "OpenAI 提供两种 VAD 模式——Server VAD（静音检测）和 Semantic VAD（语义分类器）",
+          "source": "2026-04-11-周六",
+          "first_seen": "2026-04-11",
+          "last_updated": "2026-04-12",
+          "confidence": 0.8,
+          "status": "active",
+          "evidence": "OpenAI Realtime API 提供两种 VAD 模式：Server VAD 基于静音检测，可调参数包括 threshold、prefix_padding、silence_duration；Semantic VAD 使用语义分类器，通过 eagerness 参数控制打断灵敏度。参考：OpenAI Realtime VAD Guide。Azure 也有对应的 Semantic VAD vs Basic Server VAD。"
+        },
+        {
+          "statement": "基础能量 VAD 无法区分思考停顿和说完了",
+          "source": "Speech技术全景——从音频处理基础到Turn-Taking的深层机制",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.7,
+          "status": "active",
+          "evidence": "500ms 静音触发 false end-of-turn，但用户可能只是在思考。Semantic VAD 通过语义分类器解决此问题。"
+        },
+        {
+          "statement": "Silero VAD 实现轻量级高效 VAD",
+          "source": "Voice-Live-Agent实现架构——从级联流水线到Azure-Voice-Live-API",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.7,
+          "status": "active",
+          "evidence": "2MB 模型，< 1ms per 32ms audio chunk，实现 IDLE-LISTENING-PROCESSING-SPEAKING 状态机，支持 barge-in。"
+        }
+      ]
+    },
+    {
+      "id": "voice-live-agent",
+      "type": "concept",
+      "title": "Voice Live Agent",
+      "summary": "Voice Live Agent 是结合语音 I/O 与 LLM 推理能力的实时对话系统。当前存在两种主流架构：Cascaded Pipeline（STT + LLM + TTS 独立流式组件）和 End-to-End Native（单一多模态模型）。2026 年企业级唯一生产可行架构仍是级联管线。低延迟的关键不是让单个组件更快，而是让它们重叠执行（streaming + pipelining）。",
+      "tags": [
+        "wiki",
+        "concept",
+        "voice",
+        "agent",
+        "realtime",
+        "azure"
+      ],
+      "category": "语音与实时交互",
+      "method_type": null,
+      "decision_status": null,
+      "claims_count": 6,
+      "avg_confidence": 0.75,
+      "claims": [
+        {
+          "statement": "两种主流架构——级联管线与端到端",
+          "source": "Voice-Live-Agent实现架构——从级联流水线到Azure-Voice-Live-API",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.8,
+          "status": "active",
+          "evidence": "Cascaded Pipeline（STT + LLM + TTS）vs End-to-End Native（单一多模态模型 audio-in to audio-out）。"
+        },
+        {
+          "statement": "低延迟关键在于组件重叠执行",
+          "source": "Voice-Live-Agent实现架构——从级联流水线到Azure-Voice-Live-API",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.8,
+          "status": "active",
+          "evidence": "不是让单个组件更快，而是 streaming + pipelining。sentence buffer 是 LLM token 输出到 TTS 句子输入的关键管线节点。Salesforce 级联管线实现 ~755ms first-audio latency。"
+        },
+        {
+          "statement": "语音不是\"界面层\"那么简单",
+          "source": "Voice-Live-Agent实现架构——从级联流水线到Azure-Voice-Live-API",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.7,
+          "status": "active",
+          "evidence": "实现 < 1 秒端到端延迟需要 STT、LLM、TTS 的精密流水线协调。"
+        },
+        {
+          "statement": "端到端模型尚未达到企业生产可用",
+          "source": "2026-04-06-Building-Enterprise-Realtime-Voice-Agents",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.8,
+          "status": "active",
+          "evidence": "2026 年企业级唯一生产可行架构仍是 STT → LLM → TTS 级联管线。Level 1 Fully E2E（如 Moshi）有研究价值无工程价值，Level 2 Hybrid Omni 本质仍是管线。"
+        },
+        {
+          "statement": "Voice Agent 的真正难点在 Agent 而非语音",
+          "source": "2026-04-06-Building-Enterprise-Realtime-Voice-Agents",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.8,
+          "status": "active",
+          "evidence": "Voice Agent = LLM Agent + Voice I/O。推理、工具调用、状态管理才是核心难点，\"能听会说\"只是界面。"
+        },
+        {
+          "statement": "Azure Voice Live API 走全托管端到端路线",
+          "source": "Voice-Live-Agent实现架构——从级联流水线到Azure-Voice-Live-API",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.6,
+          "status": "active",
+          "evidence": "STT、GPT Realtime、TTS、VAD、降噪、回声消除全部云端处理，原生 Avatar 集成。牺牲自托管控制换取更低集成复杂度。"
+        }
+      ]
+    },
+    {
+      "id": "ai-native-five-layer-pipeline",
+      "type": "method",
+      "title": "AI-Native 五层开发流水线",
+      "summary": "AI-Native 五层开发 Pipeline 将软件开发拆解为 5 个 AI 驱动的阶段，每个阶段有独立的 AI 工具和明确的输入输出。核心思路不是\"用 AI 替代人写代码\"，而是**让每个阶段产出下一阶段所需的 context 类型**——从视觉信息逐步转化为需求信息、变更信息、测试信息和审查信息。直接从 Figma 设计稿让 AI 写代码效果差，因为设计稿只有\"像素级信息\"而缺少\"需求级信息\"。",
+      "tags": [
+        "wiki",
+        "method",
+        "ai-native",
+        "pipeline",
+        "figma",
+        "superpowers"
+      ],
+      "category": "",
+      "method_type": "pipeline",
+      "decision_status": null,
+      "claims_count": 2,
+      "avg_confidence": 0.75,
+      "claims": [
+        {
+          "statement": "五层 Pipeline 是思维模式的转换",
+          "source": "Vibe Coding系列03",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.8,
+          "status": "active",
+          "evidence": "Figma 回答\"长什么样\"（视觉层），Brainstorm 回答\"做什么为什么做\"（需求层），Spec-Delta 回答\"这次改什么\"（变更层）。"
+        },
+        {
+          "statement": "每阶段输出的 context 类型完全不同",
+          "source": "Vibe Coding系列03",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.7,
+          "status": "active",
+          "evidence": "Design AI → Spec AI → Coding AI → Testing AI → Review AI，每个阶段产出的信息类型（视觉/需求/变更/测试/审查）各不相同。"
+        }
+      ]
+    },
+    {
+      "id": "code-reuse-four-layer-defense",
+      "type": "method",
+      "title": "Agent 时代四层代码复用防线",
+      "summary": "Coding Agent 存在结构性代码复用缺陷：每次会话倾向从头实现功能而非复用已有代码，因为 agent 缺乏项目全局视角。四层防线的核心思路是**不让 agent 自己学会复用，而是用架构约束让它不得不复用**。四层按优先级从高到低排列，每一层用不同机制\"逼迫\" agent 遵守复用规则。",
+      "tags": [
+        "wiki",
+        "method",
+        "agent",
+        "code-reuse",
+        "architecture"
+      ],
+      "category": "",
+      "method_type": "layered-strategy",
+      "decision_status": null,
+      "claims_count": 2,
+      "avg_confidence": 0.75,
+      "claims": [
+        {
+          "statement": "四层防线是代码复用的真正解法",
+          "source": "Vibe Coding系列07",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.8,
+          "status": "active",
+          "evidence": "不让 agent 自己学会复用，而是用架构约束让它不得不复用。四层：CLAUDE.md 架构约束（最关键）> FEATURE.md 依赖边界 > Superpowers 流程嵌入复用检查 > Plugin 协作。"
+        },
+        {
+          "statement": "现有框架均未直接解决代码复用",
+          "source": "Vibe Coding系列07",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.7,
+          "status": "active",
+          "evidence": "Superpowers、gstack、Compound Engineering 没有一个直接解决代码复用——CE 是知识复用不是代码复用。"
+        }
+      ]
+    },
+    {
+      "id": "gsd-five-step-workflow",
+      "type": "method",
+      "title": "GSD 五步开发工作流",
+      "summary": "GSD（Get Stuff Done）五步工作流是使用 GSD + Superpowers 进行 Vibe Coding 的标准执行流程。五个阶段：Init（初始化）→ Clarify（澄清需求）→ Plan（制定计划）→ Execute（执行编码）→ Verify（验证交付）。配合三级缺陷修复升级机制（L1 自动修复 → L2 针对性调试 → L3 外部协助），确保交付质量。",
+      "tags": [
+        "wiki",
+        "method",
+        "gsd",
+        "superpowers",
+        "workflow"
+      ],
+      "category": "",
+      "method_type": "workflow",
+      "decision_status": null,
+      "claims_count": 2,
+      "avg_confidence": 0.75,
+      "claims": [
+        {
+          "statement": "三层定位——GSD/Superpowers/gstack",
+          "source": "Vibe Coding系列08",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.8,
+          "status": "active",
+          "evidence": "GSD 管\"做对的事情\"，Superpowers 管\"做事情的方法对\"，gstack 管\"做完能交付\"。"
+        },
+        {
+          "statement": "必须用 CLAUDE.md 声明式路由消除 skill 匹配歧义",
+          "source": "Vibe Coding系列09",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.7,
+          "status": "active",
+          "evidence": "Claude Code 遇到泛指令时按路由表查表执行而非随机匹配。"
+        }
+      ]
+    },
+    {
+      "id": "gsd-project-scale-selection",
+      "type": "method",
+      "title": "GSD 项目规模分级与工具选择",
+      "summary": "GSD 项目规模分级是一个决策框架，用于根据项目复杂度选择合适的 Vibe Coding 工具组合。核心洞察：项目复杂度应按**\"需要同时保持在 Context 中的关联信息量\"**而非代码行数来定级——50 行 LangGraph 编排文件可能比 500 行 CRUD 更复杂。不同规模的项目适用不同的工具组合，过度使用工具链在简单项目中是纯开销。",
+      "tags": [
+        "wiki",
+        "method",
+        "gsd",
+        "superpowers",
+        "framework"
+      ],
+      "category": "",
+      "method_type": "decision-framework",
+      "decision_status": null,
+      "claims_count": 3,
+      "avg_confidence": 0.7,
+      "claims": [
+        {
+          "statement": "项目复杂度应按 Context 信息量而非代码行数定级",
+          "source": "Vibe Coding系列06",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.7,
+          "status": "active",
+          "evidence": "50 行 LangGraph 编排文件可能比 500 行 CRUD 更复杂。"
+        },
+        {
+          "statement": "L1 项目不存在 Context Rot，GSD 是纯开销",
+          "source": "Vibe Coding系列06",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.7,
+          "status": "active",
+          "evidence": "单文件/脚本级项目应跳过 GSD 直接执行。"
+        },
+        {
+          "statement": "L2 项目是 GSD 的\"甜蜜点\"",
+          "source": "Vibe Coding系列06",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.7,
+          "status": "active",
+          "evidence": "项目足够复杂需要结构化，但又没复杂到触发 Context 上限。"
+        }
+      ]
+    },
+    {
+      "id": "harness-five-dimension-quality-gate",
+      "type": "method",
+      "title": "Harness 五维质量门禁",
+      "summary": "通过 pre-commit hook + Harness CI pipeline 构建全链路质量保障方案。五个维度按严格递进顺序排列，每一层过滤特定类型的问题，越往后越重（成本越高、反馈越慢）。核心原则：**尽早拦截、逐层加重**——格式问题在本地 pre-commit 就拦截，不要浪费 CI 资源。",
+      "tags": [
+        "wiki",
+        "method",
+        "devops",
+        "ci-cd",
+        "harness",
+        "quality"
+      ],
+      "category": "",
+      "method_type": "quality-gate",
+      "decision_status": null,
+      "claims_count": 2,
+      "avg_confidence": 0.65,
+      "claims": [
+        {
+          "statement": "质量门禁应覆盖 5 个递进维度",
+          "source": "2026-04-11-周六",
+          "first_seen": "2026-04-11",
+          "last_updated": "2026-04-12",
+          "confidence": 0.5,
+          "status": "active",
+          "evidence": "核心思路：通过 pre-commit hook + Harness CI pipeline，从 5 个维度构建质量门禁。每个维度对应一组多语言工具链。"
+        },
+        {
+          "statement": "ArchUnit 是 Java 架构测试的标准工具",
+          "source": "2026-04-11-周六",
+          "first_seen": "2026-04-11",
+          "last_updated": "2026-04-11",
+          "confidence": 0.8,
+          "status": "active",
+          "evidence": "Java 用 ArchUnit，Python 用 import-linter / pytestarch，JS/TS 用 dependency-cruiser / eslint-plugin-boundaries。"
+        }
+      ]
+    },
+    {
+      "id": "openclaw-five-stage-gateway",
+      "type": "method",
+      "title": "OpenClaw Agent 网关五阶段建设",
+      "summary": "从教学级 Agent（claw0）到生产级 Agent 网关的五个递进阶段。核心洞察：Agent 本质上是一个循环（while loop + tool dispatch），但要从循环到生产需要逐层加固——网络层处理多用户/多渠道、智能层处理 prompt 组装和记忆、自主层处理可靠性、生产层处理并发和容错。每个阶段都在前一阶段的基础上增加一个维度的复杂性。",
+      "tags": [
+        "wiki",
+        "method",
+        "agent",
+        "gateway",
+        "architecture"
+      ],
+      "category": "",
+      "method_type": "pipeline",
+      "decision_status": null,
+      "claims_count": 2,
+      "avg_confidence": 0.7,
+      "claims": [
+        {
+          "statement": "Agent 本质上是一个循环，不是单次推理",
+          "source": "OpenClaw架构解读——从claw0教学仓库理解AI Agent网关的核心设计",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.7,
+          "status": "active",
+          "evidence": "模型通过 stop_reason 决定何时停止，工具调用是简单 dispatch table（name-to-function mapping）。"
+        },
+        {
+          "statement": "生产 Agent 网关需要五个递进阶段",
+          "source": "OpenClaw架构解读——从claw0教学仓库理解AI Agent网关的核心设计",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.7,
+          "status": "active",
+          "evidence": "基础循环 + 工具 → 网络层 → 智能层（8 层 prompt 组装 + 混合记忆）→ 自主层 → 生产硬化。"
+        }
+      ]
+    },
+    {
+      "id": "personal-knowledge-compiler-workflow",
+      "type": "method",
+      "title": "个人知识编译工作流",
+      "summary": "个人知识编译工作流（PKC Workflow）将日记/笔记/文章通过 LLM 编译为结构化知识库。核心问题是**日记按时间线写但按主题消费**——线性增长没有网络效应，大多笔记\"写后即沉\"。工作流的核心是让 LLM 充当知识维护者（像 Wikipedia 编辑），定期从日记中提取概念和论断，编译为可复用的 wiki 概念页。",
+      "tags": [
+        "wiki",
+        "method",
+        "knowledge-management",
+        "obsidian",
+        "llm-wiki"
+      ],
+      "category": "",
+      "method_type": "workflow",
+      "decision_status": null,
+      "claims_count": 2,
+      "avg_confidence": 0.7,
+      "claims": [
+        {
+          "statement": "日记存在写入与消费的结构错配",
+          "source": "从日记到知识库：Obsidian × oh-my-claudecode × LLM Wiki 的个人知识编译实践",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.7,
+          "status": "active",
+          "evidence": "日记按时间线写但按主题消费，线性增长没有网络效应，大多笔记\"写后即沉\"。"
+        },
+        {
+          "statement": "LLM Wiki 模型——LLM 是维护者不是问答者",
+          "source": "从日记到知识库：Obsidian × oh-my-claudecode × LLM Wiki 的个人知识编译实践",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.7,
+          "status": "active",
+          "evidence": "\"RAG = search, LLM Wiki = writing a book\"。Karpathy 模型。"
+        }
+      ]
+    },
+    {
+      "id": "voice-cascaded-pipeline",
+      "type": "method",
+      "title": "语音级联管线架构",
+      "summary": "语音级联管线（Cascaded Pipeline）是当前企业级 Voice Agent 的唯一生产可行架构。核心是将语音交互拆解为 STT → LLM → TTS 三个独立流式组件，通过 streaming + pipelining 重叠执行实现低延迟。**低延迟的关键不是让单个组件更快，而是让它们重叠执行**——Salesforce 级联管线实现 ~755ms first-audio latency。",
+      "tags": [
+        "wiki",
+        "method",
+        "voice",
+        "agent",
+        "architecture",
+        "azure"
+      ],
+      "category": "",
+      "method_type": "architecture-pattern",
+      "decision_status": null,
+      "claims_count": 2,
+      "avg_confidence": 0.8,
+      "claims": [
+        {
+          "statement": "低延迟关键在于组件重叠执行",
+          "source": "Voice-Live-Agent实现架构——从级联流水线到Azure-Voice-Live-API",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.8,
+          "status": "active",
+          "evidence": "不是让单个组件更快，而是 streaming + pipelining。sentence buffer 是 LLM token 输出到 TTS 句子输入的关键管线节点。"
+        },
+        {
+          "statement": "端到端模型尚未达到企业生产可用",
+          "source": "2026-04-06-Building-Enterprise-Realtime-Voice-Agents",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.8,
+          "status": "active",
+          "evidence": "2026 年企业级唯一生产可行架构仍是 STT → LLM → TTS 级联管线。"
+        }
+      ]
+    },
+    {
+      "id": "architecture-constraint-over-agent-learning",
+      "type": "decision",
+      "title": "架构约束优于 Agent 自主学习：代码复用策略",
+      "summary": "",
+      "tags": [
+        "wiki",
+        "decision",
+        "agent",
+        "code-reuse"
+      ],
+      "category": "",
+      "method_type": null,
+      "decision_status": "active",
+      "claims_count": 1,
+      "avg_confidence": 0.8,
+      "claims": [
+        {
+          "statement": "四层防线是代码复用的真正解法",
+          "source": "Vibe Coding系列07",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.8,
+          "status": "active",
+          "evidence": "不让 agent 自己学会复用，而是用架构约束让它不得不复用。"
+        }
+      ]
+    },
+    {
+      "id": "cascaded-vs-e2e-voice",
+      "type": "decision",
+      "title": "级联管线 vs 端到端：Voice Agent 架构选择",
+      "summary": "",
+      "tags": [
+        "wiki",
+        "decision",
+        "voice",
+        "architecture"
+      ],
+      "category": "",
+      "method_type": null,
+      "decision_status": "active",
+      "claims_count": 1,
+      "avg_confidence": 0.8,
+      "claims": [
+        {
+          "statement": "端到端模型尚未达到企业生产可用",
+          "source": "2026-04-06-Building-Enterprise-Realtime-Voice-Agents",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.8,
+          "status": "active",
+          "evidence": "2026 年企业级唯一生产可行架构仍是 STT → LLM → TTS 级联管线。Level 1 Fully E2E（如 Moshi）有研究价值无工程价值。"
+        }
+      ]
+    },
+    {
+      "id": "spec-driven-vs-methodology-framework",
+      "type": "decision",
+      "title": "规范驱动 vs 方法论框架：Vibe Coding 工具选型",
+      "summary": "",
+      "tags": [
+        "wiki",
+        "decision",
+        "vibe-coding",
+        "framework"
+      ],
+      "category": "",
+      "method_type": null,
+      "decision_status": "active",
+      "claims_count": 2,
+      "avg_confidence": 0.75,
+      "claims": [
+        {
+          "statement": "规范驱动与方法论框架互补不可互替",
+          "source": "Vibe Coding系列04",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.8,
+          "status": "active",
+          "evidence": "规范驱动（GSD/SpecKit/OpenSpec）解决\"做什么\"，方法论（Superpowers）解决\"怎么做\"。"
+        },
+        {
+          "statement": "GSD/SpecKit/OpenSpec 只能三选一",
+          "source": "Vibe Coding系列04",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.7,
+          "status": "active",
+          "evidence": "三者功能高度重叠（都管\"做什么\"），Superpowers 管\"怎么做\"几乎必选搭配。"
+        }
+      ]
+    },
+    {
+      "id": "wiki-over-rag-for-personal-knowledge",
+      "type": "decision",
+      "title": "LLM Wiki 优于 RAG：个人知识管理架构",
+      "summary": "",
+      "tags": [
+        "wiki",
+        "decision",
+        "knowledge-management",
+        "rag"
+      ],
+      "category": "",
+      "method_type": null,
+      "decision_status": "active",
+      "claims_count": 2,
+      "avg_confidence": 0.7,
+      "claims": [
+        {
+          "statement": "日记存在写入与消费的结构错配",
+          "source": "从日记到知识库：Obsidian × oh-my-claudecode × LLM Wiki 的个人知识编译实践",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.7,
+          "status": "active",
+          "evidence": "日记按时间线写但按主题消费，线性增长没有网络效应。"
+        },
+        {
+          "statement": "LLM Wiki 模型——LLM 是维护者不是问答者",
+          "source": "从日记到知识库：Obsidian × oh-my-claudecode × LLM Wiki 的个人知识编译实践",
+          "first_seen": "2026-04-13",
+          "last_updated": "2026-04-13",
+          "confidence": 0.7,
+          "status": "active",
+          "evidence": "\"RAG = search, LLM Wiki = writing a book\"。"
+        }
+      ]
+    }
+  ],
+  "links": [
+    {
+      "source": "agent-loop-architecture",
+      "target": "harness-engineering",
+      "relation_type": "untyped",
+      "description": "Agent Loop 是 Harness 的运行时核心"
+    },
+    {
+      "source": "agent-loop-architecture",
+      "target": "claude-code-agent-subagent",
+      "relation_type": "untyped",
+      "description": "Subagent 运行独立的 Agent Loop 实例"
+    },
+    {
+      "source": "agent-paradigms",
+      "target": "agent-loop-architecture",
+      "relation_type": "untyped",
+      "description": "Agent Loop 是范式执行的运行时载体"
+    },
+    {
+      "source": "agent-paradigms",
+      "target": "harness-engineering",
+      "relation_type": "untyped",
+      "description": "Harness 提供范式切换的系统级支撑"
+    },
+    {
+      "source": "agent-search-tools",
+      "target": "context7",
+      "relation_type": "untyped",
+      "description": "Context7 是搜索三剑客之一"
+    },
+    {
+      "source": "agent-search-tools",
+      "target": "context-engineering",
+      "relation_type": "untyped",
+      "description": "搜索工具是 Context Engineering 的信息获取层"
+    },
+    {
+      "source": "ai-native-design-tools",
+      "target": "ai-native-pipeline",
+      "relation_type": "untyped",
+      "description": "设计工具是 AI-Native Pipeline 的第一层"
+    },
+    {
+      "source": "ai-native-pipeline",
+      "target": "framework-selection",
+      "relation_type": "untyped",
+      "description": "Pipeline 各阶段对应不同框架"
+    },
+    {
+      "source": "ai-native-pipeline",
+      "target": "harness-engineering",
+      "relation_type": "untyped",
+      "description": "Pipeline 是 Harness Engineering 的具体工作流实现"
+    },
+    {
+      "source": "ai-native-pipeline",
+      "target": "ai-native-five-layer-pipeline",
+      "relation_type": "untyped",
+      "description": "实施方法：五层流水线的详细步骤和决策点"
+    },
+    {
+      "source": "ai-skill-formation",
+      "target": "one-person-team",
+      "relation_type": "untyped",
+      "description": "技能形成影响与一人团队模式的张力"
+    },
+    {
+      "source": "autoresearch",
+      "target": "agent-loop-architecture",
+      "relation_type": "untyped",
+      "description": "AutoResearch 的循环结构本质上是特化的 Agent Loop"
+    },
+    {
+      "source": "autoresearch",
+      "target": "bitter-lesson",
+      "relation_type": "untyped",
+      "description": "AutoResearch 体现了 Bitter Lesson 的\"计算胜过人工知识\"原则"
+    },
+    {
+      "source": "azure-copilot-ecosystem",
+      "target": "llm-wiki",
+      "relation_type": "untyped",
+      "description": "Azure 企业级 LLM Wiki 方案依赖 Azure AI Search"
+    },
+    {
+      "source": "azure-copilot-ecosystem",
+      "target": "skill-hub-ecosystem",
+      "relation_type": "untyped",
+      "description": "Azure Skills 是 Microsoft 官方的 Skill 实现"
+    },
+    {
+      "source": "bitter-lesson",
+      "target": "continual-self-improving-ai",
+      "relation_type": "untyped",
+      "description": "持续自我改进是 Bitter Lesson 的延伸"
+    },
+    {
+      "source": "bitter-lesson",
+      "target": "harness-engineering",
+      "relation_type": "untyped",
+      "description": "Harness Engineering 是人类知识编码的现代形式，可能面临 Bitter Lesson 挑战"
+    },
+    {
+      "source": "claude-code-agent-subagent",
+      "target": "agent-loop-architecture",
+      "relation_type": "untyped",
+      "description": "Subagent 运行独立的 Agent Loop 实例"
+    },
+    {
+      "source": "claude-code-agent-subagent",
+      "target": "harness-engineering",
+      "relation_type": "untyped",
+      "description": "Context 隔离是 Harness 设计的重要机制"
+    },
+    {
+      "source": "claude-code-extension-system",
+      "target": "skill-hub-ecosystem",
+      "relation_type": "untyped",
+      "description": "Plugin 生态的社区实现"
+    },
+    {
+      "source": "claude-code-extension-system",
+      "target": "claude-code-agent-subagent",
+      "relation_type": "untyped",
+      "description": "Agent 是扩展体系的第三层"
+    },
+    {
+      "source": "claude-code-extension-system",
+      "target": "skill-runtime",
+      "relation_type": "untyped",
+      "description": "Skill 的运行时执行模型"
+    },
+    {
+      "source": "claude-code-memory-system",
+      "target": "claude-code-extension-system",
+      "relation_type": "extends",
+      "description": "Memory 系统与 Skills/Agents/Commands 扩展层协同工作"
+    },
+    {
+      "source": "claude-code-memory-system",
+      "target": "claude-code-agent-subagent",
+      "relation_type": "uses",
+      "description": "Subagent Memory 依赖 Agent/Subagent 进程隔离架构"
+    },
+    {
+      "source": "claude-code-memory-system",
+      "target": "personal-knowledge-compiler",
+      "relation_type": "grounds",
+      "description": "PKC 的 Auto Memory 和 Agent 记忆是知识编译系统的持久化基础"
+    },
+    {
+      "source": "code-reuse-in-agent-era",
+      "target": "harness-engineering",
+      "relation_type": "untyped",
+      "description": "CLAUDE.md 架构约束是 Harness Engineering 的一部分"
+    },
+    {
+      "source": "code-reuse-in-agent-era",
+      "target": "claude-code-agent-subagent",
+      "relation_type": "untyped",
+      "description": "Subagent 上下文隔离加剧了复用困难"
+    },
+    {
+      "source": "code-reuse-in-agent-era",
+      "target": "code-reuse-four-layer-defense",
+      "relation_type": "untyped",
+      "description": "实施方法：四层防线的详细步骤和决策点"
+    },
+    {
+      "source": "context-engineering",
+      "target": "harness-engineering",
+      "relation_type": "untyped",
+      "description": "Context Engineering 是 Harness Engineering 的子集"
+    },
+    {
+      "source": "context-engineering",
+      "target": "mcp-vs-cli",
+      "relation_type": "untyped",
+      "description": "MCP 是 Context Engineering 的工具接入层"
+    },
+    {
+      "source": "context-engineering",
+      "target": "context-explosion",
+      "relation_type": "untyped",
+      "description": "Context 爆炸是 CE 的核心挑战"
+    },
+    {
+      "source": "context-explosion",
+      "target": "context-engineering",
+      "relation_type": "untyped",
+      "description": "Context Engineering 的核心挑战之一"
+    },
+    {
+      "source": "context-explosion",
+      "target": "skill-runtime",
+      "relation_type": "untyped",
+      "description": "Skill Runtime 的按需投影是 Context 爆炸的解法方向"
+    },
+    {
+      "source": "context-explosion",
+      "target": "harness-engineering",
+      "relation_type": "untyped",
+      "description": "Context 管理是 Harness 的关键能力"
+    },
+    {
+      "source": "context7",
+      "target": "context-engineering",
+      "relation_type": "untyped",
+      "description": "Context7 是 Context Engineering 的文档层工具"
+    },
+    {
+      "source": "context7",
+      "target": "agent-search-tools",
+      "relation_type": "untyped",
+      "description": "Context7 是 Agent 搜索三剑客之一"
+    },
+    {
+      "source": "continual-self-improving-ai",
+      "target": "bitter-lesson",
+      "relation_type": "untyped",
+      "description": "持续自我改进体现\"计算胜过人工知识\""
+    },
+    {
+      "source": "continual-self-improving-ai",
+      "target": "rag-architecture-comparison",
+      "relation_type": "untyped",
+      "description": "EntiGraph + RAG 互补关系"
+    },
+    {
+      "source": "enterprise-ontology",
+      "target": "ontology-philosophy",
+      "relation_type": "untyped",
+      "description": "企业本体论的哲学根基"
+    },
+    {
+      "source": "enterprise-ontology",
+      "target": "rag-architecture-comparison",
+      "relation_type": "untyped",
+      "description": "Ontology 是企业级 RAG 的语义基础层"
+    },
+    {
+      "source": "framework-selection",
+      "target": "three-layer-plugin-architecture",
+      "relation_type": "untyped",
+      "description": "框架选型的三层架构方案"
+    },
+    {
+      "source": "framework-selection",
+      "target": "context-explosion",
+      "relation_type": "untyped",
+      "description": "Context 爆炸影响框架选型决策"
+    },
+    {
+      "source": "framework-selection",
+      "target": "ai-native-pipeline",
+      "relation_type": "untyped",
+      "description": "Pipeline 各阶段需要不同框架"
+    },
+    {
+      "source": "framework-selection",
+      "target": "gsd-project-scale-selection",
+      "relation_type": "untyped",
+      "description": "实施方法：项目规模分级与工具选择决策框架"
+    },
+    {
+      "source": "harness-engineering",
+      "target": "agent-loop-architecture",
+      "relation_type": "untyped",
+      "description": "Agent Loop 是 Harness 的运行时核心"
+    },
+    {
+      "source": "harness-engineering",
+      "target": "context-engineering",
+      "relation_type": "untyped",
+      "description": "Context Engineering 是 Harness Engineering 的子集"
+    },
+    {
+      "source": "harness-engineering",
+      "target": "claude-code-agent-subagent",
+      "relation_type": "untyped",
+      "description": "Claude Code 是 Harness Engineering 理念的典型实现"
+    },
+    {
+      "source": "harness-quality-gate",
+      "target": "testcontainers",
+      "relation_type": "untyped",
+      "description": "质量门禁第 4 层的核心集成测试工具"
+    },
+    {
+      "source": "harness-quality-gate",
+      "target": "harness-engineering",
+      "relation_type": "untyped",
+      "description": "名称类似但不同概念：Harness Quality Gate 是 DevOps 质量门禁，Harness Engineering 是 AI Agent 系统工程范式"
+    },
+    {
+      "source": "harness-quality-gate",
+      "target": "harness-five-dimension-quality-gate",
+      "relation_type": "untyped",
+      "description": "实施方法：五维质量门禁的详细步骤和工具链"
+    },
+    {
+      "source": "llm-wiki",
+      "target": "azure-copilot-ecosystem",
+      "relation_type": "untyped",
+      "description": "Azure 企业级实现的基础设施层"
+    },
+    {
+      "source": "llm-wiki",
+      "target": "personal-knowledge-compiler",
+      "relation_type": "untyped",
+      "description": "PKC 是 LLM Wiki 的实践方法论"
+    },
+    {
+      "source": "llm-wiki",
+      "target": "rag-architecture-comparison",
+      "relation_type": "untyped",
+      "description": "LLM Wiki 是\"编译式\"知识，RAG 是\"检索式\"知识"
+    },
+    {
+      "source": "llm-wiki",
+      "target": "harness-quality-gate",
+      "relation_type": "untyped",
+      "description": ""
+    },
+    {
+      "source": "mcp-vs-cli",
+      "target": "context-engineering",
+      "relation_type": "untyped",
+      "description": "MCP 是 Context Engineering 的工具接入层"
+    },
+    {
+      "source": "mcp-vs-cli",
+      "target": "opencli",
+      "relation_type": "untyped",
+      "description": "OpenCLI 为 CLI 路线提供标准化接口描述"
+    },
+    {
+      "source": "notion-as-ai-layer",
+      "target": "personal-knowledge-compiler",
+      "relation_type": "untyped",
+      "description": "Notion 与 Obsidian 在知识管理中的定位对比"
+    },
+    {
+      "source": "oh-my-claude-code",
+      "target": "claude-code-agent-subagent",
+      "relation_type": "untyped",
+      "description": "OMC 基于 Claude Code 的 Agent/Subagent 架构"
+    },
+    {
+      "source": "oh-my-claude-code",
+      "target": "harness-engineering",
+      "relation_type": "untyped",
+      "description": "OMC 是 Harness Engineering 理念的高层封装"
+    },
+    {
+      "source": "oh-my-claude-code",
+      "target": "one-person-team",
+      "relation_type": "untyped",
+      "description": "OMC Autopilot 助力一人团队模式"
+    },
+    {
+      "source": "one-person-team",
+      "target": "harness-engineering",
+      "relation_type": "untyped",
+      "description": "Harness Engineering 是实现一人团队的技术基础"
+    },
+    {
+      "source": "one-person-team",
+      "target": "oh-my-claude-code",
+      "relation_type": "untyped",
+      "description": "OMC 的 Autopilot 模式助力一人团队"
+    },
+    {
+      "source": "ontology-philosophy",
+      "target": "enterprise-ontology",
+      "relation_type": "untyped",
+      "description": "哲学本体论在企业数据平台中的工程应用"
+    },
+    {
+      "source": "openclaw-agent-gateway",
+      "target": "agent-loop-architecture",
+      "relation_type": "untyped",
+      "description": "Agent 网关的核心仍是 Agent Loop"
+    },
+    {
+      "source": "openclaw-agent-gateway",
+      "target": "skill-hub-ecosystem",
+      "relation_type": "untyped",
+      "description": "OpenClaw 也是 Skill Hub 生态的一部分"
+    },
+    {
+      "source": "openclaw-agent-gateway",
+      "target": "openclaw-five-stage-gateway",
+      "relation_type": "untyped",
+      "description": "实施方法：五阶段网关建设的详细步骤"
+    },
+    {
+      "source": "opencli",
+      "target": "mcp-vs-cli",
+      "relation_type": "untyped",
+      "description": "OpenCLI 为 CLI 路线提供标准化支撑"
+    },
+    {
+      "source": "opencli",
+      "target": "openclaw-agent-gateway",
+      "relation_type": "untyped",
+      "description": "Agent 网关的工具调用层"
+    },
+    {
+      "source": "personal-knowledge-compiler",
+      "target": "llm-wiki",
+      "relation_type": "untyped",
+      "description": "LLM Wiki 是 PKC 的理论基础"
+    },
+    {
+      "source": "personal-knowledge-compiler",
+      "target": "notion-as-ai-layer",
+      "relation_type": "untyped",
+      "description": "Notion 在知识管理中的替代方案"
+    },
+    {
+      "source": "personal-knowledge-compiler",
+      "target": "personal-knowledge-compiler-workflow",
+      "relation_type": "untyped",
+      "description": "实施方法：日记到知识库的编译工作流"
+    },
+    {
+      "source": "rag-architecture-comparison",
+      "target": "enterprise-ontology",
+      "relation_type": "untyped",
+      "description": "Ontology 是企业 RAG 的语义基础"
+    },
+    {
+      "source": "rag-architecture-comparison",
+      "target": "llm-wiki",
+      "relation_type": "untyped",
+      "description": "LLM Wiki 是\"编译式\"知识而非\"检索式\"知识"
+    },
+    {
+      "source": "rag-architecture-comparison",
+      "target": "continual-self-improving-ai",
+      "relation_type": "untyped",
+      "description": "EntiGraph + RAG 互补关系"
+    },
+    {
+      "source": "skill-creator-orchestration",
+      "target": "skill-runtime",
+      "relation_type": "untyped",
+      "description": "Skill Creator 构建的是 Skill Runtime 的编排层"
+    },
+    {
+      "source": "skill-creator-orchestration",
+      "target": "claude-code-extension-system",
+      "relation_type": "untyped",
+      "description": "Skill 是 Claude Code 扩展体系的核心组件"
+    },
+    {
+      "source": "skill-hub-ecosystem",
+      "target": "azure-copilot-ecosystem",
+      "relation_type": "untyped",
+      "description": "Azure Skills 是 Microsoft 官方的 Skill 实现，与社区 Skill Hub 构成互补"
+    },
+    {
+      "source": "skill-hub-ecosystem",
+      "target": "claude-code-extension-system",
+      "relation_type": "untyped",
+      "description": ""
+    },
+    {
+      "source": "skill-hub-ecosystem",
+      "target": "openclaw-agent-gateway",
+      "relation_type": "untyped",
+      "description": ""
+    },
+    {
+      "source": "skill-pattern",
+      "target": "skill-runtime",
+      "relation_type": "untyped",
+      "description": "Skill Pattern 是 Skill Runtime 的认知架构基础"
+    },
+    {
+      "source": "skill-pattern",
+      "target": "agent-paradigms",
+      "relation_type": "untyped",
+      "description": "Agent Pattern 与 Skill Pattern 正交互补"
+    },
+    {
+      "source": "skill-pattern",
+      "target": "harness-engineering",
+      "relation_type": "untyped",
+      "description": "Skill Pattern 是 Harness 设计的认知层"
+    },
+    {
+      "source": "skill-runtime",
+      "target": "context-explosion",
+      "relation_type": "untyped",
+      "description": "Skill Runtime 是 Context 爆炸的解法方向"
+    },
+    {
+      "source": "skill-runtime",
+      "target": "skill-pattern",
+      "relation_type": "untyped",
+      "description": "Google 的 Skill Pattern 是 Skill Runtime 的认知架构基础"
+    },
+    {
+      "source": "skill-runtime",
+      "target": "claude-code-extension-system",
+      "relation_type": "untyped",
+      "description": "Claude Code 的 Skill 机制是 Skill Runtime 的实际实现"
+    },
+    {
+      "source": "speech-technology-stack",
+      "target": "voice-live-agent",
+      "relation_type": "untyped",
+      "description": "语音技术栈服务于 Voice Live Agent"
+    },
+    {
+      "source": "speech-technology-stack",
+      "target": "voice-activity-detection",
+      "relation_type": "untyped",
+      "description": "VAD 是语音技术栈的关键组件"
+    },
+    {
+      "source": "testcontainers",
+      "target": "harness-quality-gate",
+      "relation_type": "untyped",
+      "description": "Testcontainers 是 Harness 质量门禁第 4 层（CI 编译与集成测试）的核心工具"
+    },
+    {
+      "source": "three-layer-plugin-architecture",
+      "target": "framework-selection",
+      "relation_type": "untyped",
+      "description": "三层架构是框架选型的具体方案"
+    },
+    {
+      "source": "three-layer-plugin-architecture",
+      "target": "harness-engineering",
+      "relation_type": "untyped",
+      "description": "CLAUDE.md 路由是 Harness 的一部分"
+    },
+    {
+      "source": "three-layer-plugin-architecture",
+      "target": "claude-code-extension-system",
+      "relation_type": "untyped",
+      "description": "三层架构基于 Claude Code 扩展体系"
+    },
+    {
+      "source": "three-layer-plugin-architecture",
+      "target": "gsd-five-step-workflow",
+      "relation_type": "untyped",
+      "description": "实施方法：GSD 五步开发工作流"
+    },
+    {
+      "source": "voice-activity-detection",
+      "target": "voice-live-agent",
+      "relation_type": "untyped",
+      "description": "Voice Live Agent 依赖 VAD 实现语音交互"
+    },
+    {
+      "source": "voice-activity-detection",
+      "target": "speech-technology-stack",
+      "relation_type": "untyped",
+      "description": "VAD 是 Speech 技术栈的基础组件"
+    },
+    {
+      "source": "voice-live-agent",
+      "target": "voice-activity-detection",
+      "relation_type": "untyped",
+      "description": "VAD 是 Voice Agent 的关键子技术"
+    },
+    {
+      "source": "voice-live-agent",
+      "target": "speech-technology-stack",
+      "relation_type": "untyped",
+      "description": "Voice Agent 涉及完整的语音技术栈"
+    },
+    {
+      "source": "voice-live-agent",
+      "target": "voice-cascaded-pipeline",
+      "relation_type": "untyped",
+      "description": "实施方法：级联管线架构的详细步骤和决策点"
+    },
+    {
+      "source": "ai-native-five-layer-pipeline",
+      "target": "ai-native-pipeline",
+      "relation_type": "untyped",
+      "description": "此方法的概念定义页"
+    },
+    {
+      "source": "ai-native-five-layer-pipeline",
+      "target": "harness-engineering",
+      "relation_type": "untyped",
+      "description": "Pipeline 是 Harness Engineering 的具体工作流实现"
+    },
+    {
+      "source": "ai-native-five-layer-pipeline",
+      "target": "framework-selection",
+      "relation_type": "untyped",
+      "description": "Pipeline 各阶段对应不同框架选型"
+    },
+    {
+      "source": "ai-native-five-layer-pipeline",
+      "target": "gsd-five-step-workflow",
+      "relation_type": "untyped",
+      "description": "GSD 五步工作流是 Step 3 的详细实施方法"
+    },
+    {
+      "source": "code-reuse-four-layer-defense",
+      "target": "code-reuse-in-agent-era",
+      "relation_type": "untyped",
+      "description": "此方法的概念定义页"
+    },
+    {
+      "source": "code-reuse-four-layer-defense",
+      "target": "harness-engineering",
+      "relation_type": "untyped",
+      "description": "CLAUDE.md 架构约束是 Harness Engineering 的一部分"
+    },
+    {
+      "source": "code-reuse-four-layer-defense",
+      "target": "claude-code-agent-subagent",
+      "relation_type": "untyped",
+      "description": "Subagent 上下文隔离加剧了复用困难"
+    },
+    {
+      "source": "code-reuse-four-layer-defense",
+      "target": "gsd-five-step-workflow",
+      "relation_type": "untyped",
+      "description": "GSD workflow 中可嵌入复用检查步骤"
+    },
+    {
+      "source": "gsd-five-step-workflow",
+      "target": "three-layer-plugin-architecture",
+      "relation_type": "untyped",
+      "description": "三层架构是此工作流的框架基础"
+    },
+    {
+      "source": "gsd-five-step-workflow",
+      "target": "framework-selection",
+      "relation_type": "untyped",
+      "description": "框架选型决定是否使用此工作流"
+    },
+    {
+      "source": "gsd-five-step-workflow",
+      "target": "ai-native-five-layer-pipeline",
+      "relation_type": "untyped",
+      "description": "五层 Pipeline 是更宏观的流程，GSD 五步对应其 Step 3"
+    },
+    {
+      "source": "gsd-five-step-workflow",
+      "target": "gsd-project-scale-selection",
+      "relation_type": "untyped",
+      "description": "规模分级决定是否采用 GSD 五步"
+    },
+    {
+      "source": "gsd-five-step-workflow",
+      "target": "code-reuse-four-layer-defense",
+      "relation_type": "untyped",
+      "description": "四层防线可嵌入 Step 5 Verify 流程"
+    },
+    {
+      "source": "gsd-project-scale-selection",
+      "target": "framework-selection",
+      "relation_type": "untyped",
+      "description": "此方法的概念定义页"
+    },
+    {
+      "source": "gsd-project-scale-selection",
+      "target": "context-explosion",
+      "relation_type": "untyped",
+      "description": "Context 爆炸是 L3/L4 项目的核心挑战"
+    },
+    {
+      "source": "gsd-project-scale-selection",
+      "target": "three-layer-plugin-architecture",
+      "relation_type": "untyped",
+      "description": "三层架构是 L3+ 项目的工具组合方案"
+    },
+    {
+      "source": "gsd-project-scale-selection",
+      "target": "ai-native-five-layer-pipeline",
+      "relation_type": "untyped",
+      "description": "Pipeline 是 L2+ 项目的完整开发流程"
+    },
+    {
+      "source": "gsd-project-scale-selection",
+      "target": "gsd-five-step-workflow",
+      "relation_type": "untyped",
+      "description": "GSD 五步是 L2 项目的具体执行方法"
+    },
+    {
+      "source": "harness-five-dimension-quality-gate",
+      "target": "harness-quality-gate",
+      "relation_type": "untyped",
+      "description": "此方法的概念定义页"
+    },
+    {
+      "source": "harness-five-dimension-quality-gate",
+      "target": "testcontainers",
+      "relation_type": "untyped",
+      "description": "Step 4 集成测试的核心工具"
+    },
+    {
+      "source": "harness-five-dimension-quality-gate",
+      "target": "harness-engineering",
+      "relation_type": "untyped",
+      "description": "质量门禁是 Harness Engineering 工具链的一部分"
+    },
+    {
+      "source": "harness-five-dimension-quality-gate",
+      "target": "ai-native-five-layer-pipeline",
+      "relation_type": "untyped",
+      "description": "Pipeline Step 4/5 的质量保障"
+    },
+    {
+      "source": "openclaw-five-stage-gateway",
+      "target": "openclaw-agent-gateway",
+      "relation_type": "untyped",
+      "description": "此方法的概念定义页"
+    },
+    {
+      "source": "openclaw-five-stage-gateway",
+      "target": "agent-loop-architecture",
+      "relation_type": "untyped",
+      "description": "Agent Loop 是 Stage 1 的核心"
+    },
+    {
+      "source": "personal-knowledge-compiler-workflow",
+      "target": "personal-knowledge-compiler",
+      "relation_type": "untyped",
+      "description": "此方法的概念定义页"
+    },
+    {
+      "source": "personal-knowledge-compiler-workflow",
+      "target": "llm-wiki",
+      "relation_type": "untyped",
+      "description": "LLM Wiki 是此工作流的理论基础"
+    },
+    {
+      "source": "voice-cascaded-pipeline",
+      "target": "voice-live-agent",
+      "relation_type": "untyped",
+      "description": "此方法的概念定义页"
+    },
+    {
+      "source": "voice-cascaded-pipeline",
+      "target": "speech-technology-stack",
+      "relation_type": "untyped",
+      "description": "管线各阶段对应的技术栈"
+    },
+    {
+      "source": "voice-cascaded-pipeline",
+      "target": "voice-activity-detection",
+      "relation_type": "untyped",
+      "description": "VAD 是 Step 1 的关键子技术"
+    },
+    {
+      "source": "architecture-constraint-over-agent-learning",
+      "target": "code-reuse-in-agent-era",
+      "relation_type": "grounds",
+      "description": "问题定义"
+    },
+    {
+      "source": "architecture-constraint-over-agent-learning",
+      "target": "harness-engineering",
+      "relation_type": "uses",
+      "description": "CLAUDE.md 约束是 Harness 的核心"
+    },
+    {
+      "source": "architecture-constraint-over-agent-learning",
+      "target": "code-reuse-four-layer-defense",
+      "relation_type": "produces",
+      "description": "此决策的实施方法"
+    },
+    {
+      "source": "cascaded-vs-e2e-voice",
+      "target": "voice-live-agent",
+      "relation_type": "grounds",
+      "description": "此决策的上下文概念"
+    },
+    {
+      "source": "cascaded-vs-e2e-voice",
+      "target": "speech-technology-stack",
+      "relation_type": "part-of",
+      "description": "管线各阶段的技术栈选择"
+    },
+    {
+      "source": "cascaded-vs-e2e-voice",
+      "target": "voice-cascaded-pipeline",
+      "relation_type": "produces",
+      "description": "基于此决策的实施方法"
+    },
+    {
+      "source": "spec-driven-vs-methodology-framework",
+      "target": "framework-selection",
+      "relation_type": "grounds",
+      "description": "此决策的概念基础"
+    },
+    {
+      "source": "spec-driven-vs-methodology-framework",
+      "target": "three-layer-plugin-architecture",
+      "relation_type": "produces",
+      "description": "决策产物：GSD + Superpowers + gstack 三层架构"
+    },
+    {
+      "source": "spec-driven-vs-methodology-framework",
+      "target": "context-explosion",
+      "relation_type": "constrains",
+      "description": "影响框架选型的关键约束"
+    },
+    {
+      "source": "spec-driven-vs-methodology-framework",
+      "target": "gsd-project-scale-selection",
+      "relation_type": "produces",
+      "description": "基于此决策的框架选型方法"
+    },
+    {
+      "source": "spec-driven-vs-methodology-framework",
+      "target": "gsd-five-step-workflow",
+      "relation_type": "produces",
+      "description": "基于此决策的 GSD 执行流程"
+    },
+    {
+      "source": "wiki-over-rag-for-personal-knowledge",
+      "target": "llm-wiki",
+      "relation_type": "grounds",
+      "description": "理论基础"
+    },
+    {
+      "source": "wiki-over-rag-for-personal-knowledge",
+      "target": "personal-knowledge-compiler",
+      "relation_type": "implements",
+      "description": "实践框架"
+    },
+    {
+      "source": "wiki-over-rag-for-personal-knowledge",
+      "target": "rag-architecture-comparison",
+      "relation_type": "contrasts",
+      "description": "架构对比分析"
+    },
+    {
+      "source": "wiki-over-rag-for-personal-knowledge",
+      "target": "personal-knowledge-compiler-workflow",
+      "relation_type": "produces",
+      "description": "基于此决策的工作流"
+    }
+  ],
+  "categories": [
+    {
+      "id": "ai-agent",
+      "name": "AI Agent 理论与架构",
+      "members": [
+        "harness-engineering",
+        "agent-loop-architecture",
+        "agent-paradigms",
+        "context-engineering",
+        "context-explosion",
+        "skill-runtime",
+        "skill-pattern",
+        "autoresearch",
+        "code-reuse-in-agent-era",
+        "one-person-team",
+        "bitter-lesson",
+        "continual-self-improving-ai",
+        "ai-skill-formation"
+      ]
+    },
+    {
+      "id": "claude-code",
+      "name": "Claude Code 与扩展生态",
+      "members": [
+        "claude-code-agent-subagent",
+        "claude-code-extension-system",
+        "oh-my-claude-code",
+        "skill-creator-orchestration",
+        "skill-hub-ecosystem",
+        "openclaw-agent-gateway"
+      ]
+    },
+    {
+      "id": "vibe-coding",
+      "name": "Vibe Coding 框架与工作流",
+      "members": [
+        "ai-native-pipeline",
+        "framework-selection",
+        "three-layer-plugin-architecture"
+      ]
+    },
+    {
+      "id": "context",
+      "name": "Context 与工具集成",
+      "members": [
+        "mcp-vs-cli",
+        "context7",
+        "agent-search-tools",
+        "opencli"
+      ]
+    },
+    {
+      "id": "",
+      "name": "语音与实时交互",
+      "members": [
+        "voice-live-agent",
+        "voice-activity-detection",
+        "speech-technology-stack"
+      ]
+    },
+    {
+      "id": "azure",
+      "name": "Azure 与云平台",
+      "members": [
+        "azure-copilot-ecosystem",
+        "rag-architecture-comparison"
+      ]
+    },
+    {
+      "id": "ontology",
+      "name": "数据本体论（Ontology）",
+      "members": [
+        "enterprise-ontology",
+        "ontology-philosophy"
+      ]
+    },
+    {
+      "id": "",
+      "name": "知识管理与工具",
+      "members": [
+        "llm-wiki",
+        "personal-knowledge-compiler",
+        "testcontainers",
+        "harness-quality-gate",
+        "notion-as-ai-layer",
+        "ai-native-design-tools",
+        "terminal-multiplexer-for-ai",
+        "claude-code-memory-system"
+      ]
+    }
+  ]
+}
