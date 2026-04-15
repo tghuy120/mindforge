@@ -34,7 +34,9 @@ jobs:
         run: npm ci
 
       - name: Copy graph data
-        run: cp wiki/wiki-graph.json wiki/visualizer/public/
+        run: |
+          rm -f wiki/visualizer/public/wiki-graph.json
+          cp wiki/wiki-graph.json wiki/visualizer/public/wiki-graph.json
 
       - name: Build
         working-directory: wiki/visualizer
