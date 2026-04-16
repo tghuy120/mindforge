@@ -1,7 +1,7 @@
 ---
 title: "Harness Engineering"
 created: "2026-04-13"
-updated: "2026-04-15"
+updated: "2026-04-16"
 tags:
   - wiki
   - concept
@@ -95,9 +95,29 @@ Harness Engineering（驾驭工程）是 Prompt Engineering 和 Context Engineer
 
 > model 是做决策的主体，外部代码只是缰绳。
 
+### Claim: Meta-Harness 论文给出了更精确的 Harness 定义——聚焦信息管道
+
+- **来源**：[[2026-04-16-Meta-Harness论文解读与实践思考]]
+- **首次出现**：2026-04-16
+- **最近更新**：2026-04-16
+- **置信度**：0.8
+- **状态**：active
+
+> 业界主流（LangChain）定义 Harness 为"模型之外的一切"，Meta-Harness 论文精确聚焦为"the code that determines what to store, retrieve, and show to the model"——控制模型输入输出信息流的那层代码。同时揭示实际存在两层 Harness：Platform Harness（平台内置）和 User Harness（用户定制），同一模型换 Harness 可使性能排名跳跃 28 位。
+
+### Claim: Harness 优化可被自动化为搜索问题
+
+- **来源**：[[2026-04-16-Meta-Harness论文解读与实践思考]]
+- **首次出现**：2026-04-16
+- **最近更新**：2026-04-16
+- **置信度**：0.8
+- **状态**：active
+
+> Meta-Harness 将手工 Harness 迭代自动化为 Propose → Evaluate → Log → Repeat 搜索循环。消融实验证明完整执行 trace 访问（50.0%）远优于仅分数（34.6%），原始 trace 是不可替代的诊断信号。
+
 ## 冲突与演进
 
-（暂无）
+- 2026-04-16：Meta-Harness 论文对 Harness 给出了比 LangChain 主流定义更窄、更精确的操作性定义，两者并不矛盾但侧重点不同——前者聚焦信息管道，后者泛指"模型之外的一切"。
 
 ## 关联概念
 
@@ -113,9 +133,11 @@ Harness Engineering（驾驭工程）是 Prompt Engineering 和 Context Engineer
 - [[harness-quality-gate]] — `contrasts` 名称类似但不同概念：前者是 AI Agent 系统工程范式，后者是 DevOps 质量门禁
 - [[agent-paradigms]] — `uses` Harness 提供范式切换的系统级支撑
 - [[context-explosion]] — `constrains` Context 管理是 Harness 的关键能力
+- [[meta-harness]] — `produces` Meta-Harness 是 Harness Engineering 的自动化演进
 
 ## 来源日记
 
 - [[Vibe Coding系列01]] — Harness Engineering 概念首次系统阐述
 - [[Vibe Coding系列02]] — OpenAI 五大支柱详解
 - [[learn-claude-code]] — 从 Claude Code 源码理解 Harness 实践
+- [[2026-04-16-周四]] — Meta-Harness 论文解读，补充精确 Harness 定义和自动化优化

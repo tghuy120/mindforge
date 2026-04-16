@@ -1,8 +1,8 @@
 ---
 title: Personal Knowledge Wiki
 created: 2026-04-13
-updated: 2026-04-15
-stats: "42 concepts, 9 methods, 4 decisions, 186 claims"
+updated: 2026-04-16
+stats: "43 concepts, 9 methods, 4 decisions, 195 claims"
 tags:
   - wiki
   - index
@@ -75,6 +75,7 @@ wiki 页面之间的关联使用类型化前缀标注，格式：`- [[page]] —
 - [[skill-pattern]] — Google 五种 Skill Pattern 认知架构
 - [[autoresearch]] — AutoResearch：受控搜索空间中的自动化爬坡
 - [[code-reuse-in-agent-era]] — Agent 时代的代码复用：四层防线
+- [[meta-harness]] — Meta-Harness：用 Harness 优化 Harness 的递归搜索架构
 - [[one-person-team]] — One Person Team：AI 重新定义技术角色边界
 - [[bitter-lesson]] — The Bitter Lesson：计算胜过人类知识的 70 年规律
 - [[continual-self-improving-ai]] — 持续自我改进 AI：EntiGraph、SBP

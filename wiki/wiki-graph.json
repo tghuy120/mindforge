@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-04-15T14:52:47.275777+00:00",
+  "generated_at": "2026-04-16T11:46:00.777309+00:00",
   "stats": {
-    "nodes": 55,
-    "links": 173,
+    "nodes": 56,
+    "links": 181,
     "orphan_links_removed": 0,
-    "claims": 186,
+    "claims": 195,
     "categories": 8
   },
   "nodes": [
@@ -473,24 +473,25 @@
     {
       "id": "claude-code-agent-subagent",
       "type": "concept",
-      "title": "Claude Code Agent/Subagent Architecture",
-      "summary": "Claude Code 中 Agent 和 Subagent 是同一事物的两面——在 `.claude/agents/` 定义时叫 agent，被 Agent 工具调用运行时叫 subagent。Subagent 的 Context 与主 session 完全隔离且不可配置为共享，仅传递 prompt 参数，返回时中间过程全部丢弃仅返回摘要。\"Process isolation gives context isolation for free\" 是最关键的架构洞察。",
+      "title": "Claude Code Agent/Subagent/Teammate Architecture",
+      "summary": "Claude Code 中 Agent 和 Subagent 是同一事物的两面——在 `.claude/agents/` 定义时叫 agent，被 Agent 工具调用运行时叫 subagent。Subagent 的 Context 与主 session 完全隔离且不可配置为共享，仅传递 prompt 参数，返回时中间过程全部丢弃仅返回摘要。\"Process isolation gives context isolation for free\" 是最关键的架构洞察。2026 年 Claude Code 进一步引入 Teammate 架构——具有名字、独立收件箱（JSONL）和持久 Agent Loop 的长期协作者，通过 TeamConfig + MessageEnvelope 实现结构化通信，形成 Subagent（一次性委派）→ Runtime Task（后台槽位）→ Teammate（长期协作）的三层 Agent 架构。",
       "tags": [
         "wiki",
         "concept",
         "claude-code",
         "agent",
-        "architecture"
+        "architecture",
+        "teammate"
       ],
       "category": "Claude Code 与扩展生态",
       "method_type": null,
       "decision_status": null,
-      "claims_count": 3,
+      "claims_count": 5,
       "avg_confidence": 0.8,
       "claims": [
         {
           "statement": "Agent 和 Subagent 是同一个东西的两面",
-          "source": "Claude Code的Agent与Subagent架构解析——以Superpowers为例",
+          "source": "Claude Code系列03：Agent、Subagent与Teammate架构解析——从一次性委派到长期协作",
           "first_seen": "2026-04-13",
           "last_updated": "2026-04-13",
           "confidence": 0.8,
@@ -499,7 +500,7 @@
         },
         {
           "statement": "Subagent Context 与主 session 完全隔离",
-          "source": "Claude Code的Agent与Subagent架构解析——以Superpowers为例",
+          "source": "Claude Code系列03：Agent、Subagent与Teammate架构解析——从一次性委派到长期协作",
           "first_seen": "2026-04-13",
           "last_updated": "2026-04-13",
           "confidence": 0.8,
@@ -514,6 +515,24 @@
           "confidence": 0.8,
           "status": "active",
           "evidence": "Parent 维持持久 messages，Child 从空 messages 开始，交互极其克制。这是最关键的架构洞察。"
+        },
+        {
+          "statement": "Teammate 是具有名字、收件箱和独立 Agent Loop 的长期协作者",
+          "source": "Claude Code系列03：Agent、Subagent与Teammate架构解析——从一次性委派到长期协作",
+          "first_seen": "2026-04-16",
+          "last_updated": "2026-04-16",
+          "confidence": 0.8,
+          "status": "active",
+          "evidence": "Teammate 与 Subagent 的本质区别：Subagent 是一次性委派（fire-and-forget），执行完即销毁；Teammate 有持久身份（name）、独立收件箱（JSONL inbox）和长期运行的 Agent Loop，通过 TeamConfig（`.team/config.json`）注册，通过 MessageEnvelope（type/from/content/timestamp）通信。"
+        },
+        {
+          "statement": "Claude Code 形成三层 Agent 架构——Subagent / Runtime Task / Teammate",
+          "source": "Claude Code系列03：Agent、Subagent与Teammate架构解析——从一次性委派到长期协作",
+          "first_seen": "2026-04-16",
+          "last_updated": "2026-04-16",
+          "confidence": 0.8,
+          "status": "active",
+          "evidence": "三层对比：① Subagent——一次性助手，空白 context 启动，仅返回摘要；② Runtime Task——后台槽位，异步执行长时间任务（npm install/pytest），完成后通知；③ Teammate——长期协作者，有名字和收件箱，可被 SendMessage 唤醒，支持 Shutdown/Plan Approval 等 FSM 协议。三者分别对应 learn-claude-code 的 S04、S08、S09-S12。"
         }
       ]
     },
@@ -538,7 +557,7 @@
       "claims": [
         {
           "statement": "Command / Skill / Agent 三层扩展各有定位",
-          "source": "Claude Code扩展三剑客",
+          "source": "Claude Code系列04：扩展三剑客——Command、Skill与Agent的区别与协作",
           "first_seen": "2026-04-13",
           "last_updated": "2026-04-13",
           "confidence": 0.8,
@@ -547,7 +566,7 @@
         },
         {
           "statement": "Plugin 是 Coding Agent 从\"工具\"走向\"平台\"的关键拐点",
-          "source": "Coding Agent Plugin生态调研",
+          "source": "Claude Code系列06：Plugin生态调研——协议、最佳实践与自定义plugin开发",
           "first_seen": "2026-04-13",
           "last_updated": "2026-04-13",
           "confidence": 0.7,
@@ -556,7 +575,7 @@
         },
         {
           "statement": "Plugin 是分发单元不是运行时单元",
-          "source": "Coding Agent Plugin生态调研",
+          "source": "Claude Code系列06：Plugin生态调研——协议、最佳实践与自定义plugin开发",
           "first_seen": "2026-04-13",
           "last_updated": "2026-04-13",
           "confidence": 0.8,
@@ -565,7 +584,7 @@
         },
         {
           "statement": "扩展机制经历三次演进",
-          "source": "Coding Agent Plugin生态调研",
+          "source": "Claude Code系列06：Plugin生态调研——协议、最佳实践与自定义plugin开发",
           "first_seen": "2026-04-13",
           "last_updated": "2026-04-13",
           "confidence": 0.7,
@@ -1076,8 +1095,8 @@
       "category": "AI Agent 理论与架构",
       "method_type": null,
       "decision_status": null,
-      "claims_count": 7,
-      "avg_confidence": 0.77,
+      "claims_count": 9,
+      "avg_confidence": 0.78,
       "claims": [
         {
           "statement": "Harness Engineering 是 Prompt Engineering 和 Context Engineering 的超集",
@@ -1141,6 +1160,24 @@
           "confidence": 0.7,
           "status": "active",
           "evidence": "model 是做决策的主体，外部代码只是缰绳。"
+        },
+        {
+          "statement": "Meta-Harness 论文给出了更精确的 Harness 定义——聚焦信息管道",
+          "source": "2026-04-16-Meta-Harness论文解读与实践思考",
+          "first_seen": "2026-04-16",
+          "last_updated": "2026-04-16",
+          "confidence": 0.8,
+          "status": "active",
+          "evidence": "业界主流（LangChain）定义 Harness 为\"模型之外的一切\"，Meta-Harness 论文精确聚焦为\"the code that determines what to store, retrieve, and show to the model\"——控制模型输入输出信息流的那层代码。同时揭示实际存在两层 Harness：Platform Harness（平台内置）和 User Harness（用户定制），同一模型换 Harness 可使性能排名跳跃 28 位。"
+        },
+        {
+          "statement": "Harness 优化可被自动化为搜索问题",
+          "source": "2026-04-16-Meta-Harness论文解读与实践思考",
+          "first_seen": "2026-04-16",
+          "last_updated": "2026-04-16",
+          "confidence": 0.8,
+          "status": "active",
+          "evidence": "Meta-Harness 将手工 Harness 迭代自动化为 Propose → Evaluate → Log → Repeat 搜索循环。消融实验证明完整执行 trace 访问（50.0%）远优于仅分数（34.6%），原始 trace 是不可替代的诊断信号。"
         }
       ]
     },
@@ -1301,6 +1338,72 @@
           "confidence": 0.7,
           "status": "active",
           "evidence": "MCP 的优势是跨应用通用性和动态工具发现；CLI 的优势是成熟 Unix 生态、零协议开销、直接进程调用。选择不是二元的。"
+        }
+      ]
+    },
+    {
+      "id": "meta-harness",
+      "type": "concept",
+      "title": "Meta-Harness",
+      "summary": "Meta-Harness 是一种用 Harness 优化 Harness 的递归架构——以 Coding Agent（如 Claude Code Opus 4.6）作为 Proposer，在文件系统中保留完整历史（原始 trace + 分数），通过 Propose → Evaluate → Log → Repeat 的搜索循环自动探索最优 Harness 配置。论文（arxiv 2603.28052）同时给出了比业界主流更精确的 Harness 定义：\"the code that determines what to store, retrieve, and show to the model\"——将 Harness 聚焦于信息管道层，而非泛指\"模型之外的一切\"。消融实验证明完整 trace 访问（50.0%）远优于仅分数（34.6%）和 LLM 摘要（34.9%），原始执行 trace 是不可替代的诊断信号。",
+      "tags": [
+        "wiki",
+        "concept",
+        "ai-engineering",
+        "harness",
+        "optimization",
+        "agent"
+      ],
+      "category": "AI Agent 理论与架构",
+      "method_type": null,
+      "decision_status": null,
+      "claims_count": 5,
+      "avg_confidence": 0.8,
+      "claims": [
+        {
+          "statement": "Meta-Harness 给出了比业界主流更精确的 Harness 定义",
+          "source": "2026-04-16-Meta-Harness论文解读与实践思考",
+          "first_seen": "2026-04-16",
+          "last_updated": "2026-04-16",
+          "confidence": 0.8,
+          "status": "active",
+          "evidence": "业界主流（LangChain）定义 Harness 为\"模型之外的一切\"，边界过于宽泛。Meta-Harness 论文将其精确聚焦为\"the code that determines what to store, retrieve, and show to the model\"——即控制模型输入输出信息流的那层代码。这个区分在工程实践中至关重要，因为 Meta-Harness 优化的恰恰是这个信息管道。"
+        },
+        {
+          "statement": "实际存在两层 Harness——Platform Harness 和 User Harness",
+          "source": "2026-04-16-Meta-Harness论文解读与实践思考",
+          "first_seen": "2026-04-16",
+          "last_updated": "2026-04-16",
+          "confidence": 0.8,
+          "status": "active",
+          "evidence": "内置 Harness（Platform Harness）是 Agent 平台方提供的核心能力（如 Claude Code 的 compaction、Git 集成、子 Agent 生成）；外层 Harness（User Harness）是用户定制层（CLAUDE.md、Skills、GSD/Superpowers 等）。Terminal Bench 2.0 数据证实：同一模型换一层 Harness，性能排名可跳跃 28 位。"
+        },
+        {
+          "statement": "完整执行 trace 是不可替代的诊断信号",
+          "source": "2026-04-16-Meta-Harness论文解读与实践思考",
+          "first_seen": "2026-04-16",
+          "last_updated": "2026-04-16",
+          "confidence": 0.9,
+          "status": "active",
+          "evidence": "消融实验：仅分数 34.6% → 分数 + LLM 摘要 34.9%（几乎无提升）→ 完整接口含原始 trace 50.0%（+15.4）。LLM 生成的摘要无法恢复丢失的因果信息。Proposer 每轮中位数读取 82 个文件、访问最高 1000 万 tokens 的诊断信息，是之前方法（OPRO/TextGrad/AlphaEvolve）的 400~5000 倍。"
+        },
+        {
+          "statement": "Harness 优化本质上是一个搜索问题",
+          "source": "2026-04-16-Meta-Harness论文解读与实践思考",
+          "first_seen": "2026-04-16",
+          "last_updated": "2026-04-16",
+          "confidence": 0.8,
+          "status": "active",
+          "evidence": "手工设计 Harness 是当前 AI 系统的主要瓶颈。HumanLayer 博客结论：\"it's not a model problem. It's a configuration problem.\" Meta-Harness 将这个手工试错过程自动化为 Propose → Evaluate → Log → Repeat 的搜索循环，约 20 轮迭代、每轮约 3 个候选、总计约 60 个 Harness 变体。"
+        },
+        {
+          "statement": "Meta-Harness 落地存在三种路径",
+          "source": "2026-04-16-Meta-Harness论文解读与实践思考",
+          "first_seen": "2026-04-16",
+          "last_updated": "2026-04-16",
+          "confidence": 0.7,
+          "status": "active",
+          "evidence": "场景 A：从裸模型 API 出发构建完整 Agent（搜索空间无限）；场景 B：基于 Coding Agent 的外层 Harness 优化（CLAUDE.md/Hooks/Skills）；场景 C：Agent + 开源 Harness 框架（GSD/Superpowers）+ Meta-Harness 优化层。三种路径的 Harness 架构、优化空间和适用方式截然不同。"
         }
       ]
     },
@@ -1829,7 +1932,7 @@
         },
         {
           "statement": "Skill 跨平台兼容性是事实标准",
-          "source": "Coding Agent Plugin生态调研",
+          "source": "Claude Code系列06：Plugin生态调研——协议、最佳实践与自定义plugin开发",
           "first_seen": "2026-04-13",
           "last_updated": "2026-04-13",
           "confidence": 0.6,
@@ -2927,7 +3030,7 @@
       "source": "claude-code-agent-subagent",
       "target": "agent-loop-architecture",
       "relation_type": "uses",
-      "description": "Subagent 运行独立的 Agent Loop 实例"
+      "description": "Subagent 和 Teammate 都运行独立的 Agent Loop 实例"
     },
     {
       "source": "claude-code-agent-subagent",
@@ -2951,13 +3054,19 @@
       "source": "claude-code-agent-subagent",
       "target": "oh-my-claude-code",
       "relation_type": "uses",
-      "description": "OMC 基于 Agent/Subagent 架构"
+      "description": "OMC 基于 Agent/Subagent/Teammate 架构"
     },
     {
       "source": "claude-code-agent-subagent",
       "target": "claude-code-memory-system",
       "relation_type": "uses",
       "description": "Subagent Memory 依赖进程隔离架构"
+    },
+    {
+      "source": "claude-code-agent-subagent",
+      "target": "meta-harness",
+      "relation_type": "uses",
+      "description": "Meta-Harness 论文选用 Claude Code Agent 作为 Proposer"
     },
     {
       "source": "claude-code-extension-system",
@@ -3206,6 +3315,12 @@
       "description": "Context 管理是 Harness 的关键能力"
     },
     {
+      "source": "harness-engineering",
+      "target": "meta-harness",
+      "relation_type": "produces",
+      "description": "Meta-Harness 是 Harness Engineering 的自动化演进"
+    },
+    {
       "source": "harness-quality-gate",
       "target": "testcontainers",
       "relation_type": "uses",
@@ -3258,6 +3373,42 @@
       "target": "opencli",
       "relation_type": "contrasts",
       "description": "OpenCLI 为 CLI 路线提供标准化接口描述"
+    },
+    {
+      "source": "meta-harness",
+      "target": "harness-engineering",
+      "relation_type": "extends",
+      "description": "Meta-Harness 是 Harness Engineering 的自动化演进——从手工设计到搜索优化"
+    },
+    {
+      "source": "meta-harness",
+      "target": "agent-loop-architecture",
+      "relation_type": "uses",
+      "description": "Meta-Harness 的 Proposer 运行在 Agent Loop 之上"
+    },
+    {
+      "source": "meta-harness",
+      "target": "context-engineering",
+      "relation_type": "extends",
+      "description": "Meta-Harness 优化的核心正是\"给模型看什么、怎么组织上下文\""
+    },
+    {
+      "source": "meta-harness",
+      "target": "bitter-lesson",
+      "relation_type": "implements",
+      "description": "Meta-Harness 用搜索替代人工设计，呼应 Bitter Lesson 的核心主张"
+    },
+    {
+      "source": "meta-harness",
+      "target": "claude-code-agent-subagent",
+      "relation_type": "uses",
+      "description": "论文选用 Claude Code 作为 Proposer"
+    },
+    {
+      "source": "meta-harness",
+      "target": "rtk-token-compression",
+      "relation_type": "contrasts",
+      "description": "RTK 压缩工具输出是手工 Harness 优化，Meta-Harness 将此过程自动化"
     },
     {
       "source": "notion-as-ai-layer",
@@ -3850,6 +4001,7 @@
         "skill-pattern",
         "autoresearch",
         "code-reuse-in-agent-era",
+        "meta-harness",
         "one-person-team",
         "bitter-lesson",
         "continual-self-improving-ai",
