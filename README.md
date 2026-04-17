@@ -33,6 +33,8 @@ Click any node to inspect its claims, confidence scores, and connections. Filter
 - [Claude Code 系列 04：扩展三剑客——Command、Skill 与 Agent 的区别与协作](Notes/AI/Claude-Code/Claude%20Code系列04：扩展三剑客——Command、Skill与Agent的区别与协作.md)
 - [Claude Code 系列 05：记忆全景——从 Session 到 Memory 的六层持久化体系](Notes/AI/Claude-Code/Claude%20Code系列05：记忆全景——从Session到Memory的六层持久化体系.md)
 - [Claude Code 系列 06：Plugin 生态调研——协议、最佳实践与自定义 Plugin 开发](Notes/AI/Claude-Code/Claude%20Code系列06：Plugin生态调研——协议、最佳实践与自定义plugin开发.md)
+- [Claude Code 系列 07：Harness 分层架构——从 50 万行源码到社区框架的控制论解读](Notes/AI/Claude-Code/Claude%20Code系列07：Harness分层架构——从50万行源码到社区框架的控制论解读.md)
+- [Harness 实践案例：从一次 Memory 失效到记忆治理体系](Notes/AI/Claude-Code/Harness实践案例：从一次Memory失效到记忆治理体系.md)
 
 ### Notes/AI/agent
 

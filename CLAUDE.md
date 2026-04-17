@@ -56,6 +56,8 @@ Core rules that apply everywhere:
 
 **Tavily MCP** is the default web search tool. Use `tavily_search`, `tavily_extract`, `tavily_crawl`, `tavily_map`, `tavily_research` instead of `WebSearch`. `WebFetch` can still be used for specific known URLs.
 
+- **URL 路由**：认证网站（chatgpt.com、docs.google.com、mp.weixin.qq.com 等）**必须直接用 Playwright**，禁止先试 WebFetch/tavily。详见 `.claude/rules/url-routing.md`
+
 **qmd** is a local hybrid search engine (BM25 + vector + LLM reranking). Collection `mindforge` indexes all `.md` files.
 - Search: `qmd query "search term"` or `qmd search "keyword" -c mindforge`
 - Re-index: `qmd embed`
@@ -96,3 +98,6 @@ When adding new knowledge to the vault:
 4. **Complete linkage** — when updating task status, also update related notes and references
 5. **.pen files** — use only Pencil MCP tools (never Read/Grep) to access `.pen` file contents
 6. **Diagrams** — default to Excalidraw skill; place files into root `asset/`; embed using `![alt](../asset/filename.png)`
+7. **个性化记忆优先于默认行为** — 当 Memory 中的用户反馈与你的默认行为模式冲突时，**Memory 中的反馈优先**。具体执行：在做任何有多种方式的操作前（URL 访问、文件创建、格式选择等），先回忆 Memory 中是否有该场景的用户反馈，有则遵守，无则使用默认策略。
+
+- **记忆提权**：Memory 中的行为规则（"必须/禁止"）应提权到 CLAUDE.md 或 Rules；背景知识留在 Memory。详见 `.claude/rules/memory-promotion.md`，使用 `/memory-review` 定期审查。
